@@ -1,11 +1,6 @@
-# Welcome to your Jupyter Book
+# **Análsis temporal y espacial de PM 10 Y PM 2.5 en Montería: Implicaciones para la planificación territorial y desarrollo urbano sostenible**
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
-
-Check out the content pages bundled with this sample book to see more.
+La contaminación del aire representa un riesgo significativo para la salud, causando aproximadamente siete millones de muertes prematuras anualmente. Este estudio se centra en analizar las dinámicas temporales y espaciales de los contaminantes PM10 y PM2.5 en Montería durante el período 2020-2023, con el objetivo de integrar la calidad del aire en la planificación territorial y el desarrollo urbano sostenible de la ciudad. La información se recopila de la base de datos de la CVS disponible en la plataforma SISAIRE. La limpieza de datos elimina valores atípicos con diagramas de caja y z-scores, y se manejan datos faltantes con técnicas de imputación. El análisis estadístico utiliza medidas descriptivas y técnicas de series temporales para identificar patrones a largo y corto plazo, empleando descomposición de tendencia, estacionalidad y ruido, análisis de Fourier y modelos de suavizamiento exponencial. Se realizan análisis de correlación para determinar la relación entre las dinámicas atmosféricas y las concentraciones de PM10 y PM2.5. Finalmente, se desarrolla un instrumento de gestión ambiental basado en la revisión de normativas y estudios previos, con recomendaciones para reducir las emisiones y mejorar la calidad del aire en Montería.
 
 ```{tableofcontents}
 ```
