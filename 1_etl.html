@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '1_etl';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Análisis temporal y espacial de PM 10 Y PM 2.5 en Montería: Implicaciones para la planificación territorial y desarrollo urbano sostenible" href="intro.html" />
+    <link rel="prev" title="Análisis temporal y espacial de PM 10 Y PM 2.5 en Montería" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,7 +154,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Análisis temporal y espacial de PM 10 Y PM 2.5 en Montería: Implicaciones para la planificación territorial y desarrollo urbano sostenible
+                    Análisis temporal y espacial de PM 10 Y PM 2.5 en Montería
                 </a>
             </li>
         </ul>
@@ -330,7 +330,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -346,6 +348,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos Faltantes para el PM 10</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -377,9 +388,9 @@ document.write(`
 
 <span class="c1"># Renombrar las columnas</span>
 <span class="n">datos_recopilados</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;Estacion&#39;</span><span class="p">:</span> <span class="s1">&#39;Estación&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Estacion&#39;</span><span class="p">:</span> <span class="s1">&#39;Estacion&#39;</span><span class="p">,</span>
     <span class="s1">&#39;Fecha inicial&#39;</span><span class="p">:</span> <span class="s1">&#39;Fecha&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;PARÁMETRO&#39;</span><span class="p">:</span> <span class="s1">&#39;Parámetro&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PARÁMETRO&#39;</span><span class="p">:</span> <span class="s1">&#39;Parametro&#39;</span><span class="p">,</span>
     <span class="s1">&#39;CONCENTRACIÓN mg/m3&#39;</span><span class="p">:</span> <span class="s1">&#39;Concentración_mg/m3&#39;</span>
 <span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -406,9 +417,9 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Estación</th>
+      <th>Estacion</th>
       <th>Fecha</th>
-      <th>Parámetro</th>
+      <th>Parametro</th>
       <th>Concentración_mg/m3</th>
     </tr>
   </thead>
@@ -484,9 +495,9 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Estación</th>
+      <th>Estacion</th>
       <th>Fecha</th>
-      <th>Parámetro</th>
+      <th>Parametro</th>
       <th>Concentración_mg/m3</th>
     </tr>
   </thead>
@@ -545,9 +556,9 @@ RangeIndex: 1352 entries, 0 to 1351
 Data columns (total 4 columns):
  #   Column               Non-Null Count  Dtype         
 ---  ------               --------------  -----         
- 0   Estación             1352 non-null   object        
+ 0   Estacion             1352 non-null   object        
  1   Fecha                1352 non-null   datetime64[ns]
- 2   Parámetro            1352 non-null   object        
+ 2   Parametro            1352 non-null   object        
  3   Concentración_mg/m3  1352 non-null   float64       
 dtypes: datetime64[ns](1), float64(1), object(2)
 memory usage: 42.4+ KB
@@ -612,35 +623,35 @@ memory usage: 42.4+ KB
       <td>2020-06-17</td>
       <td>249.907970</td>
       <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
+      <td>Dirección Viento</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2020-06-18</td>
       <td>106.967656</td>
       <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
+      <td>Dirección Viento</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2020-06-19</td>
       <td>352.443983</td>
       <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
+      <td>Dirección Viento</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2020-06-20</td>
       <td>161.221664</td>
       <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
+      <td>Dirección Viento</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2020-06-21</td>
       <td>192.649780</td>
       <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
+      <td>Dirección Viento</td>
     </tr>
   </tbody>
 </table>
@@ -657,50 +668,100 @@ memory usage: 42.4+ KB
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 5121 entries, 0 to 5120
+RangeIndex: 5171 entries, 0 to 5170
 Data columns (total 4 columns):
  #   Column                 Non-Null Count  Dtype         
 ---  ------                 --------------  -----         
- 0   Fecha                  5121 non-null   datetime64[ns]
- 1   Valor                  5121 non-null   float64       
- 2   Unidad                 5121 non-null   object        
- 3   Parametros_climaticos  5121 non-null   object        
+ 0   Fecha                  5171 non-null   datetime64[ns]
+ 1   Valor                  5171 non-null   float64       
+ 2   Unidad                 5171 non-null   object        
+ 3   Parametros_climaticos  5171 non-null   object        
 dtypes: datetime64[ns](1), float64(1), object(2)
-memory usage: 160.2+ KB
+memory usage: 161.7+ KB
 </pre></div>
 </div>
 </div>
 </div>
+<ul class="simple">
+<li><p>Unamos los datos recopilados y los datos de parámetros</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unir los DataFrames por la columna &quot;Fecha&quot; usando un merge (left join para mantener todos los datos de df_parametros)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datos_parametros</span><span class="p">,</span> <span class="n">datos_recopilados</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unir los DataFrames por la columna &quot;Fecha&quot; usando un merge (right join para mantener todos los datos de df_recopilacion)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datos_parametros</span><span class="p">,</span> <span class="n">datos_recopilados</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 8892 entries, 0 to 8891
+RangeIndex: 4951 entries, 0 to 4950
 Data columns (total 7 columns):
  #   Column                 Non-Null Count  Dtype         
 ---  ------                 --------------  -----         
- 0   Fecha                  8892 non-null   datetime64[ns]
- 1   Valor                  8892 non-null   float64       
- 2   Unidad                 8892 non-null   object        
- 3   Parametros_climaticos  8892 non-null   object        
- 4   Estación               4751 non-null   object        
- 5   Parámetro              4751 non-null   object        
- 6   Concentración_mg/m3    4751 non-null   float64       
+ 0   Fecha                  4951 non-null   datetime64[ns]
+ 1   Valor                  4951 non-null   float64       
+ 2   Unidad                 4951 non-null   object        
+ 3   Parametros_climaticos  4951 non-null   object        
+ 4   Estacion               4951 non-null   object        
+ 5   Parametro              4951 non-null   object        
+ 6   Concentración_mg/m3    4951 non-null   float64       
 dtypes: datetime64[ns](1), float64(2), object(4)
-memory usage: 486.4+ KB
+memory usage: 270.9+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Veamos si todos los días mediciones de PM 10 y PM 2.5</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Agrupar por fecha y contar las ocurrencias de PM10 y PM2.5</span>
+<span class="n">df_grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># df_grouped</span>
+
+<span class="c1"># Crear una columna booleana indicando si ambos valores están presentes en fechas consecutivas</span>
+<span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Filtrar para obtener las fechas donde ambos valores no están presentes en fechas consecutivas</span>
+<span class="n">fechas_sin_coincidencia</span> <span class="o">=</span> <span class="n">df_grouped</span><span class="p">[</span><span class="o">~</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">index</span>
+
+<span class="c1"># Imprimir los resultados</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coinciden:&quot;</span><span class="p">,</span> <span class="n">df_grouped</span><span class="p">[</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No coinciden:&quot;</span><span class="p">,</span> <span class="n">fechas_sin_coincidencia</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coinciden: [Timestamp(&#39;2020-09-15 00:00:00&#39;), Timestamp(&#39;2020-09-16 00:00:00&#39;), Timestamp(&#39;2020-09-17 00:00:00&#39;), Timestamp(&#39;2020-09-18 00:00:00&#39;), Timestamp(&#39;2020-09-19 00:00:00&#39;), Timestamp(&#39;2020-09-20 00:00:00&#39;), Timestamp(&#39;2020-09-21 00:00:00&#39;), Timestamp(&#39;2020-09-22 00:00:00&#39;), Timestamp(&#39;2020-09-23 00:00:00&#39;), Timestamp(&#39;2020-09-24 00:00:00&#39;), Timestamp(&#39;2020-09-25 00:00:00&#39;), Timestamp(&#39;2020-09-26 00:00:00&#39;), Timestamp(&#39;2020-09-27 00:00:00&#39;), Timestamp(&#39;2020-09-28 00:00:00&#39;), Timestamp(&#39;2020-09-29 00:00:00&#39;), Timestamp(&#39;2020-09-30 00:00:00&#39;), Timestamp(&#39;2020-10-01 00:00:00&#39;), Timestamp(&#39;2020-10-02 00:00:00&#39;), Timestamp(&#39;2020-10-03 00:00:00&#39;), Timestamp(&#39;2020-10-04 00:00:00&#39;), Timestamp(&#39;2021-09-25 00:00:00&#39;), Timestamp(&#39;2021-09-26 00:00:00&#39;), Timestamp(&#39;2021-09-27 00:00:00&#39;), Timestamp(&#39;2021-09-28 00:00:00&#39;), Timestamp(&#39;2021-09-29 00:00:00&#39;), Timestamp(&#39;2021-09-30 00:00:00&#39;), Timestamp(&#39;2021-10-01 00:00:00&#39;), Timestamp(&#39;2021-10-02 00:00:00&#39;), Timestamp(&#39;2021-10-03 00:00:00&#39;), Timestamp(&#39;2021-10-04 00:00:00&#39;), Timestamp(&#39;2021-10-05 00:00:00&#39;), Timestamp(&#39;2021-10-06 00:00:00&#39;), Timestamp(&#39;2021-10-07 00:00:00&#39;), Timestamp(&#39;2021-10-08 00:00:00&#39;), Timestamp(&#39;2021-10-09 00:00:00&#39;), Timestamp(&#39;2021-10-10 00:00:00&#39;), Timestamp(&#39;2021-10-11 00:00:00&#39;), Timestamp(&#39;2021-10-12 00:00:00&#39;), Timestamp(&#39;2021-10-13 00:00:00&#39;), Timestamp(&#39;2021-10-14 00:00:00&#39;), Timestamp(&#39;2022-10-15 00:00:00&#39;), Timestamp(&#39;2022-10-16 00:00:00&#39;), Timestamp(&#39;2022-10-17 00:00:00&#39;), Timestamp(&#39;2022-10-18 00:00:00&#39;), Timestamp(&#39;2022-10-19 00:00:00&#39;), Timestamp(&#39;2022-10-20 00:00:00&#39;), Timestamp(&#39;2022-10-21 00:00:00&#39;), Timestamp(&#39;2022-10-22 00:00:00&#39;), Timestamp(&#39;2022-10-23 00:00:00&#39;), Timestamp(&#39;2022-10-24 00:00:00&#39;), Timestamp(&#39;2022-10-25 00:00:00&#39;), Timestamp(&#39;2022-10-26 00:00:00&#39;), Timestamp(&#39;2022-10-27 00:00:00&#39;), Timestamp(&#39;2022-10-28 00:00:00&#39;), Timestamp(&#39;2022-10-29 00:00:00&#39;), Timestamp(&#39;2022-10-30 00:00:00&#39;), Timestamp(&#39;2022-10-31 00:00:00&#39;), Timestamp(&#39;2022-11-01 00:00:00&#39;), Timestamp(&#39;2022-11-02 00:00:00&#39;), Timestamp(&#39;2022-11-03 00:00:00&#39;), Timestamp(&#39;2023-10-12 00:00:00&#39;), Timestamp(&#39;2023-10-14 00:00:00&#39;), Timestamp(&#39;2023-10-16 00:00:00&#39;), Timestamp(&#39;2023-10-18 00:00:00&#39;), Timestamp(&#39;2023-10-20 00:00:00&#39;), Timestamp(&#39;2023-10-22 00:00:00&#39;), Timestamp(&#39;2023-10-24 00:00:00&#39;), Timestamp(&#39;2023-10-26 00:00:00&#39;), Timestamp(&#39;2023-10-28 00:00:00&#39;), Timestamp(&#39;2023-11-05 00:00:00&#39;), Timestamp(&#39;2023-11-07 00:00:00&#39;), Timestamp(&#39;2023-11-09 00:00:00&#39;), Timestamp(&#39;2023-11-11 00:00:00&#39;), Timestamp(&#39;2023-11-13 00:00:00&#39;), Timestamp(&#39;2023-11-15 00:00:00&#39;), Timestamp(&#39;2023-11-17 00:00:00&#39;), Timestamp(&#39;2023-11-19 00:00:00&#39;), Timestamp(&#39;2023-11-21 00:00:00&#39;)]
+No coinciden: [Timestamp(&#39;2020-09-01 00:00:00&#39;), Timestamp(&#39;2020-09-04 00:00:00&#39;), Timestamp(&#39;2020-09-07 00:00:00&#39;), Timestamp(&#39;2020-09-10 00:00:00&#39;), Timestamp(&#39;2020-09-13 00:00:00&#39;), Timestamp(&#39;2020-10-09 00:00:00&#39;), Timestamp(&#39;2020-10-12 00:00:00&#39;), Timestamp(&#39;2020-10-15 00:00:00&#39;), Timestamp(&#39;2020-10-18 00:00:00&#39;), Timestamp(&#39;2020-10-21 00:00:00&#39;), Timestamp(&#39;2020-10-24 00:00:00&#39;), Timestamp(&#39;2020-10-27 00:00:00&#39;), Timestamp(&#39;2020-10-30 00:00:00&#39;), Timestamp(&#39;2020-11-02 00:00:00&#39;), Timestamp(&#39;2020-11-04 00:00:00&#39;), Timestamp(&#39;2020-11-06 00:00:00&#39;), Timestamp(&#39;2020-11-08 00:00:00&#39;), Timestamp(&#39;2020-11-10 00:00:00&#39;), Timestamp(&#39;2020-11-12 00:00:00&#39;), Timestamp(&#39;2020-11-14 00:00:00&#39;), Timestamp(&#39;2020-11-16 00:00:00&#39;), Timestamp(&#39;2020-11-18 00:00:00&#39;), Timestamp(&#39;2020-11-20 00:00:00&#39;), Timestamp(&#39;2020-11-22 00:00:00&#39;), Timestamp(&#39;2020-11-24 00:00:00&#39;), Timestamp(&#39;2020-11-26 00:00:00&#39;), Timestamp(&#39;2020-11-28 00:00:00&#39;), Timestamp(&#39;2020-11-30 00:00:00&#39;), Timestamp(&#39;2020-12-01 00:00:00&#39;), Timestamp(&#39;2020-12-02 00:00:00&#39;), Timestamp(&#39;2020-12-03 00:00:00&#39;), Timestamp(&#39;2020-12-04 00:00:00&#39;), Timestamp(&#39;2020-12-05 00:00:00&#39;), Timestamp(&#39;2020-12-06 00:00:00&#39;), Timestamp(&#39;2020-12-07 00:00:00&#39;), Timestamp(&#39;2020-12-08 00:00:00&#39;), Timestamp(&#39;2020-12-09 00:00:00&#39;), Timestamp(&#39;2020-12-10 00:00:00&#39;), Timestamp(&#39;2021-07-02 00:00:00&#39;), Timestamp(&#39;2021-07-04 00:00:00&#39;), Timestamp(&#39;2021-07-06 00:00:00&#39;), Timestamp(&#39;2021-07-08 00:00:00&#39;), Timestamp(&#39;2021-07-10 00:00:00&#39;), Timestamp(&#39;2021-07-12 00:00:00&#39;), Timestamp(&#39;2021-07-14 00:00:00&#39;), Timestamp(&#39;2021-07-16 00:00:00&#39;), Timestamp(&#39;2021-07-18 00:00:00&#39;), Timestamp(&#39;2021-07-20 00:00:00&#39;), Timestamp(&#39;2021-07-22 00:00:00&#39;), Timestamp(&#39;2021-07-24 00:00:00&#39;), Timestamp(&#39;2021-07-26 00:00:00&#39;), Timestamp(&#39;2021-07-28 00:00:00&#39;), Timestamp(&#39;2021-07-30 00:00:00&#39;), Timestamp(&#39;2021-08-01 00:00:00&#39;), Timestamp(&#39;2021-08-03 00:00:00&#39;), Timestamp(&#39;2021-08-05 00:00:00&#39;), Timestamp(&#39;2021-08-07 00:00:00&#39;), Timestamp(&#39;2021-08-09 00:00:00&#39;), Timestamp(&#39;2021-08-11 00:00:00&#39;), Timestamp(&#39;2021-08-13 00:00:00&#39;), Timestamp(&#39;2021-08-15 00:00:00&#39;), Timestamp(&#39;2021-08-17 00:00:00&#39;), Timestamp(&#39;2021-08-19 00:00:00&#39;), Timestamp(&#39;2021-08-21 00:00:00&#39;), Timestamp(&#39;2021-08-23 00:00:00&#39;), Timestamp(&#39;2021-08-25 00:00:00&#39;), Timestamp(&#39;2021-08-27 00:00:00&#39;), Timestamp(&#39;2021-08-29 00:00:00&#39;), Timestamp(&#39;2021-08-31 00:00:00&#39;), Timestamp(&#39;2021-09-02 00:00:00&#39;), Timestamp(&#39;2021-09-04 00:00:00&#39;), Timestamp(&#39;2021-09-06 00:00:00&#39;), Timestamp(&#39;2021-09-08 00:00:00&#39;), Timestamp(&#39;2021-09-10 00:00:00&#39;), Timestamp(&#39;2021-09-12 00:00:00&#39;), Timestamp(&#39;2021-09-14 00:00:00&#39;), Timestamp(&#39;2021-09-16 00:00:00&#39;), Timestamp(&#39;2021-09-18 00:00:00&#39;), Timestamp(&#39;2021-09-20 00:00:00&#39;), Timestamp(&#39;2021-09-22 00:00:00&#39;), Timestamp(&#39;2021-10-16 00:00:00&#39;), Timestamp(&#39;2021-10-18 00:00:00&#39;), Timestamp(&#39;2021-10-20 00:00:00&#39;), Timestamp(&#39;2021-10-22 00:00:00&#39;), Timestamp(&#39;2021-10-24 00:00:00&#39;), Timestamp(&#39;2021-10-26 00:00:00&#39;), Timestamp(&#39;2021-10-28 00:00:00&#39;), Timestamp(&#39;2021-10-30 00:00:00&#39;), Timestamp(&#39;2021-11-01 00:00:00&#39;), Timestamp(&#39;2021-11-03 00:00:00&#39;), Timestamp(&#39;2021-11-05 00:00:00&#39;), Timestamp(&#39;2021-11-07 00:00:00&#39;), Timestamp(&#39;2021-11-09 00:00:00&#39;), Timestamp(&#39;2021-11-11 00:00:00&#39;), Timestamp(&#39;2021-11-13 00:00:00&#39;), Timestamp(&#39;2022-07-01 00:00:00&#39;), Timestamp(&#39;2022-07-03 00:00:00&#39;), Timestamp(&#39;2022-07-05 00:00:00&#39;), Timestamp(&#39;2022-07-07 00:00:00&#39;), Timestamp(&#39;2022-07-09 00:00:00&#39;), Timestamp(&#39;2022-07-11 00:00:00&#39;), Timestamp(&#39;2022-07-13 00:00:00&#39;), Timestamp(&#39;2022-07-15 00:00:00&#39;), Timestamp(&#39;2022-07-17 00:00:00&#39;), Timestamp(&#39;2022-07-19 00:00:00&#39;), Timestamp(&#39;2022-07-21 00:00:00&#39;), Timestamp(&#39;2022-07-23 00:00:00&#39;), Timestamp(&#39;2022-07-25 00:00:00&#39;), Timestamp(&#39;2022-07-27 00:00:00&#39;), Timestamp(&#39;2022-07-29 00:00:00&#39;), Timestamp(&#39;2022-07-31 00:00:00&#39;), Timestamp(&#39;2022-08-02 00:00:00&#39;), Timestamp(&#39;2022-08-04 00:00:00&#39;), Timestamp(&#39;2022-08-06 00:00:00&#39;), Timestamp(&#39;2022-08-08 00:00:00&#39;), Timestamp(&#39;2022-08-10 00:00:00&#39;), Timestamp(&#39;2022-08-12 00:00:00&#39;), Timestamp(&#39;2022-08-14 00:00:00&#39;), Timestamp(&#39;2022-08-16 00:00:00&#39;), Timestamp(&#39;2022-08-18 00:00:00&#39;), Timestamp(&#39;2022-08-20 00:00:00&#39;), Timestamp(&#39;2022-08-22 00:00:00&#39;), Timestamp(&#39;2022-08-24 00:00:00&#39;), Timestamp(&#39;2022-08-26 00:00:00&#39;), Timestamp(&#39;2022-08-28 00:00:00&#39;), Timestamp(&#39;2022-08-30 00:00:00&#39;), Timestamp(&#39;2022-09-01 00:00:00&#39;), Timestamp(&#39;2022-09-03 00:00:00&#39;), Timestamp(&#39;2022-09-05 00:00:00&#39;), Timestamp(&#39;2022-09-07 00:00:00&#39;), Timestamp(&#39;2022-09-08 00:00:00&#39;), Timestamp(&#39;2022-09-09 00:00:00&#39;), Timestamp(&#39;2022-09-10 00:00:00&#39;), Timestamp(&#39;2022-09-11 00:00:00&#39;), Timestamp(&#39;2022-09-12 00:00:00&#39;), Timestamp(&#39;2022-09-13 00:00:00&#39;), Timestamp(&#39;2022-09-14 00:00:00&#39;), Timestamp(&#39;2022-09-15 00:00:00&#39;), Timestamp(&#39;2022-09-17 00:00:00&#39;), Timestamp(&#39;2022-09-18 00:00:00&#39;), Timestamp(&#39;2022-09-19 00:00:00&#39;), Timestamp(&#39;2022-09-20 00:00:00&#39;), Timestamp(&#39;2022-09-22 00:00:00&#39;), Timestamp(&#39;2022-09-24 00:00:00&#39;), Timestamp(&#39;2022-09-26 00:00:00&#39;), Timestamp(&#39;2022-09-28 00:00:00&#39;), Timestamp(&#39;2022-09-30 00:00:00&#39;), Timestamp(&#39;2022-10-03 00:00:00&#39;), Timestamp(&#39;2022-10-06 00:00:00&#39;), Timestamp(&#39;2022-10-09 00:00:00&#39;), Timestamp(&#39;2022-10-12 00:00:00&#39;), Timestamp(&#39;2022-12-12 00:00:00&#39;), Timestamp(&#39;2022-12-13 00:00:00&#39;), Timestamp(&#39;2022-12-14 00:00:00&#39;), Timestamp(&#39;2022-12-15 00:00:00&#39;), Timestamp(&#39;2022-12-16 00:00:00&#39;), Timestamp(&#39;2022-12-17 00:00:00&#39;), Timestamp(&#39;2022-12-18 00:00:00&#39;), Timestamp(&#39;2022-12-19 00:00:00&#39;), Timestamp(&#39;2022-12-20 00:00:00&#39;), Timestamp(&#39;2022-12-21 00:00:00&#39;), Timestamp(&#39;2023-10-10 00:00:00&#39;), Timestamp(&#39;2023-10-13 00:00:00&#39;), Timestamp(&#39;2023-10-15 00:00:00&#39;), Timestamp(&#39;2023-10-17 00:00:00&#39;), Timestamp(&#39;2023-10-19 00:00:00&#39;), Timestamp(&#39;2023-10-21 00:00:00&#39;), Timestamp(&#39;2023-10-23 00:00:00&#39;), Timestamp(&#39;2023-10-25 00:00:00&#39;), Timestamp(&#39;2023-10-27 00:00:00&#39;), Timestamp(&#39;2023-10-29 00:00:00&#39;), Timestamp(&#39;2023-10-30 00:00:00&#39;), Timestamp(&#39;2023-11-01 00:00:00&#39;), Timestamp(&#39;2023-11-03 00:00:00&#39;), Timestamp(&#39;2023-11-04 00:00:00&#39;), Timestamp(&#39;2023-11-06 00:00:00&#39;), Timestamp(&#39;2023-11-08 00:00:00&#39;), Timestamp(&#39;2023-11-10 00:00:00&#39;), Timestamp(&#39;2023-11-12 00:00:00&#39;), Timestamp(&#39;2023-11-14 00:00:00&#39;), Timestamp(&#39;2023-11-16 00:00:00&#39;), Timestamp(&#39;2023-11-18 00:00:00&#39;), Timestamp(&#39;2023-11-20 00:00:00&#39;), Timestamp(&#39;2023-11-23 00:00:00&#39;), Timestamp(&#39;2023-11-25 00:00:00&#39;), Timestamp(&#39;2023-11-27 00:00:00&#39;), Timestamp(&#39;2023-11-29 00:00:00&#39;), Timestamp(&#39;2023-12-01 00:00:00&#39;), Timestamp(&#39;2023-12-03 00:00:00&#39;), Timestamp(&#39;2023-12-05 00:00:00&#39;), Timestamp(&#39;2023-12-07 00:00:00&#39;), Timestamp(&#39;2023-12-09 00:00:00&#39;), Timestamp(&#39;2023-12-11 00:00:00&#39;), Timestamp(&#39;2023-12-13 00:00:00&#39;), Timestamp(&#39;2023-12-15 00:00:00&#39;), Timestamp(&#39;2023-12-17 00:00:00&#39;), Timestamp(&#39;2023-12-19 00:00:00&#39;), Timestamp(&#39;2023-12-21 00:00:00&#39;)]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contar el número de fechas donde ambos valores no están presentes en fechas consecutivas</span>
+<span class="n">num_no_coincidencias</span> <span class="o">=</span> <span class="n">df_grouped</span><span class="p">[</span><span class="o">~</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Número de fechas donde no coinciden:&quot;</span><span class="p">,</span> <span class="n">num_no_coincidencias</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Número de fechas donde no coinciden: 198
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Indexando la fecha para futuras mediciones</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">df_2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -723,486 +784,601 @@ memory usage: 486.4+ KB
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Fecha</th>
       <th>Valor</th>
       <th>Unidad</th>
       <th>Parametros_climaticos</th>
-      <th>Estación</th>
-      <th>Parámetro</th>
+      <th>Estacion</th>
+      <th>Parametro</th>
       <th>Concentración_mg/m3</th>
     </tr>
-  </thead>
-  <tbody>
     <tr>
-      <th>0</th>
-      <td>2020-06-17</td>
-      <td>249.907970</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2020-06-18</td>
-      <td>106.967656</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2020-06-19</td>
-      <td>352.443983</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2020-06-20</td>
-      <td>161.221664</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2020-06-21</td>
-      <td>192.649780</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>2020-06-22</td>
-      <td>154.702942</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>2020-06-23</td>
-      <td>131.504356</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>2020-06-24</td>
-      <td>25.817766</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>2020-06-25</td>
-      <td>8.985866</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2020-06-26</td>
-      <td>348.034911</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>2020-06-27</td>
-      <td>341.772166</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>2020-06-28</td>
-      <td>341.469937</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>2020-06-29</td>
-      <td>12.327294</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>2020-06-30</td>
-      <td>351.955805</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>2020-07-01</td>
-      <td>353.682095</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>2020-07-02</td>
-      <td>340.698873</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>2020-07-03</td>
-      <td>341.500213</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>2020-07-04</td>
-      <td>320.862944</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>2020-07-05</td>
-      <td>346.145191</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>2020-07-06</td>
-      <td>10.263924</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unir los DataFrames por la columna &quot;Fecha&quot; usando un merge (left join para mantener todos los datos de df_parametros)</span>
-<span class="n">df_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datos_parametros</span><span class="p">,</span> <span class="n">datos_recopilados</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
-<span class="n">df_2</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 4791 entries, 0 to 4790
-Data columns (total 7 columns):
- #   Column                 Non-Null Count  Dtype         
----  ------                 --------------  -----         
- 0   Fecha                  4791 non-null   datetime64[ns]
- 1   Valor                  4751 non-null   float64       
- 2   Unidad                 4751 non-null   object        
- 3   Parametros_climaticos  4751 non-null   object        
- 4   Estación               4791 non-null   object        
- 5   Parámetro              4791 non-null   object        
- 6   Concentración_mg/m3    4791 non-null   float64       
-dtypes: datetime64[ns](1), float64(2), object(4)
-memory usage: 262.1+ KB
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_2</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
+      <th>Fecha</th>
       <th></th>
-      <th>Fecha</th>
-      <th>Valor</th>
-      <th>Unidad</th>
-      <th>Parametros_climaticos</th>
-      <th>Estación</th>
-      <th>Parámetro</th>
-      <th>Concentración_mg/m3</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>2022-12-21</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2022-12-21</th>
+      <td>291.021497</td>
+      <td>Grados (°)</td>
+      <td>Dirección Viento</td>
       <td>LA GLORIA</td>
       <td>PM 10</td>
       <td>40.69</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>2022-12-20</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2022-12-21</th>
+      <td>98.000000</td>
+      <td>%</td>
+      <td>Humedad</td>
       <td>LA GLORIA</td>
       <td>PM 10</td>
-      <td>41.01</td>
+      <td>40.69</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>2022-12-19</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2022-12-21</th>
+      <td>32.301221</td>
+      <td>°C</td>
+      <td>Temp. Maxima</td>
       <td>LA GLORIA</td>
       <td>PM 10</td>
-      <td>40.94</td>
+      <td>40.69</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>2022-12-18</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2022-12-21</th>
+      <td>30.796568</td>
+      <td>°C</td>
+      <td>Temp. Mínima</td>
       <td>LA GLORIA</td>
       <td>PM 10</td>
-      <td>39.87</td>
+      <td>40.69</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>2022-12-17</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>38.79</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>2022-12-16</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>39.36</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>2022-12-15</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>42.59</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>2022-12-14</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>43.79</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>2022-12-13</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>40.12</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2022-12-12</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>44.87</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>2022-11-03</td>
-      <td>270.363636</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>34.80</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>2022-11-03</td>
-      <td>1.416360</td>
+      <th>2022-12-21</th>
+      <td>1.852968</td>
       <td>m/s</td>
-      <td>VEL. VIENTO</td>
+      <td>Velocidad Viento</td>
       <td>LA GLORIA</td>
       <td>PM 10</td>
-      <td>34.80</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>2022-11-02</td>
-      <td>238.629536</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>47.90</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>2022-11-02</td>
-      <td>1.153148</td>
-      <td>m/s</td>
-      <td>VEL. VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>47.90</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>2022-10-31</td>
-      <td>206.452280</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>23.54</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>2022-10-31</td>
-      <td>0.997649</td>
-      <td>m/s</td>
-      <td>VEL. VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>23.54</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>2022-10-30</td>
-      <td>260.764942</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>31.32</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>2022-10-30</td>
-      <td>1.349539</td>
-      <td>m/s</td>
-      <td>VEL. VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>31.32</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>2022-10-29</td>
-      <td>292.235848</td>
-      <td>Grados (°)</td>
-      <td>DIR VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>28.22</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>2022-10-29</td>
-      <td>1.197060</td>
-      <td>m/s</td>
-      <td>VEL. VIENTO</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>28.22</td>
+      <td>40.69</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<section id="datos-faltantes-para-el-pm-10">
+<h2><strong>Datos Faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Miraremos los datos faltantes para el PM 10</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datos_recopilados</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>Fecha</th>
+      <th>Parametro</th>
+      <th>Concentración_mg/m3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-21</td>
+      <td>PM 10</td>
+      <td>40.69</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-20</td>
+      <td>PM 10</td>
+      <td>41.01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-19</td>
+      <td>PM 10</td>
+      <td>40.94</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-18</td>
+      <td>PM 10</td>
+      <td>39.87</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-17</td>
+      <td>PM 10</td>
+      <td>38.79</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pm_10</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span>
+<span class="n">df_pm_10</span> <span class="o">=</span> <span class="n">df_pm_10</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span><span class="s1">&#39;Estacion&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)</span>
+
+<span class="n">df_pm_10</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>Fecha</th>
+      <th>Parametro</th>
+      <th>Concentración_mg/m3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-21</td>
+      <td>PM 10</td>
+      <td>40.69</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-20</td>
+      <td>PM 10</td>
+      <td>41.01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-19</td>
+      <td>PM 10</td>
+      <td>40.94</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-18</td>
+      <td>PM 10</td>
+      <td>39.87</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LA GLORIA</td>
+      <td>2022-12-17</td>
+      <td>PM 10</td>
+      <td>38.79</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>Veamos la fecha de inicio y final de la toma de los datos</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un nuevo índice con todas las fechas del mes de septiembre de 2020</span>
+<span class="n">fecha_inicio</span> <span class="o">=</span> <span class="n">df_pm_10</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">fecha_fin</span> <span class="o">=</span> <span class="n">df_pm_10</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Fecha de inicio&#39;</span><span class="p">,</span> <span class="n">fecha_inicio</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39; Fecha de final&#39;</span><span class="p">,</span> <span class="n">fecha_fin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Fecha de inicio 2020-09-01 00:00:00
+ Fecha de final 2023-12-21 00:00:00
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Ingreso de las fechas faltantes del PM 10</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un índice de fechas continuo</span>
+<span class="n">nuevo_indice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">fecha_fin</span><span class="p">)</span>
+
+<span class="c1"># Crear un DataFrame vacío para almacenar los resultados</span>
+<span class="n">df_resultado</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1"># Reindexar por cada estación</span>
+<span class="k">for</span> <span class="n">estacion</span><span class="p">,</span> <span class="n">grupo</span> <span class="ow">in</span> <span class="n">df_pm_10</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">):</span>
+    <span class="c1"># Reindexar el grupo utilizando el rango de fechas</span>
+    <span class="n">grupo_reindexado</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">grupo</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">nuevo_indice</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="c1"># Asignar el nombre de la estación al grupo reindexado</span>
+    <span class="n">grupo_reindexado</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estacion</span>
+    <span class="c1"># Rellenar los valores faltantes en &quot;Parametro&quot;</span>
+    <span class="n">grupo_reindexado</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grupo_reindexado</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;PM 10&#39;</span><span class="p">)</span>
+    <span class="c1"># Renombrar la columna del índice</span>
+    <span class="n">grupo_reindexado</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;Fecha&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Añadir al DataFrame final</span>
+    <span class="n">df_resultado</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_resultado</span><span class="p">,</span> <span class="n">grupo_reindexado</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Verificar el resultado</span>
+<span class="n">df_resultado</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 4828 entries, 0 to 4827
+Data columns (total 4 columns):
+ #   Column               Non-Null Count  Dtype         
+---  ------               --------------  -----         
+ 0   Fecha                4828 non-null   datetime64[ns]
+ 1   Estacion             4828 non-null   object        
+ 2   Parametro            4828 non-null   object        
+ 3   Concentración_mg/m3  1012 non-null   float64       
+dtypes: datetime64[ns](1), float64(1), object(2)
+memory usage: 151.0+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_va</span> <span class="o">=</span> <span class="n">df_resultado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Contar la cantidad de datos totales por estación</span>
+<span class="n">cantidad_datos_por_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cantidad de Datos&#39;</span><span class="p">)</span>
+
+<span class="c1"># Contar la cantidad de datos no faltantes en &quot;Concentración_mg/m3&quot; por estación</span>
+<span class="n">datos_no_faltantes</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cantidad de datos del PM 10 (no faltantes)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Revisar los datos faltantes por estación</span>
+<span class="n">missing_values_by_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="c1"># Calcular el porcentaje de valores faltantes por estación</span>
+<span class="n">missing_percentage_by_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Crear un DataFrame unificado</span>
+<span class="n">missing_data_by_estacion</span> <span class="o">=</span> <span class="n">cantidad_datos_por_estacion</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">missing_data_by_estacion</span> <span class="o">=</span> <span class="n">missing_data_by_estacion</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datos_no_faltantes</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">missing_data_by_estacion</span><span class="p">[</span><span class="s1">&#39;Valores Faltantes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing_values_by_estacion</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">missing_data_by_estacion</span><span class="p">[</span><span class="s1">&#39;Porcentaje Faltante (%)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing_percentage_by_estacion</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">missing_data_by_estacion</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>Cantidad de Datos</th>
+      <th>Cantidad de datos del PM 10 (no faltantes)</th>
+      <th>Valores Faltantes</th>
+      <th>Porcentaje Faltante (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>1207</td>
+      <td>255</td>
+      <td>952</td>
+      <td>78.87</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TERMINAL</td>
+      <td>1207</td>
+      <td>252</td>
+      <td>955</td>
+      <td>79.12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UNISINU</td>
+      <td>1207</td>
+      <td>252</td>
+      <td>955</td>
+      <td>79.12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UPB</td>
+      <td>1207</td>
+      <td>253</td>
+      <td>954</td>
+      <td>79.04</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="datos-faltantes-del-pm-2-5">
+<h2><strong>Datos Faltantes del PM 2.5</strong><a class="headerlink" href="#datos-faltantes-del-pm-2-5" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Miremos los datos faltantes del PM 2.5</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pm_2_5</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span>
+<span class="n">df_pm_2_5</span> <span class="o">=</span> <span class="n">df_pm_2_5</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span><span class="s1">&#39;Estacion&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)</span>
+
+<span class="n">df_pm_2_5</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>Fecha</th>
+      <th>Parametro</th>
+      <th>Concentración_mg/m3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>256</th>
+      <td>LA GLORIA</td>
+      <td>2022-11-03</td>
+      <td>PM 2.5</td>
+      <td>11.87</td>
+    </tr>
+    <tr>
+      <th>257</th>
+      <td>LA GLORIA</td>
+      <td>2022-11-02</td>
+      <td>PM 2.5</td>
+      <td>13.07</td>
+    </tr>
+    <tr>
+      <th>258</th>
+      <td>LA GLORIA</td>
+      <td>2022-11-01</td>
+      <td>PM 2.5</td>
+      <td>13.84</td>
+    </tr>
+    <tr>
+      <th>259</th>
+      <td>LA GLORIA</td>
+      <td>2022-10-31</td>
+      <td>PM 2.5</td>
+      <td>14.36</td>
+    </tr>
+    <tr>
+      <th>260</th>
+      <td>LA GLORIA</td>
+      <td>2022-10-30</td>
+      <td>PM 2.5</td>
+      <td>12.17</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>Ingreso de fechas faltantes del PM 2.5</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un índice de fechas continuo</span>
+<span class="n">nuevo_indice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">fecha_fin</span><span class="p">)</span>
+
+<span class="c1"># Crear un DataFrame vacío para almacenar los resultados</span>
+<span class="n">df_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1"># Reindexar por cada estación</span>
+<span class="k">for</span> <span class="n">estacion</span><span class="p">,</span> <span class="n">grupo</span> <span class="ow">in</span> <span class="n">df_pm_2_5</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">):</span>
+    <span class="c1"># Reindexar el grupo utilizando el rango de fechas</span>
+    <span class="n">grupo_reindexado</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">grupo</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">nuevo_indice</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="c1"># Asignar el nombre de la estación al grupo reindexado</span>
+    <span class="n">grupo_reindexado</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estacion</span>
+    <span class="c1"># Rellenar los valores faltantes en &quot;Parametro&quot;</span>
+    <span class="n">grupo_reindexado</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grupo_reindexado</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;PM 10&#39;</span><span class="p">)</span>
+    <span class="c1"># Renombrar la columna del índice</span>
+    <span class="n">grupo_reindexado</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;Fecha&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Añadir al DataFrame final</span>
+    <span class="n">df_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_result</span><span class="p">,</span> <span class="n">grupo_reindexado</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Verificar el resultado</span>
+<span class="n">df_result</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 4828 entries, 0 to 4827
+Data columns (total 4 columns):
+ #   Column               Non-Null Count  Dtype         
+---  ------               --------------  -----         
+ 0   Fecha                4828 non-null   datetime64[ns]
+ 1   Estacion             4828 non-null   object        
+ 2   Parametro            4828 non-null   object        
+ 3   Concentración_mg/m3  338 non-null    float64       
+dtypes: datetime64[ns](1), float64(1), object(2)
+memory usage: 151.0+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_va</span> <span class="o">=</span> <span class="n">df_result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Contar la cantidad de datos totales por estación</span>
+<span class="n">cantidad_datos_por_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cantidad de Datos&#39;</span><span class="p">)</span>
+
+<span class="c1"># Contar la cantidad de datos no faltantes en &quot;Concentración_mg/m3&quot; por estación</span>
+<span class="n">datos_no_faltantes</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cantidad de datos del PM 2.5 (no faltantes)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Revisar los datos faltantes por estación</span>
+<span class="n">missing_values_by_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="c1"># Calcular el porcentaje de valores faltantes por estación</span>
+<span class="n">missing_percentage_by_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Crear un DataFrame unificado</span>
+<span class="n">missing_data_by_estacion</span> <span class="o">=</span> <span class="n">cantidad_datos_por_estacion</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">missing_data_by_estacion</span> <span class="o">=</span> <span class="n">missing_data_by_estacion</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datos_no_faltantes</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">missing_data_by_estacion</span><span class="p">[</span><span class="s1">&#39;Valores Faltantes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing_values_by_estacion</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">missing_data_by_estacion</span><span class="p">[</span><span class="s1">&#39;Porcentaje Faltante (%)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing_percentage_by_estacion</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">missing_data_by_estacion</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>Cantidad de Datos</th>
+      <th>Cantidad de datos del PM 2.5 (no faltantes)</th>
+      <th>Valores Faltantes</th>
+      <th>Porcentaje Faltante (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>1207</td>
+      <td>78</td>
+      <td>1129</td>
+      <td>93.54</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TERMINAL</td>
+      <td>1207</td>
+      <td>93</td>
+      <td>1114</td>
+      <td>92.29</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UNISINU</td>
+      <td>1207</td>
+      <td>78</td>
+      <td>1129</td>
+      <td>93.54</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UPB</td>
+      <td>1207</td>
+      <td>89</td>
+      <td>1118</td>
+      <td>92.63</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1242,7 +1418,7 @@ memory usage: 262.1+ KB
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><strong>Análisis temporal y espacial de PM 10 Y PM 2.5 en Montería: Implicaciones para la planificación territorial y desarrollo urbano sostenible</strong></p>
+        <p class="prev-next-title"><strong>Análisis temporal y espacial de PM 10 Y PM 2.5 en Montería</strong></p>
       </div>
     </a>
 </div></div>
@@ -1254,6 +1430,21 @@ memory usage: 262.1+ KB
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos Faltantes para el PM 10</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
