@@ -353,20 +353,23 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extraccion-transformacion-y-carga-etl"><strong>Extracción, transformación y carga (ETL)</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-10"><strong>Análisis del PM 10</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>datos faltantes para el PM 10</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion"><strong>Descriptivo e inferencial del PM 10 según la estación</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-de-datos"><strong>Carga de datos</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-10"><strong>Análisis del PM 10</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion"><strong>Descriptivo e inferencial del PM 10 según la estación</strong></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-2-5"><strong>Análisis del PM 2.5</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-2-5"><strong>Análisis del PM 2.5</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos faltantes del PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm-2-5-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM 2.5 según la estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-2-5-segun-la-estacion"><strong>Descriptivo e inferencial del PM 2.5 según la estación</strong></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
 </ul>
             </nav>
         </div>
@@ -380,8 +383,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="analisis-de-los-datos-de-pm10-y-pm-2-5">
 <h1><strong>Análisis de los datos de PM10 y PM 2.5</strong><a class="headerlink" href="#analisis-de-los-datos-de-pm10-y-pm-2-5" title="Permalink to this heading">#</a></h1>
-<section id="extraccion-transformacion-y-carga-etl">
-<h2><strong>Extracción, transformación y carga (ETL)</strong><a class="headerlink" href="#extraccion-transformacion-y-carga-etl" title="Permalink to this heading">#</a></h2>
+<section id="carga-de-datos">
+<h2><strong>Carga de datos</strong><a class="headerlink" href="#carga-de-datos" title="Permalink to this heading">#</a></h2>
 <p>En la parte superior cargaremos los paquetes</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -390,7 +393,11 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Pruebas estadísticas</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ks_1samp</span><span class="p">,</span> <span class="n">shapiro</span><span class="p">,</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kruskal</span>
+<span class="kn">import</span> <span class="nn">scikit_posthocs</span> <span class="k">as</span> <span class="nn">sp</span>
 </pre></div>
 </div>
 </div>
@@ -699,8 +706,9 @@ memory usage: 161.7+ KB
 </div>
 </div>
 </div>
+</section>
 <section id="analisis-de-la-variable-fecha">
-<h3><strong>Análisis de la variable fecha</strong><a class="headerlink" href="#analisis-de-la-variable-fecha" title="Permalink to this heading">#</a></h3>
+<h2><strong>Análisis de la variable fecha</strong><a class="headerlink" href="#analisis-de-la-variable-fecha" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Realicemos un análisis univariado</p></li>
 </ul>
@@ -767,7 +775,7 @@ memory usage: 161.7+ KB
 </div>
 </section>
 <section id="analisis-de-la-variable-estacion">
-<h3><strong>Análisis de la variable estación</strong><a class="headerlink" href="#analisis-de-la-variable-estacion" title="Permalink to this heading">#</a></h3>
+<h2><strong>Análisis de la variable estación</strong><a class="headerlink" href="#analisis-de-la-variable-estacion" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un resumen con conteo para PM 10 y PM 2.5</span>
@@ -885,7 +893,7 @@ memory usage: 161.7+ KB
 </div>
 </section>
 <section id="analisis-de-las-variables-climaticas">
-<h3><strong>Análisis de las variables climaticas</strong><a class="headerlink" href="#analisis-de-las-variables-climaticas" title="Permalink to this heading">#</a></h3>
+<h2><strong>Análisis de las variables climaticas</strong><a class="headerlink" href="#analisis-de-las-variables-climaticas" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Eliminar duplicados por &#39;Fecha&#39; y &#39;Parametros_climaticos&#39;</span>
@@ -1134,9 +1142,9 @@ memory usage: 161.7+ KB
 </div>
 </section>
 <section id="analisis-del-pm-10">
-<h3><strong>Análisis del PM 10</strong><a class="headerlink" href="#analisis-del-pm-10" title="Permalink to this heading">#</a></h3>
+<h2><strong>Análisis del PM 10</strong><a class="headerlink" href="#analisis-del-pm-10" title="Permalink to this heading">#</a></h2>
 <section id="datos-faltantes-para-el-pm-10">
-<h4><strong>datos faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h4>
+<h3><strong>Datos faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pm_10</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span>
@@ -1426,7 +1434,7 @@ memory usage: 151.0+ KB
 </div>
 </section>
 <section id="grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion">
-<h4><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong><a class="headerlink" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion" title="Permalink to this heading">#</a></h4>
+<h3><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong><a class="headerlink" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
@@ -1579,9 +1587,100 @@ memory usage: 151.0+ KB
 </li>
 </ol>
 </div>
+<ul class="simple">
+<li><p>Hagamos un diagrama de cajas y bigoyes del PM 10 segun la estación cada año</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Asegurar que la columna &#39;Fecha&#39; esté en formato datetime usando .loc</span>
+<span class="n">pm_10</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 10&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">pm_10</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Fecha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">])</span>
+
+<span class="c1"># Crear una nueva columna &#39;Año&#39; a partir de la fecha</span>
+<span class="n">pm_10</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Año&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+
+<span class="c1"># Crear el diagrama de cajas y bigotes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">pm_10</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Año&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span>
+    <span class="n">showfliers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Mostrar valores atípicos</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set3&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Configuración del gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Diagrama de cajas y bigotes del PM 10 por estación y año&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Año&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Concentración de PM 10 (mg/m³)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Estación&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Mostrar el gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e75694d7e051cb0b3a08ca76f9bdb7daf690fab4b2d9ab9aa95b549525caceed.png" src="_images/e75694d7e051cb0b3a08ca76f9bdb7daf690fab4b2d9ab9aa95b549525caceed.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación del Diagrama de Cajas y Bigotes del PM 10 por Estación y Año</strong></p>
+<p>El diagrama de cajas y bigotes presenta la distribución de las concentraciones de PM 10 en función del año y desglosadas por estación: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong>, y <strong>UPB</strong>. Este análisis permite observar las diferencias y variabilidad en la calidad del aire en cada estación a lo largo del tiempo.</p>
+<ol class="arabic simple">
+<li><p><strong>Distribución por estación:</strong></p>
+<ul class="simple">
+<li><p><strong>LA GLORIA</strong>:</p>
+<ul>
+<li><p>Muestra una distribución más consistente con valores intercuartiles más compactos. Sin embargo, presenta valores atípicos bajos en algunos años, indicando episodios de menor concentración de PM 10.</p></li>
+</ul>
+</li>
+<li><p><strong>TERMINAL</strong>:</p>
+<ul>
+<li><p>Presenta un comportamiento similar a <strong>LA GLORIA</strong> en términos de rango intercuartil, pero con valores ligeramente más altos en general.</p></li>
+</ul>
+</li>
+<li><p><strong>UNISINU</strong>:</p>
+<ul>
+<li><p>Exhibe una mayor dispersión en algunos años, con valores atípicos significativamente bajos en 2022, lo que podría indicar condiciones puntuales favorables de calidad del aire.</p></li>
+</ul>
+</li>
+<li><p><strong>UPB</strong>:</p>
+<ul>
+<li><p>La distribución es relativamente uniforme, pero con algunos valores atípicos hacia los extremos en años recientes.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Tendencia temporal:</strong></p>
+<ul class="simple">
+<li><p>A lo largo de los años, se observa una reducción en la variabilidad de las concentraciones en la mayoría de las estaciones. Esto puede indicar una mejora en el control de emisiones o condiciones climáticas más uniformes.</p></li>
+<li><p>El rango intercuartil en todas las estaciones tiende a mantenerse consistente, reflejando condiciones estables en la mayoría de los casos.</p></li>
+</ul>
+</li>
+<li><p><strong>Valores atípicos:</strong></p>
+<ul class="simple">
+<li><p>Los valores atípicos bajos en estaciones como <strong>UNISINU</strong> y <strong>LA GLORIA</strong> podrían estar asociados a eventos puntuales de mejor calidad del aire.</p></li>
+<li><p>Los valores altos en estaciones como <strong>UPB</strong> podrían deberse a episodios específicos de contaminación, como fenómenos meteorológicos o incrementos locales de emisiones.</p></li>
+</ul>
+</li>
+<li><p><strong>Comparación entre estaciones:</strong></p>
+<ul class="simple">
+<li><p>Las estaciones <strong>LA GLORIA</strong> y <strong>TERMINAL</strong> presentan distribuciones similares en la mayoría de los años, sugiriendo condiciones de calidad del aire comparables.</p></li>
+<li><p><strong>UNISINU</strong> muestra una mayor variabilidad en comparación con las demás estaciones, especialmente en años recientes.</p></li>
+<li><p><strong>UPB</strong> presenta un rango más amplio en algunos años, lo que refleja mayor fluctuación en la calidad del aire.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusión:</strong></p>
+<p>El diagrama evidencia diferencias significativas en las concentraciones de PM 10 según la estación y el año, destacando la importancia de analizar estos datos de manera segmentada.</p>
+</div>
 </section>
 <section id="descriptivo-e-inferencial-del-pm-10-segun-la-estacion">
-<h4><strong>Descriptivo e inferencial del PM 10 según la estación</strong><a class="headerlink" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion" title="Permalink to this heading">#</a></h4>
+<h3><strong>Descriptivo e inferencial del PM 10 según la estación</strong><a class="headerlink" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion" title="Permalink to this heading">#</a></h3>
 <p>Para realizar este análisis, no haremos imputación de datos por la fecha faltante, usaremos los datos en crudo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1820,6 +1919,54 @@ memory usage: 151.0+ KB
 </ol>
 </div>
 <ul class="simple">
+<li><p>Hagamos un gráfico de densidad del PM 10 según las estaciones</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Limpiar los datos: eliminar filas con valores nulos en &#39;Estacion&#39; o &#39;Concentración_mg/m3&#39;</span>
+<span class="n">pm_10_cleaned</span> <span class="o">=</span> <span class="n">pm_10</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> <span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">])</span>
+
+<span class="c1"># Confirmar que los datos son categóricos</span>
+<span class="n">pm_10_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm_10_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+
+<span class="c1"># Crear el gráfico de densidad manualmente para cada estación</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">pm_10_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">:</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">pm_10_cleaned</span><span class="p">[</span><span class="n">pm_10_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">]</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">subset</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Concentración_mg/m3&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">estacion</span><span class="p">,</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span>
+    <span class="p">)</span>
+
+<span class="c1"># Configuración del gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución de densidad del PM 10 según las estaciones&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Concentración de PM 10 (mg/m³)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Densidad&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Estación&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Mostrar el gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f68d580dc221cc355c0effe0ff915e16ec73df4f6f6087d2d8ab302497677dd0.png" src="_images/f68d580dc221cc355c0effe0ff915e16ec73df4f6f6087d2d8ab302497677dd0.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Grafico de densidad PM 10</strong></p>
+<p>El gráfico de densidad muestra la distribución de las concentraciones de PM 10 en las diferentes estaciones: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>. Se observa que las concentraciones presentan curvas de densidad similares en forma general, con algunas variaciones en la ubicación y altura de los picos, lo que refleja diferencias en las distribuciones entre estaciones.</p>
+<p>La estación <strong>TERMINAL</strong> muestra una distribución con un pico más alto, lo que indica una mayor densidad de concentraciones alrededor de su promedio. Esto sugiere que los valores de concentración en esta estación están menos dispersos y son más consistentes. En contraste, las estaciones <strong>LA GLORIA</strong> y <strong>UNISINU</strong> presentan distribuciones ligeramente más amplias, indicando una mayor variabilidad en las mediciones de concentración.</p>
+<p>La estación <strong>UPB</strong>, aunque sigue una tendencia similar a las demás, muestra una menor densidad en el rango más alto de concentraciones de PM 10. Esto puede estar relacionado con condiciones ambientales o fuentes específicas que afectan las concentraciones en esta estación.</p>
+</div>
+<ul class="simple">
 <li><p>Hagamos las pruebas de normalidad de la variable PM 10 y tambien según la estación</p></li>
 </ul>
 <div class="cell docutils container">
@@ -1948,13 +2095,181 @@ memory usage: 151.0+ KB
 <p class="admonition-title"><strong>Análisis de Normalidad de las Concentraciones de PM 10</strong></p>
 <p>La tabla muestra los resultados de la prueba de Kolmogorov-Smirnov aplicada a las concentraciones de PM 10 por estación y para el total general, con el propósito de evaluar la normalidad de los datos. En la estación <strong>LA GLORIA</strong>, con 256 observaciones, el estadístico KS fue 0.070 y el p-valor de 0.155, indicando que las concentraciones de PM 10 podrían seguir una distribución normal al no rechazarse la hipótesis nula. De manera similar, en la estación <strong>TERMINAL</strong>, con 253 observaciones, el estadístico KS fue 0.064 y el p-valor de 0.239, lo que también sugiere una distribución normal. En contraste, las estaciones <strong>UNISINU</strong> y <strong>UPB</strong> no cumplieron con la normalidad. En <strong>UNISINU</strong>, con 252 observaciones, el estadístico KS fue 0.114 y el p-valor de 0.003, mientras que en <strong>UPB</strong>, con 253 observaciones, el estadístico KS fue 0.096 y el p-valor de 0.018, indicando que en ambas estaciones las concentraciones de PM 10 no siguen una distribución normal. Para el total general, considerando 1014 observaciones de todas las estaciones combinadas, el estadístico KS fue 0.078 y el p-valor de 0.000, concluyendo que las concentraciones de PM 10 no se distribuyen de forma normal cuando se analizan de manera conjunta. Estos resultados destacan la necesidad de segmentar los análisis por estación, dado que las condiciones varían significativamente. Para estaciones como <strong>UNISINU</strong> y <strong>UPB</strong>, donde no se cumple la normalidad.</p>
 </div>
+<ul class="simple">
+<li><p>Veamos la prueba no paramétrica <code class="docutils literal notranslate"><span class="pre">Kruskal-Wallis</span></code>, para ver si hay diferencia entre las estaciones por el PM10</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Realizar la prueba de Kruskal-Wallis para PM 10 según la estación</span>
+<span class="n">pm10_kruskal</span> <span class="o">=</span> <span class="n">kruskal</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">pm_10</span><span class="p">[</span><span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">][</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> 
+      <span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()]</span>
+<span class="p">)</span>
+
+<span class="c1"># Resultados de Kruskal-Wallis</span>
+<span class="n">kruskal_resultado</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Prueba&#39;</span><span class="p">:</span> <span class="s1">&#39;Kruskal-Wallis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Estadístico&#39;</span><span class="p">:</span> <span class="n">pm10_kruskal</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span>
+    <span class="s1">&#39;p-valor&#39;</span><span class="p">:</span> <span class="n">pm10_kruskal</span><span class="o">.</span><span class="n">pvalue</span>
+<span class="p">}</span>
+
+<span class="c1"># Convertir los resultados a un DataFrame para mejor visualización</span>
+<span class="n">kruskal_resultado_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">kruskal_resultado</span><span class="p">])</span>
+
+<span class="n">kruskal_resultado_df</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Prueba</th>
+      <th>Estadístico</th>
+      <th>p-valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Kruskal-Wallis</td>
+      <td>15.404458</td>
+      <td>0.001502</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de Kruskal-Wallis del PM 10</strong></p>
+<p>El p-valor obtenido (0.0015) indica que hay diferencias estadísticamente significativas en las concentraciones de PM 10 entre las diferentes estaciones de monitoreo. Esto sugiere que al menos una de las estaciones tiene una mediana de concentración de PM 10 significativamente diferente de las demás, lo cual resalta la importancia de analizar las estaciones individualmente para entender mejor las posibles fuentes de estas variaciones.</p>
+</div>
+<ul class="simple">
+<li><p>Ahora veamos que estaciones son diferentes.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Realizar la prueba post-hoc de Dunn con ajuste de Bonferroni</span>
+<span class="n">pm10_posthoc_dunn</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">posthoc_dunn</span><span class="p">(</span>
+    <span class="n">pm_10</span><span class="p">,</span> 
+    <span class="n">val_col</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">,</span> 
+    <span class="n">group_col</span><span class="o">=</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> 
+    <span class="n">p_adjust</span><span class="o">=</span><span class="s1">&#39;bonferroni&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Mostrar los resultados de la prueba post-hoc de Dunn</span>
+<span class="n">pm10_posthoc_dunn</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LA GLORIA</th>
+      <th>TERMINAL</th>
+      <th>UNISINU</th>
+      <th>UPB</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>LA GLORIA</th>
+      <td>1.000000</td>
+      <td>0.671318</td>
+      <td>0.128058</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>TERMINAL</th>
+      <td>0.671318</td>
+      <td>1.000000</td>
+      <td>0.000630</td>
+      <td>0.176340</td>
+    </tr>
+    <tr>
+      <th>UNISINU</th>
+      <td>0.128058</td>
+      <td>0.000630</td>
+      <td>1.000000</td>
+      <td>0.531857</td>
+    </tr>
+    <tr>
+      <th>UPB</th>
+      <td>1.000000</td>
+      <td>0.176340</td>
+      <td>0.531857</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Conclusiones de la prueba post-hoc de Dunn para PM 10</strong></p>
+<p>Los resultados de la prueba post-hoc de Dunn muestran los p-valores ajustados para las comparaciones múltiples entre las estaciones en relación con las concentraciones de PM 10. Las conclusiones más destacadas son las siguientes:</p>
+<ol class="arabic simple">
+<li><p><strong>LA GLORIA</strong>:</p>
+<ul class="simple">
+<li><p>No se encontraron diferencias estadísticamente significativas con las demás estaciones:</p>
+<ul>
+<li><p>Con <strong>UPB</strong>: p-valor = 1.000.</p></li>
+<li><p>Con <strong>TERMINAL</strong>: p-valor = 0.671.</p></li>
+<li><p>Con <strong>UNISINU</strong>: p-valor = 0.128.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>TERMINAL</strong>:</p>
+<ul class="simple">
+<li><p>Existe una diferencia estadísticamente significativa con <strong>UNISINU</strong> (p-valor = 0.0006), indicando que las concentraciones de PM 10 son diferentes entre estas estaciones.</p></li>
+<li><p>No se encontraron diferencias significativas con <strong>UPB</strong> (p-valor = 0.176).</p></li>
+</ul>
+</li>
+<li><p><strong>UNISINU</strong>:</p>
+<ul class="simple">
+<li><p>No se encontraron diferencias significativas con <strong>UPB</strong> (p-valor = 0.532).</p></li>
+</ul>
+</li>
+</ol>
+<p>En resumen, la prueba de Dunn confirma que las concentraciones de PM 10 en <strong>TERMINAL</strong> y <strong>UNISINU</strong> son significativamente diferentes, lo cual refuerza la importancia de considerar tratamientos separados para estas estaciones en el análisis. Para las demás comparaciones, no se encontraron diferencias significativas.</p>
+</div>
 </section>
 </section>
 <section id="analisis-del-pm-2-5">
-<h3><strong>Análisis del PM 2.5</strong><a class="headerlink" href="#analisis-del-pm-2-5" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Miremos los datos faltantes del PM 2.5</p></li>
-</ul>
+<h2><strong>Análisis del PM 2.5</strong><a class="headerlink" href="#analisis-del-pm-2-5" title="Permalink to this heading">#</a></h2>
+<section id="datos-faltantes-del-pm-2-5">
+<h3><strong>Datos faltantes del PM 2.5</strong><a class="headerlink" href="#datos-faltantes-del-pm-2-5" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pm_2_5</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span>
@@ -2208,9 +2523,9 @@ memory usage: 151.0+ KB
 <li><p>El porcentaje de datos faltantes supera el <strong>92% en todas las estaciones</strong>, lo que indica una gran discontinuidad en la recolección de datos para este parámetro.</p></li>
 </ul>
 </div>
-<ul class="simple">
-<li><p>Ahora, realizaremos la serie del PM 2.5 según cada estación, para mirar los datos faltantes</p></li>
-</ul>
+</section>
+<section id="grafico-de-lineas-de-la-fecha-con-respecto-al-pm-2-5-segun-la-estacion">
+<h3><strong>Gráfico de lineas de la fecha con respecto al PM 2.5 según la estación</strong><a class="headerlink" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm-2-5-segun-la-estacion" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
@@ -2366,9 +2681,491 @@ memory usage: 151.0+ KB
 </li>
 </ol>
 </div>
+<ul class="simple">
+<li><p>Hagamos un diagrama de cajas y bigoyes del PM 2.5 segun la estación cada año</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filtrar datos para PM 2.5</span>
+<span class="n">pm_25</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Convertir la columna &#39;Fecha&#39; a formato datetime y agregar columna &#39;Año&#39;</span>
+<span class="n">pm_25</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Fecha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">])</span>
+<span class="n">pm_25</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Año&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+
+<span class="c1"># Crear el diagrama de cajas y bigotes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">pm_25</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Año&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;Set2&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Configuración del gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Diagrama de cajas y bigotes del PM 2.5 por estación y año&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Año&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Concentración de PM 2.5 (mg/m³)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Estación&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">title_fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># Mostrar el gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bc398f8ecb93c9667bff98867cf530a4b0edb2e2b33d3d5b4e30ed8c7104bac8.png" src="_images/bc398f8ecb93c9667bff98867cf530a4b0edb2e2b33d3d5b4e30ed8c7104bac8.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación del Diagrama de Cajas y Bigotes del PM 2.5 por Estación y Año</strong></p>
+<p>El gráfico muestra la variación en las concentraciones de <strong>PM 2.5</strong> por estación y año, proporcionando una visión clara de las distribuciones, rangos y valores atípicos en cada combinación de estación y año.</p>
+<ol class="arabic simple">
+<li><p><strong>Variación anual:</strong></p>
+<ul class="simple">
+<li><p>En <strong>2020</strong>, se observan rangos más amplios de concentraciones, especialmente en la estación <strong>TERMINAL</strong>, que presenta valores máximos significativamente mayores en comparación con otras estaciones.</p></li>
+<li><p>A partir de <strong>2021</strong>, las concentraciones muestran una mayor consistencia entre las estaciones, con rangos más estrechos y menor dispersión.</p></li>
+<li><p>Para <strong>2023</strong>, los rangos son más compactos y similares entre estaciones, lo que sugiere una tendencia hacia concentraciones más uniformes en todas las estaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Diferencias entre estaciones:</strong></p>
+<ul class="simple">
+<li><p><strong>TERMINAL</strong> destaca en 2020 con un rango superior al de las demás estaciones, alcanzando valores máximos cercanos a 35 mg/m³.</p></li>
+<li><p><strong>UNISINU</strong> presenta valores más dispersos en 2020, incluyendo algunos valores atípicos que superan significativamente los valores típicos de esa estación.</p></li>
+<li><p><strong>LA GLORIA</strong> y <strong>UPB</strong> tienden a mostrar rangos más consistentes a lo largo de los años, con medianas similares y menor dispersión.</p></li>
+</ul>
+</li>
+<li><p><strong>Tendencias generales:</strong></p>
+<ul class="simple">
+<li><p>A lo largo de los años, la mediana de las concentraciones de <strong>PM 2.5</strong> se mantiene relativamente estable para todas las estaciones, oscilando entre 10 y 15 mg/m³.</p></li>
+<li><p>Se observa una disminución general en la cantidad y magnitud de valores atípicos a medida que avanzan los años, lo que podría reflejar mejoras en las condiciones ambientales o en la medición.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusión:</strong>
+El diagrama de cajas y bigotes muestra que las concentraciones de <strong>PM 2.5</strong> varían tanto entre estaciones como entre años. En 2020, las estaciones <strong>TERMINAL</strong> y <strong>UNISINU</strong> experimentaron valores extremos y una mayor dispersión, mientras que en años posteriores, las concentraciones se estabilizan. Este análisis sugiere que es importante considerar tanto la estación como el año al evaluar las concentraciones de <strong>PM 2.5</strong>, ya que los patrones de variación pueden diferir significativamente según estas variables.</p>
+</div>
+</section>
+<section id="descriptivo-e-inferencial-del-pm-2-5-segun-la-estacion">
+<h3><strong>Descriptivo e inferencial del PM 2.5 según la estación</strong><a class="headerlink" href="#descriptivo-e-inferencial-del-pm-2-5-segun-la-estacion" title="Permalink to this heading">#</a></h3>
+<p>Para realizar este análisis, no haremos imputación de datos por la fecha faltante, usaremos los datos en crudo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filtrar los datos para PM 2.5</span>
+<span class="n">pm_25</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span>
+
+<span class="c1"># Generar la tabla resumen por estación para PM 2.5</span>
+<span class="n">resumen_pm25</span> <span class="o">=</span> <span class="n">pm_25</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">media</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Agregar una fila con el total de PM 2.5</span>
+<span class="n">total_pm25</span> <span class="o">=</span> <span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">media</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">total_pm25_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">total_pm25</span><span class="p">])</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Estacion</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">)</span>
+
+<span class="c1"># Unir el total con el resumen por estación para PM 2.5</span>
+<span class="n">resumen_pm25_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">resumen_pm25</span><span class="p">,</span> <span class="n">total_pm25_df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Mostrar el resumen final para PM 2.5</span>
+<span class="n">resumen_pm25_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>n</th>
+      <th>media</th>
+      <th>desviacion_estandar</th>
+      <th>mediana</th>
+      <th>min</th>
+      <th>max</th>
+      <th>Q1</th>
+      <th>Q3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>78.0</td>
+      <td>12.309487</td>
+      <td>4.152656</td>
+      <td>12.575</td>
+      <td>1.17</td>
+      <td>33.47</td>
+      <td>10.0550</td>
+      <td>14.2750</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TERMINAL</td>
+      <td>93.0</td>
+      <td>12.915591</td>
+      <td>4.468369</td>
+      <td>12.720</td>
+      <td>0.73</td>
+      <td>34.16</td>
+      <td>10.6000</td>
+      <td>14.4700</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UNISINU</td>
+      <td>78.0</td>
+      <td>12.392692</td>
+      <td>5.896774</td>
+      <td>12.535</td>
+      <td>0.69</td>
+      <td>55.66</td>
+      <td>10.0550</td>
+      <td>14.0725</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UPB</td>
+      <td>89.0</td>
+      <td>12.019663</td>
+      <td>3.012945</td>
+      <td>12.040</td>
+      <td>2.65</td>
+      <td>20.69</td>
+      <td>10.4500</td>
+      <td>14.0200</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Total</td>
+      <td>338.0</td>
+      <td>12.419142</td>
+      <td>4.451899</td>
+      <td>12.575</td>
+      <td>0.69</td>
+      <td>55.66</td>
+      <td>10.2325</td>
+      <td>14.3075</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de la tabla: Resumen de PM 2.5 por estación y total</strong></p>
+<p>La tabla proporciona un análisis descriptivo de las concentraciones de PM 2.5 en cuatro estaciones: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>, así como un resumen total.</p>
+<ol class="arabic simple">
+<li><p><strong>Total (Todas las estaciones)</strong>
+El total de las mediciones en todas las estaciones es de <strong>338 registros</strong>. La concentración promedio de PM 2.5 es <strong>12.42 µg/m³</strong>, donde el 50% de los registros son menor o iguales a <strong>12.58 µg/m³</strong>, lo que indica una distribución relativamente equilibrada. La variabilidad general, medida por la desviación estándar, es de <strong>4.45 µg/m³</strong>, y los valores de concentración oscilan entre un mínimo de <strong>0.69 µg/m³</strong> y un máximo de <strong>55.66 µg/m³</strong>. El 50% de los datos se encuentran entre <strong>10.23 µg/m³</strong> (Q1) y <strong>14.31 µg/m³</strong> (Q3).</p></li>
+<li><p><strong>Estación: LA GLORIA</strong>
+En la estación <strong>LA GLORIA</strong>, se registraron <strong>78 mediciones</strong> de PM 2.5. La concentración promedio es de <strong>12.31 µg/m³</strong>, cercana al 50% de registro es de <strong>12.58 µg/m³</strong>, indicando una distribución balanceada. La variabilidad es moderada, con una desviación estándar de <strong>4.15 µg/m³</strong>, y los valores van desde <strong>1.17 µg/m³</strong> hasta <strong>33.47 µg/m³</strong>. El rango intercuartílico (Q1 a Q3) está entre <strong>10.06 µg/m³</strong> y <strong>14.28 µg/m³</strong>.</p></li>
+<li><p><strong>Estación: TERMINAL</strong>
+La estación <strong>TERMINAL</strong> cuenta con <strong>93 registros</strong>. La concentración promedio es de <strong>12.92 µg/m³</strong>, donde el 50% de los registros son menor o iguales a <strong>12.72 µg/m³</strong>, lo que sugiere una distribución equilibrada. La desviación estándar es de <strong>4.47 µg/m³</strong>, indicando una ligera mayor variabilidad en comparación con otras estaciones. Los valores varían entre <strong>0.73 µg/m³</strong> y <strong>34.16 µg/m³</strong>, con el 50% de los datos entre <strong>10.60 µg/m³</strong> y <strong>14.47 µg/m³</strong>.</p></li>
+<li><p><strong>Estación: UNISINU</strong>
+En la estación <strong>UNISINU</strong>, se registraron <strong>78 observaciones</strong>. La concentración promedio es de <strong>12.39 µg/m³</strong>, donde el 50% de los registros son menor o iguales a <strong>12.54 µg/m³</strong>. La variabilidad es la mayor entre las estaciones, con una desviación estándar de <strong>5.90 µg/m³</strong>, y los valores fluctúan entre <strong>0.69 µg/m³</strong> y <strong>55.66 µg/m³</strong>. El rango intercuartílico está entre <strong>10.06 µg/m³</strong> (Q1) y <strong>14.07 µg/m³</strong> (Q3).</p></li>
+<li><p><strong>Estación: UPB</strong>
+La estación <strong>UPB</strong> tiene <strong>89 registros</strong>. La concentración promedio es de <strong>12.02 µg/m³</strong>, donde el 50% de los registros son menor o iguales a <strong>12.04 µg/m³</strong>, reflejando una distribución balanceada. La desviación estándar es de <strong>3.01 µg/m³</strong>, la menor entre las estaciones, indicando menor variabilidad. Los valores oscilan entre <strong>2.65 µg/m³</strong> y <strong>20.69 µg/m³</strong>, con el 50% de los datos entre <strong>10.45 µg/m³</strong> (Q1) y <strong>14.02 µg/m³</strong> (Q3).</p></li>
+</ol>
+<p><strong>Conclusiones</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Uniformidad en los promedios</strong>:
+Las concentraciones promedio y medianas son similares entre las estaciones, lo que refleja condiciones de calidad del aire relativamente consistentes en términos de PM 2.5.</p></li>
+<li><p><strong>Mayor variabilidad en UNISINU</strong>:
+La estación <strong>UNISINU</strong> muestra la mayor variabilidad, con un rango amplio de valores (<strong>0.69 µg/m³ a 55.66 µg/m³</strong>) y la desviación estándar más alta (<strong>5.90 µg/m³</strong>), lo que podría estar relacionado con factores ambientales específicos.</p></li>
+<li><p><strong>Estabilidad en UPB</strong>:
+La estación <strong>UPB</strong> presenta la menor variabilidad, con la desviación estándar más baja (<strong>3.01 µg/m³</strong>) y un rango más estrecho en comparación con las demás estaciones.</p></li>
+<li><p><strong>Implicaciones generales</strong>:
+Los resultados sugieren que, aunque hay consistencia en las concentraciones promedio, las variaciones entre estaciones, especialmente en UNISINU, podrían ser indicativas de diferencias en las fuentes o condiciones ambientales que afectan las concentraciones de PM 2.5.</p></li>
+</ol>
+</div>
+<ul class="simple">
+<li><p>Hagamos un gráfico de densidad del PM 2.5 según las estaciones</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filtrar los datos para PM 2.5</span>
+<span class="n">pm_25_cleaned</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">])</span>
+
+<span class="c1"># Confirmar que &#39;Estacion&#39; sea categórica</span>
+<span class="n">pm_25_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm_25_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+
+<span class="c1"># Crear el gráfico de densidad</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">pm_25_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">:</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">pm_25_cleaned</span><span class="p">[</span><span class="n">pm_25_cleaned</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">]</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">subset</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Concentración_mg/m3&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">estacion</span><span class="p">,</span>
+        <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span>
+    <span class="p">)</span>
+
+<span class="c1"># Configuración del gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución de densidad del PM 2.5 según las estaciones&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Concentración de PM 2.5 (mg/m³)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Densidad&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Estación&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Mostrar el gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1b76ccc0d40ad247622a38a07a9d6d23af943a3a46c89a37183a35b3ca445885.png" src="_images/1b76ccc0d40ad247622a38a07a9d6d23af943a3a46c89a37183a35b3ca445885.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Grafico de densidad PM 2.5</strong></p>
+<p>El gráfico de densidad muestra la distribución de las concentraciones de PM 2.5 en las diferentes estaciones: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>. En general, las distribuciones tienen características similares con picos pronunciados alrededor de concentraciones entre 10 y 15 mg/m³, lo que sugiere que la mayoría de las mediciones se concentran en este rango.</p>
+<ol class="arabic simple">
+<li><p><strong>Estación UPB</strong>: Presenta el pico más alto, lo que indica una mayor densidad de concentraciones en el rango central, lo cual sugiere una menor variabilidad en comparación con las demás estaciones.</p></li>
+<li><p><strong>Estaciones LA GLORIA, TERMINAL y UNISINU</strong>: Aunque sus distribuciones son similares en forma, muestran ligeras diferencias en la altura y dispersión, reflejando una mayor variabilidad en las concentraciones de PM 2.5.</p></li>
+<li><p><strong>Extremos</strong>: Las concentraciones más altas (valores fuera del rango principal) son más visibles en <strong>TERMINAL</strong> y <strong>UNISINU</strong>, indicando la posibilidad de eventos puntuales que han incrementado significativamente los niveles de PM 2.5.</p></li>
+</ol>
+<p>En conclusión, el análisis sugiere que la mayoría de las estaciones tienen un comportamiento homogéneo en cuanto a las concentraciones de PM 2.5, con pequeñas diferencias en la densidad y dispersión. La estación <strong>UPB</strong> destaca por su mayor densidad en el rango central, mientras que <strong>TERMINAL</strong> y <strong>UNISINU</strong> muestran una mayor presencia de valores extremos.</p>
+</div>
+<ul class="simple">
+<li><p>Hagamos las pruebas de normalidad de la variable PM 2.5 y tambien según la estación</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suponiendo que datos_recopilados está cargado correctamente</span>
+<span class="c1"># Filtrar los datos para PM 2.5</span>
+<span class="n">pm_25</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span>
+
+<span class="c1"># Inicializar un diccionario para almacenar resultados</span>
+<span class="n">normalidad_resultados_pm25</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Prueba&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;Estación&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;Estadístico&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;p-valor&#39;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+<span class="c1"># Analizar normalidad para cada estación y total</span>
+<span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="c1"># Filtrar datos por estación</span>
+    <span class="n">pm25_estacion</span> <span class="o">=</span> <span class="n">pm_25</span><span class="p">[</span><span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">][</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+    <span class="c1"># Agregar el número de observaciones (n)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pm25_estacion</span><span class="p">)</span>
+
+    <span class="c1"># Prueba de Kolmogorov-Smirnov</span>
+    <span class="n">ks_result</span> <span class="o">=</span> <span class="n">ks_1samp</span><span class="p">((</span><span class="n">pm25_estacion</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pm25_estacion</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">pm25_estacion</span><span class="p">),</span> <span class="n">cdf</span><span class="o">=</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;Prueba&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Kolmogorov-Smirnov&#39;</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;Estación&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estacion</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;Estadístico&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ks_result</span><span class="o">.</span><span class="n">statistic</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;p-valor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">ks_result</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Calcular para el total sin descomponer por estación</span>
+<span class="n">pm25_total</span> <span class="o">=</span> <span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">n_total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pm25_total</span><span class="p">)</span>
+
+<span class="c1"># Prueba de Kolmogorov-Smirnov</span>
+<span class="n">ks_total</span> <span class="o">=</span> <span class="n">ks_1samp</span><span class="p">((</span><span class="n">pm25_total</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pm25_total</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">pm25_total</span><span class="p">),</span> <span class="n">cdf</span><span class="o">=</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;Prueba&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Kolmogorov-Smirnov&#39;</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;Estación&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Total (Sin Descomponer)&#39;</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_total</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;Estadístico&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ks_total</span><span class="o">.</span><span class="n">statistic</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm25</span><span class="p">[</span><span class="s1">&#39;p-valor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">ks_total</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Convertir los resultados a un DataFrame</span>
+<span class="n">normalidad_resultados_pm25_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">normalidad_resultados_pm25</span><span class="p">)</span>
+
+<span class="c1"># Reordenar columnas para que &#39;n&#39; aparezca después de &#39;Estación&#39;</span>
+<span class="n">normalidad_resultados_pm25_df</span> <span class="o">=</span> <span class="n">normalidad_resultados_pm25_df</span><span class="p">[[</span><span class="s1">&#39;Estación&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;Prueba&#39;</span><span class="p">,</span> <span class="s1">&#39;Estadístico&#39;</span><span class="p">,</span> <span class="s1">&#39;p-valor&#39;</span><span class="p">]]</span>
+
+<span class="c1"># Mostrar los resultados</span>
+<span class="n">normalidad_resultados_pm25_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estación</th>
+      <th>n</th>
+      <th>Prueba</th>
+      <th>Estadístico</th>
+      <th>p-valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>78</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.128007</td>
+      <td>0.142</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TERMINAL</td>
+      <td>93</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.184401</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UNISINU</td>
+      <td>78</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.243109</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UPB</td>
+      <td>89</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.062678</td>
+      <td>0.854</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Total (Sin Descomponer)</td>
+      <td>338</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.155052</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Análisis de normalidad de las concentraciones de PM 2.5</strong></p>
+<p>La tabla presenta los resultados de la prueba de Kolmogorov-Smirnov aplicada a las concentraciones de PM 2.5 por estación y para el total general, con el objetivo de evaluar si los datos siguen una distribución normal. En la estación <strong>LA GLORIA</strong>, con 78 observaciones, el estadístico KS fue 0.128 y el p-valor de 0.142, indicando que no se rechaza la hipótesis nula de normalidad, por lo que las concentraciones de PM 2.5 podrían ajustarse razonablemente a una distribución normal. En contraste, la estación <strong>TERMINAL</strong>, con 93 observaciones, presentó un estadístico KS de 0.184 y un p-valor de 0.003, sugiriendo que los datos no siguen una distribución normal. De manera similar, en <strong>UNISINU</strong>, con 78 observaciones, el estadístico KS fue 0.243 y el p-valor de 0.000, lo que indica una fuerte desviación respecto a la normalidad. En la estación <strong>UPB</strong>, con 89 observaciones, el estadístico KS fue 0.063 y el p-valor de 0.854, indicando que los datos pueden aproximarse a una distribución normal. Finalmente, para el total general, que incluye 338 observaciones de todas las estaciones combinadas, el estadístico KS fue 0.155 y el p-valor de 0.000, concluyendo que las concentraciones de PM 2.5 no siguen una distribución normal cuando se analizan en su conjunto.</p>
+<p>Estos resultados subrayan que las concentraciones de PM 2.5 presentan comportamientos distintos según la estación. En estaciones como <strong>TERMINAL</strong> y <strong>UNISINU</strong>, donde no se cumple la normalidad, sería apropiado aplicar transformaciones de datos o métodos no paramétricos en los análisis posteriores. Para el total general, el incumplimiento de la normalidad refuerza la importancia de abordar los análisis de manera segmentada por estación, dado que las diferencias entre ellas podrían estar influenciadas por condiciones ambientales o características específicas de cada ubicación.</p>
+</div>
+<ul class="simple">
+<li><p>Veamos la prueba no paramétrica <code class="docutils literal notranslate"><span class="pre">Kruskal-Wallis</span></code>, para ver si hay diferencia entre las estaciones por el PM 2.5</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Realizar la prueba de Kruskal-Wallis para PM 2.5 según la estación</span>
+<span class="n">pm25_kruskal</span> <span class="o">=</span> <span class="n">kruskal</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">pm_25</span><span class="p">[</span><span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">][</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">pm_25</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()]</span>
+<span class="p">)</span>
+
+<span class="c1"># Resultados de Kruskal-Wallis</span>
+<span class="n">kruskal_resultado_pm25</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Prueba&#39;</span><span class="p">:</span> <span class="s1">&#39;Kruskal-Wallis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Estadístico&#39;</span><span class="p">:</span> <span class="n">pm25_kruskal</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span>
+    <span class="s1">&#39;p-valor&#39;</span><span class="p">:</span> <span class="n">pm25_kruskal</span><span class="o">.</span><span class="n">pvalue</span>
+<span class="p">}</span>
+
+<span class="c1"># Convertir los resultados a un DataFrame para mejor visualización</span>
+<span class="n">kruskal_resultado_pm25_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">kruskal_resultado_pm25</span><span class="p">])</span>
+
+<span class="n">kruskal_resultado_pm25_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Prueba</th>
+      <th>Estadístico</th>
+      <th>p-valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Kruskal-Wallis</td>
+      <td>1.553539</td>
+      <td>0.66997</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de Kruskal-Wallis del PM 2.5</strong></p>
+<p>El resultado de la prueba de Kruskal-Wallis para las concentraciones de PM 2.5 según la estación arroja un estadístico de <strong>1.55</strong> y un p-valor de <strong>0.670</strong>. Dado que el p-valor es considerablemente mayor al nivel de significancia comúnmente utilizado (por ejemplo, 0.05), no se rechaza la hipótesis nula de que las concentraciones de PM 2.5 tienen la misma distribución entre las estaciones. Esto sugiere que no hay evidencia estadísticamente significativa para afirmar que las concentraciones de PM 2.5 difieren entre las estaciones.</p>
+<p>En términos prácticos, los resultados indican que las condiciones que afectan las concentraciones de PM 2.5 son comparables en todas las estaciones, al menos en lo que respecta a las distribuciones de los datos disponibles. Sin embargo, se recomienda considerar otros factores ambientales o temporales que puedan influir en estas mediciones para un análisis más detallado.</p>
+</div>
+</section>
 </section>
 <section id="union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas">
-<h3><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong><a class="headerlink" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas" title="Permalink to this heading">#</a></h3>
+<h2><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong><a class="headerlink" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Unión los dataframe creados</p></li>
 </ul>
@@ -2446,7 +3243,6 @@ memory usage: 1.8+ MB
 </div>
 </section>
 </section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2506,20 +3302,23 @@ memory usage: 1.8+ MB
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extraccion-transformacion-y-carga-etl"><strong>Extracción, transformación y carga (ETL)</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-10"><strong>Análisis del PM 10</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>datos faltantes para el PM 10</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion"><strong>Descriptivo e inferencial del PM 10 según la estación</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-de-datos"><strong>Carga de datos</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-10"><strong>Análisis del PM 10</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion"><strong>Descriptivo e inferencial del PM 10 según la estación</strong></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-2-5"><strong>Análisis del PM 2.5</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-2-5"><strong>Análisis del PM 2.5</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos faltantes del PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm-2-5-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM 2.5 según la estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-2-5-segun-la-estacion"><strong>Descriptivo e inferencial del PM 2.5 según la estación</strong></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
 </ul>
   </nav></div>
 
