@@ -1925,6 +1925,312 @@ memory usage: 151.0+ KB
 </ol>
 </div>
 <ul class="simple">
+<li><p>Agreguemos el año a la tabla anterior</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear una copia explícita del DataFrame original</span>
+<span class="n">pm10_data</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 10&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Convertir la columna &#39;Fecha&#39; a tipo datetime</span>
+<span class="n">pm10_data</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">pm10_data</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">])</span>
+
+<span class="c1"># Crear una nueva columna para el año</span>
+<span class="n">pm10_data</span><span class="p">[</span><span class="s1">&#39;Año&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm10_data</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+
+<span class="c1"># Calcular las estadísticas agrupadas por año y estación</span>
+<span class="n">pm10_summary</span> <span class="o">=</span> <span class="n">pm10_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Año&#39;</span><span class="p">,</span> <span class="s1">&#39;Estacion&#39;</span><span class="p">])[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">promedio</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="n">minimo</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="n">maximo</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">pm10_summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Año</th>
+      <th>Estacion</th>
+      <th>n</th>
+      <th>promedio</th>
+      <th>desviacion_estandar</th>
+      <th>mediana</th>
+      <th>minimo</th>
+      <th>maximo</th>
+      <th>Q1</th>
+      <th>Q3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>LA GLORIA</td>
+      <td>58</td>
+      <td>38.786379</td>
+      <td>3.975092</td>
+      <td>39.165000</td>
+      <td>32.210000</td>
+      <td>50.330000</td>
+      <td>35.680000</td>
+      <td>42.187500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>TERMINAL</td>
+      <td>58</td>
+      <td>39.687414</td>
+      <td>3.861337</td>
+      <td>40.060000</td>
+      <td>32.190000</td>
+      <td>47.860000</td>
+      <td>36.237500</td>
+      <td>42.015000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>UNISINU</td>
+      <td>58</td>
+      <td>38.212759</td>
+      <td>4.251651</td>
+      <td>38.060000</td>
+      <td>31.310000</td>
+      <td>45.880000</td>
+      <td>34.665000</td>
+      <td>41.422500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>UPB</td>
+      <td>58</td>
+      <td>36.446983</td>
+      <td>4.968652</td>
+      <td>35.900000</td>
+      <td>21.230000</td>
+      <td>44.430000</td>
+      <td>33.992500</td>
+      <td>40.272500</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2021</td>
+      <td>LA GLORIA</td>
+      <td>76</td>
+      <td>40.345658</td>
+      <td>4.043786</td>
+      <td>41.490000</td>
+      <td>32.170000</td>
+      <td>47.070000</td>
+      <td>37.162500</td>
+      <td>42.887500</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2021</td>
+      <td>TERMINAL</td>
+      <td>71</td>
+      <td>40.246761</td>
+      <td>3.533748</td>
+      <td>39.910000</td>
+      <td>33.380000</td>
+      <td>48.040000</td>
+      <td>37.525000</td>
+      <td>42.975000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2021</td>
+      <td>UNISINU</td>
+      <td>74</td>
+      <td>37.860270</td>
+      <td>3.184760</td>
+      <td>38.210000</td>
+      <td>31.100000</td>
+      <td>44.700000</td>
+      <td>35.900000</td>
+      <td>39.977500</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2021</td>
+      <td>UPB</td>
+      <td>75</td>
+      <td>40.669067</td>
+      <td>4.301814</td>
+      <td>40.550000</td>
+      <td>33.100000</td>
+      <td>53.180000</td>
+      <td>37.390000</td>
+      <td>43.210000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2022</td>
+      <td>LA GLORIA</td>
+      <td>84</td>
+      <td>38.989405</td>
+      <td>7.069906</td>
+      <td>40.895000</td>
+      <td>22.020000</td>
+      <td>50.250000</td>
+      <td>38.710000</td>
+      <td>43.547500</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2022</td>
+      <td>TERMINAL</td>
+      <td>86</td>
+      <td>41.325233</td>
+      <td>3.698576</td>
+      <td>41.070000</td>
+      <td>30.940000</td>
+      <td>49.350000</td>
+      <td>38.942500</td>
+      <td>43.585000</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2022</td>
+      <td>UNISINU</td>
+      <td>83</td>
+      <td>39.156627</td>
+      <td>5.764326</td>
+      <td>40.050000</td>
+      <td>22.100000</td>
+      <td>46.820000</td>
+      <td>37.935000</td>
+      <td>42.780000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2022</td>
+      <td>UPB</td>
+      <td>83</td>
+      <td>39.491325</td>
+      <td>4.967957</td>
+      <td>39.870000</td>
+      <td>22.300000</td>
+      <td>47.310000</td>
+      <td>38.010000</td>
+      <td>42.570000</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2023</td>
+      <td>LA GLORIA</td>
+      <td>38</td>
+      <td>37.607704</td>
+      <td>1.409157</td>
+      <td>37.518698</td>
+      <td>35.025379</td>
+      <td>40.663902</td>
+      <td>36.747122</td>
+      <td>38.413633</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2023</td>
+      <td>TERMINAL</td>
+      <td>38</td>
+      <td>38.129402</td>
+      <td>1.174943</td>
+      <td>38.586329</td>
+      <td>34.633422</td>
+      <td>39.395171</td>
+      <td>37.573063</td>
+      <td>38.992312</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2023</td>
+      <td>UNISINU</td>
+      <td>37</td>
+      <td>38.399217</td>
+      <td>1.157863</td>
+      <td>37.988737</td>
+      <td>36.569861</td>
+      <td>40.443310</td>
+      <td>37.446682</td>
+      <td>39.243546</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2023</td>
+      <td>UPB</td>
+      <td>37</td>
+      <td>39.151104</td>
+      <td>1.077052</td>
+      <td>38.951357</td>
+      <td>37.113808</td>
+      <td>40.835282</td>
+      <td>38.381600</td>
+      <td>40.009203</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación del análisis de concentración de PM 10 por año y estación</strong></p>
+<p>La tabla resume las estadísticas descriptivas de la concentración de PM 10 (en mg/m³) para cada estación y año en el período 2020-2023. A continuación, se destacan los principales hallazgos:</p>
+<ol class="arabic simple">
+<li><p><strong>2020</strong>:</p>
+<ul class="simple">
+<li><p><strong>TERMINAL</strong> presenta el promedio más alto (<strong>39.69 mg/m³</strong>) y una desviación estándar moderada (<strong>3.86 mg/m³</strong>), lo que indica valores relativamente consistentes.</p></li>
+<li><p><strong>UPB</strong> exhibe el promedio más bajo (<strong>36.45 mg/m³</strong>) con la mayor variabilidad (<strong>4.97 mg/m³</strong>), lo que refleja una mayor dispersión en las mediciones.</p></li>
+</ul>
+</li>
+<li><p><strong>2021</strong>:</p>
+<ul class="simple">
+<li><p><strong>UPB</strong> muestra un aumento en la concentración promedio (<strong>40.67 mg/m³</strong>) y el rango máximo (<strong>53.18 mg/m³</strong>), destacándose como la estación con mayor concentración de PM 10 en este año.</p></li>
+<li><p><strong>UNISINU</strong>, con un promedio de <strong>37.86 mg/m³</strong>, tiene la menor variabilidad (<strong>3.18 mg/m³</strong>), lo que indica datos más consistentes.</p></li>
+</ul>
+</li>
+<li><p><strong>2022</strong>:</p>
+<ul class="simple">
+<li><p><strong>TERMINAL</strong> lidera con el promedio más alto (<strong>41.33 mg/m³</strong>) y una desviación estándar baja (<strong>3.70 mg/m³</strong>), lo que sugiere un aumento sostenido en las concentraciones de este año.</p></li>
+<li><p><strong>LA GLORIA</strong> muestra una alta variabilidad con una desviación estándar de <strong>7.07 mg/m³</strong>, lo que podría estar relacionado con factores locales.</p></li>
+</ul>
+</li>
+<li><p><strong>2023</strong>:</p>
+<ul class="simple">
+<li><p>Las concentraciones promedio disminuyen en comparación con años anteriores, siendo <strong>LA GLORIA</strong> la estación con el promedio más bajo (<strong>37.61 mg/m³</strong>) y <strong>UPB</strong> con el más alto (<strong>39.15 mg/m³</strong>).</p></li>
+<li><p>La variabilidad en todas las estaciones es significativamente menor, con desviaciones estándar inferiores a <strong>1.5 mg/m³</strong>, lo que refleja mediciones más homogéneas.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusiones</strong>:</p>
+<p>El análisis revela fluctuaciones en las concentraciones de PM 10 entre estaciones y años. Mientras que <strong>TERMINAL</strong> y <strong>UPB</strong> presentan consistentemente mayores concentraciones promedio en la mayoría de los años, <strong>UNISINU</strong> y <strong>LA GLORIA</strong> tienden a registrar menores valores con mayor variabilidad en ciertos períodos. Las tendencias observadas resaltan la importancia de investigar factores ambientales y de fuentes de contaminación específicas para comprender las variaciones en las concentraciones de PM 10.</p>
+</div>
+<ul class="simple">
 <li><p>Hagamos un gráfico de densidad del PM 10 según las estaciones</p></li>
 </ul>
 <div class="cell docutils container">
@@ -2915,6 +3221,312 @@ La estación <strong>UPB</strong> presenta la menor variabilidad, con la desviac
 <li><p><strong>Implicaciones generales</strong>:
 Los resultados sugieren que, aunque hay consistencia en las concentraciones promedio, las variaciones entre estaciones, especialmente en UNISINU, podrían ser indicativas de diferencias en las fuentes o condiciones ambientales que afectan las concentraciones de PM 2.5.</p></li>
 </ol>
+</div>
+<ul class="simple">
+<li><p>Agreguemos a la tabla anterior los años</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear una copia explícita del DataFrame original para PM 2.5</span>
+<span class="n">pm25_data</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Convertir la columna &#39;Fecha&#39; a tipo datetime</span>
+<span class="n">pm25_data</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">pm25_data</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">])</span>
+
+<span class="c1"># Crear una nueva columna para el año</span>
+<span class="n">pm25_data</span><span class="p">[</span><span class="s1">&#39;Año&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm25_data</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+
+<span class="c1"># Calcular las estadísticas agrupadas por año y estación</span>
+<span class="n">pm25_summary</span> <span class="o">=</span> <span class="n">pm25_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Año&#39;</span><span class="p">,</span> <span class="s1">&#39;Estacion&#39;</span><span class="p">])[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">promedio</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="n">minimo</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="n">maximo</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">pm25_summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Año</th>
+      <th>Estacion</th>
+      <th>n</th>
+      <th>promedio</th>
+      <th>desviacion_estandar</th>
+      <th>mediana</th>
+      <th>minimo</th>
+      <th>maximo</th>
+      <th>Q1</th>
+      <th>Q3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>LA GLORIA</td>
+      <td>20</td>
+      <td>10.967500</td>
+      <td>7.441833</td>
+      <td>8.785</td>
+      <td>1.17</td>
+      <td>33.47</td>
+      <td>6.3125</td>
+      <td>13.2875</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>TERMINAL</td>
+      <td>20</td>
+      <td>13.575500</td>
+      <td>8.932515</td>
+      <td>10.130</td>
+      <td>0.73</td>
+      <td>34.16</td>
+      <td>7.5675</td>
+      <td>18.6200</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>UNISINU</td>
+      <td>20</td>
+      <td>11.128500</td>
+      <td>11.346756</td>
+      <td>9.355</td>
+      <td>0.69</td>
+      <td>55.66</td>
+      <td>6.5025</td>
+      <td>10.8400</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>UPB</td>
+      <td>16</td>
+      <td>10.356875</td>
+      <td>4.986529</td>
+      <td>10.020</td>
+      <td>2.65</td>
+      <td>20.69</td>
+      <td>7.8475</td>
+      <td>11.8450</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2021</td>
+      <td>LA GLORIA</td>
+      <td>20</td>
+      <td>13.554500</td>
+      <td>2.038853</td>
+      <td>12.980</td>
+      <td>8.72</td>
+      <td>17.06</td>
+      <td>12.5175</td>
+      <td>15.2500</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2021</td>
+      <td>TERMINAL</td>
+      <td>20</td>
+      <td>13.794000</td>
+      <td>1.966197</td>
+      <td>13.995</td>
+      <td>9.43</td>
+      <td>17.02</td>
+      <td>12.4700</td>
+      <td>15.1800</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2021</td>
+      <td>UNISINU</td>
+      <td>20</td>
+      <td>13.748500</td>
+      <td>1.493848</td>
+      <td>13.660</td>
+      <td>11.59</td>
+      <td>16.27</td>
+      <td>12.4400</td>
+      <td>15.0800</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2021</td>
+      <td>UPB</td>
+      <td>20</td>
+      <td>14.078000</td>
+      <td>2.003283</td>
+      <td>14.230</td>
+      <td>8.84</td>
+      <td>17.07</td>
+      <td>13.2600</td>
+      <td>15.6175</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2022</td>
+      <td>LA GLORIA</td>
+      <td>20</td>
+      <td>13.091500</td>
+      <td>1.546797</td>
+      <td>13.375</td>
+      <td>9.31</td>
+      <td>15.56</td>
+      <td>12.1925</td>
+      <td>14.1050</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2022</td>
+      <td>TERMINAL</td>
+      <td>20</td>
+      <td>13.648500</td>
+      <td>1.157967</td>
+      <td>13.750</td>
+      <td>10.63</td>
+      <td>15.35</td>
+      <td>13.0350</td>
+      <td>14.3700</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2022</td>
+      <td>UNISINU</td>
+      <td>20</td>
+      <td>13.234000</td>
+      <td>1.456678</td>
+      <td>13.200</td>
+      <td>9.85</td>
+      <td>15.56</td>
+      <td>12.6150</td>
+      <td>14.5850</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2022</td>
+      <td>UPB</td>
+      <td>20</td>
+      <td>12.886500</td>
+      <td>2.006168</td>
+      <td>13.520</td>
+      <td>8.33</td>
+      <td>15.21</td>
+      <td>11.9950</td>
+      <td>14.3025</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2023</td>
+      <td>LA GLORIA</td>
+      <td>18</td>
+      <td>11.548333</td>
+      <td>1.901619</td>
+      <td>11.135</td>
+      <td>8.66</td>
+      <td>14.85</td>
+      <td>9.9325</td>
+      <td>12.8025</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2023</td>
+      <td>TERMINAL</td>
+      <td>33</td>
+      <td>11.539091</td>
+      <td>1.972895</td>
+      <td>10.890</td>
+      <td>6.61</td>
+      <td>14.90</td>
+      <td>10.0700</td>
+      <td>13.0900</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2023</td>
+      <td>UNISINU</td>
+      <td>18</td>
+      <td>11.356111</td>
+      <td>1.649771</td>
+      <td>11.390</td>
+      <td>8.66</td>
+      <td>14.59</td>
+      <td>9.9475</td>
+      <td>12.4325</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2023</td>
+      <td>UPB</td>
+      <td>33</td>
+      <td>11.053030</td>
+      <td>1.752790</td>
+      <td>10.880</td>
+      <td>6.85</td>
+      <td>15.26</td>
+      <td>10.0700</td>
+      <td>11.7500</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación del análisis de concentración de PM 2.5 por año y estación</strong></p>
+<p>La tabla presenta un análisis descriptivo de las concentraciones de PM 2.5 (en mg/m³) desglosadas por estación y año en el periodo 2020-2023. A continuación, se destacan los hallazgos más relevantes:</p>
+<ol class="arabic simple">
+<li><p><strong>2020</strong>:</p>
+<ul class="simple">
+<li><p><strong>TERMINAL</strong> muestra la mayor concentración promedio (<strong>13.58 mg/m³</strong>) y la mayor variabilidad (<strong>8.93 mg/m³</strong>), lo que sugiere una distribución más dispersa en comparación con otras estaciones.</p></li>
+<li><p><strong>UPB</strong> presenta el promedio más bajo (<strong>10.36 mg/m³</strong>) con una desviación estándar menor (<strong>4.99 mg/m³</strong>), indicando datos más consistentes.</p></li>
+</ul>
+</li>
+<li><p><strong>2021</strong>:</p>
+<ul class="simple">
+<li><p><strong>UPB</strong> registra el promedio más alto del año (<strong>14.08 mg/m³</strong>) con una desviación estándar de <strong>2.00 mg/m³</strong>, reflejando niveles elevados pero consistentes de concentración.</p></li>
+<li><p>En contraste, <strong>LA GLORIA</strong> tiene un promedio ligeramente inferior (<strong>13.55 mg/m³</strong>) con una variabilidad más baja (<strong>2.04 mg/m³</strong>).</p></li>
+</ul>
+</li>
+<li><p><strong>2022</strong>:</p>
+<ul class="simple">
+<li><p><strong>TERMINAL</strong> destaca con el mayor promedio (<strong>13.65 mg/m³</strong>) y la menor variabilidad (<strong>1.16 mg/m³</strong>) entre todas las estaciones, lo que indica una tendencia uniforme en las mediciones.</p></li>
+<li><p><strong>UPB</strong> presenta el promedio más bajo (<strong>12.89 mg/m³</strong>) pero con una desviación estándar moderada (<strong>2.01 mg/m³</strong>), lo que indica datos algo más dispersos.</p></li>
+</ul>
+</li>
+<li><p><strong>2023</strong>:</p>
+<ul class="simple">
+<li><p><strong>LA GLORIA</strong> tiene un promedio de concentración de <strong>11.55 mg/m³</strong>, el más alto entre las estaciones este año, pero con una ligera variabilidad (<strong>1.90 mg/m³</strong>).</p></li>
+<li><p><strong>UPB</strong> registra el promedio más bajo (<strong>11.05 mg/m³</strong>) con una desviación estándar de <strong>1.75 mg/m³</strong>, sugiriendo una distribución más homogénea.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusiones</strong>:
+El análisis evidencia fluctuaciones significativas en las concentraciones de PM 2.5 entre años y estaciones. En general, las concentraciones más altas se observaron en el año 2021, particularmente en <strong>UPB</strong>, mientras que los niveles más bajos se registraron en 2023. Estas diferencias reflejan posibles variaciones en las condiciones ambientales o fuentes de contaminación específicas en cada estación. Los niveles de dispersión, representados por las desviaciones estándar, disminuyeron en 2023, lo que podría indicar una mayor estabilidad en las condiciones ambientales recientes.</p>
 </div>
 <ul class="simple">
 <li><p>Hagamos un gráfico de densidad del PM 2.5 según las estaciones</p></li>
