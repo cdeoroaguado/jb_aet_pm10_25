@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Extracción, transformación y carga (ETL) &#8212; Análisis espacial y temporal del PM 10 y PM 2.5</title>
+    <title>Análisis de los datos de PM10 y PM 2.5 &#8212; Análisis espacial y temporal del PM 10 y PM 2.5</title>
   
   
   
@@ -159,7 +159,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Extracción, transformación y carga (ETL)</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Análisis de los datos de PM10 y PM 2.5</strong></a></li>
 </ul>
 
     </div>
@@ -343,7 +343,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Extracción, transformación y carga (ETL)</h1>
+    <h1>Análisis de los datos de PM10 y PM 2.5</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -353,8 +353,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos Faltantes para el PM 10</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extraccion-transformacion-y-carga-etl"><strong>Extracción, transformación y carga (ETL)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -366,14 +370,18 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="extraccion-transformacion-y-carga-etl">
-<h1><strong>Extracción, transformación y carga (ETL)</strong><a class="headerlink" href="#extraccion-transformacion-y-carga-etl" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-de-los-datos-de-pm10-y-pm-2-5">
+<h1><strong>Análisis de los datos de PM10 y PM 2.5</strong><a class="headerlink" href="#analisis-de-los-datos-de-pm10-y-pm-2-5" title="Permalink to this heading">#</a></h1>
+<section id="extraccion-transformacion-y-carga-etl">
+<h2><strong>Extracción, transformación y carga (ETL)</strong><a class="headerlink" href="#extraccion-transformacion-y-carga-etl" title="Permalink to this heading">#</a></h2>
 <p>En la parte superior cargaremos los paquetes</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar paquetes</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
@@ -852,81 +860,10 @@ No coinciden: [Timestamp(&#39;2020-09-01 00:00:00&#39;), Timestamp(&#39;2020-09-
 </div></div></div>
 </div>
 <section id="datos-faltantes-para-el-pm-10">
-<h2><strong>Datos Faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h2>
+<h3><strong>Datos faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Miraremos los datos faltantes para el PM 10</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datos_recopilados</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Estacion</th>
-      <th>Fecha</th>
-      <th>Parametro</th>
-      <th>Concentración_mg/m3</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>LA GLORIA</td>
-      <td>2022-12-21</td>
-      <td>PM 10</td>
-      <td>40.69</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LA GLORIA</td>
-      <td>2022-12-20</td>
-      <td>PM 10</td>
-      <td>41.01</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>LA GLORIA</td>
-      <td>2022-12-19</td>
-      <td>PM 10</td>
-      <td>40.94</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>LA GLORIA</td>
-      <td>2022-12-18</td>
-      <td>PM 10</td>
-      <td>39.87</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>LA GLORIA</td>
-      <td>2022-12-17</td>
-      <td>PM 10</td>
-      <td>38.79</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pm_10</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span>
@@ -1031,7 +968,7 @@ No coinciden: [Timestamp(&#39;2020-09-01 00:00:00&#39;), Timestamp(&#39;2020-09-
 <span class="n">nuevo_indice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">fecha_fin</span><span class="p">)</span>
 
 <span class="c1"># Crear un DataFrame vacío para almacenar los resultados</span>
-<span class="n">df_resultado</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">df_res_pm10</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 
 <span class="c1"># Reindexar por cada estación</span>
 <span class="k">for</span> <span class="n">estacion</span><span class="p">,</span> <span class="n">grupo</span> <span class="ow">in</span> <span class="n">df_pm_10</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">):</span>
@@ -1048,10 +985,10 @@ No coinciden: [Timestamp(&#39;2020-09-01 00:00:00&#39;), Timestamp(&#39;2020-09-
     <span class="c1"># Renombrar la columna del índice</span>
     <span class="n">grupo_reindexado</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;Fecha&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># Añadir al DataFrame final</span>
-    <span class="n">df_resultado</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_resultado</span><span class="p">,</span> <span class="n">grupo_reindexado</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_res_pm10</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_res_pm10</span><span class="p">,</span> <span class="n">grupo_reindexado</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Verificar el resultado</span>
-<span class="n">df_resultado</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">df_res_pm10</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1073,7 +1010,7 @@ memory usage: 151.0+ KB
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_va</span> <span class="o">=</span> <span class="n">df_resultado</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_va</span> <span class="o">=</span> <span class="n">df_res_pm10</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="c1"># Contar la cantidad de datos totales por estación</span>
 <span class="n">cantidad_datos_por_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cantidad de Datos&#39;</span><span class="p">)</span>
@@ -1160,9 +1097,218 @@ memory usage: 151.0+ KB
 </table>
 </div></div></div>
 </div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de la tabla</strong></p>
+<p>La tabla muestra un análisis de datos faltantes para cuatro estaciones diferentes (LA GLORIA, TERMINAL, UNISINU, UPB) en relación con la medición del parámetro <strong>PM 10</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Cantidad total de datos</strong>:</p>
+<ul class="simple">
+<li><p>Cada estación tiene 1207 observaciones totales (filas), lo que indica un período de tiempo uniforme cubierto para todas las estaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Cantidad de datos del PM 10 (no faltantes)</strong>:</p>
+<ul class="simple">
+<li><p>Los datos completos (no faltantes) para el parámetro <strong>PM 10</strong> son significativamente menores:</p>
+<ul>
+<li><p><strong>LA GLORIA</strong>: 255 observaciones (21.13% de los datos disponibles).</p></li>
+<li><p><strong>TERMINAL</strong>: 252 observaciones (20.88% de los datos disponibles).</p></li>
+<li><p><strong>UNISINU</strong>: 252 observaciones (20.88% de los datos disponibles).</p></li>
+<li><p><strong>UPB</strong>: 253 observaciones (20.96% de los datos disponibles).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Valores faltantes</strong>:</p>
+<ul class="simple">
+<li><p>El número de valores faltantes para <strong>PM 10</strong> es alto:</p>
+<ul>
+<li><p>Entre 952 y 955 valores faltantes por estación.</p></li>
+<li><p>Esto representa aproximadamente el <strong>79% de los datos totales</strong> en todas las estaciones.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Porcentaje faltante (%)</strong>:</p>
+<ul class="simple">
+<li><p>En todas las estaciones, el porcentaje de valores faltantes ronda el <strong>79%</strong>, lo que significa que los datos son muy incompletos para el parámetro <strong>PM 10</strong>.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<ul class="simple">
+<li><p>Veamos el gráfico de datos faltantes del PM 10</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_res_pm10</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="_images/c9bb3b396d6fd1437a80824a68950edb2e38b82c9f6396bb46324329eba78322.png" src="_images/c9bb3b396d6fd1437a80824a68950edb2e38b82c9f6396bb46324329eba78322.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Ahora, realicemos el gráfico de lineas de la fecha con respecto al PM10 según la estación, para los datos faltantes</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># Suprimir advertencias</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+
+<span class="c1"># Obtener la lista única de estaciones</span>
+<span class="n">estaciones</span> <span class="o">=</span> <span class="n">df_res_pm10</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+<span class="c1"># Crear un gráfico para cada estación</span>
+<span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">estaciones</span><span class="p">:</span>
+    <span class="c1"># Filtrar los datos para la estación actual</span>
+    <span class="n">df_estacion</span> <span class="o">=</span> <span class="n">df_res_pm10</span><span class="p">[</span><span class="n">df_res_pm10</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">]</span>
+    
+    <span class="c1"># Configurar el tamaño de la figura</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    
+    <span class="c1"># Crear el gráfico de líneas</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_estacion</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Configurar etiquetas y título</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Concentración de PM 10 a lo largo del tiempo - Estación: </span><span class="si">{</span><span class="n">estacion</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Concentración de PM 10 (mg/m3)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Mostrar el gráfico</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d8cd096206fbd062dcb907609cd019025e1a3277a417b2faa429bce529e472f3.png" src="_images/d8cd096206fbd062dcb907609cd019025e1a3277a417b2faa429bce529e472f3.png" />
+<img alt="_images/f8e876d8a81ac7d40bc57f458febb9738baac913fe8473bdf8e97c946eeaabd9.png" src="_images/f8e876d8a81ac7d40bc57f458febb9738baac913fe8473bdf8e97c946eeaabd9.png" />
+<img alt="_images/fae1c9da997ad7312d95c4684a1e9b4ae65a0f3b0d87937783239bdc1f301bed.png" src="_images/fae1c9da997ad7312d95c4684a1e9b4ae65a0f3b0d87937783239bdc1f301bed.png" />
+<img alt="_images/90b084b68128c4ffb38eae61b90813f8b0656b21ca606f31eeb7a571a06e87af.png" src="_images/90b084b68128c4ffb38eae61b90813f8b0656b21ca606f31eeb7a571a06e87af.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de las gráficas por estación para PM 10</strong></p>
+<p>Esta son las interpretaciones de las series según las estaciones</p>
+<ol class="arabic simple">
+<li><p><strong>Estación: LA GLORIA</strong></p>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Se observa una tendencia general de valores de PM 10 oscilando entre <strong>35 mg/m³ y 45 mg/m³</strong>.</p></li>
+<li><p>Hay gaps significativos en los datos en diferentes periodos, como entre finales de 2021 y mediados de 2022, y otro hacia finales de 2023.</p></li>
+</ul>
+</li>
+<li><p><strong>Picos notables</strong>:</p>
+<ul>
+<li><p>Existen algunos picos por encima de <strong>45 mg/m³</strong>, lo que podría indicar eventos de contaminación específicos o anomalías en la recolección de datos.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Estación: TERMINAL</strong></p>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Los valores de PM 10 están distribuidos entre <strong>35 mg/m³ y 45 mg/m³</strong>, con algunos picos cercanos a <strong>50 mg/m³</strong>.</p></li>
+<li><p>Hay períodos significativos sin datos (gaps) en 2022 y 2023, similares a los de LA GLORIA.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>Existe una mayor dispersión en los datos, con variaciones más marcadas que en otras estaciones, especialmente en 2021 y 2022.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Estación: UNISINU</strong></p>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Los valores de PM 10 muestran menor variabilidad, con la mayoría de los puntos en el rango de <strong>35 mg/m³ a 45 mg/m³</strong>.</p></li>
+<li><p>Los gaps son más frecuentes en 2022 y finales de 2023.</p></li>
+</ul>
+</li>
+<li><p><strong>Tendencias generales</strong>:</p>
+<ul>
+<li><p>No se observan patrones estacionales claros debido a la discontinuidad en los datos.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Estación: UPB</strong></p>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Similar a las otras estaciones, los valores de PM 10 oscilan principalmente entre <strong>35 mg/m³ y 45 mg/m³</strong>, con algunos picos que alcanzan los <strong>50 mg/m³</strong>.</p></li>
+<li><p>Los gaps en los datos son evidentes en períodos similares (2022 y finales de 2023).</p></li>
+</ul>
+</li>
+<li><p><strong>Mayor estabilidad en ciertos periodos</strong>:</p>
+<ul>
+<li><p>Existen períodos con datos más completos, pero no permiten identificar una tendencia clara a largo plazo.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusiones generales</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Falta de datos continuos</strong>:</p>
+<ul class="simple">
+<li><p>Todas las estaciones presentan gaps significativos en los datos, lo que dificulta la identificación de patrones estacionales o tendencias a largo plazo.</p></li>
+</ul>
+</li>
+<li><p><strong>Valores típicos de PM 10</strong>:</p>
+<ul class="simple">
+<li><p>Los valores de PM 10 se encuentran mayormente en el rango de <strong>35 mg/m³ a 45 mg/m³</strong>, lo que sugiere un nivel de contaminación moderado en las estaciones analizadas.</p></li>
+</ul>
+</li>
+<li><p><strong>Picos de contaminación</strong>:</p>
+<ul class="simple">
+<li><p>En algunas estaciones, como TERMINAL y UPB, los picos de contaminación por encima de <strong>45 mg/m³</strong> podrían estar relacionados con eventos específicos de contaminación, como tráfico pesado o condiciones meteorológicas.</p></li>
+</ul>
+</li>
+<li><p><strong>Dificultad para análisis temporal</strong>:</p>
+<ul class="simple">
+<li><p>Debido a los gaps en los datos, un análisis temporal robusto requeriría imputación de valores faltantes o el uso de datos complementarios.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Recomendaciones</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Imputación de valores faltantes</strong>:</p>
+<ul class="simple">
+<li><p>Aplicar técnicas como interpolación para completar los gaps en los datos.</p></li>
+</ul>
+</li>
+<li><p><strong>Monitoreo más constante</strong>:</p>
+<ul class="simple">
+<li><p>Implementar estrategias para garantizar la continuidad en la recolección de datos en las estaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Análisis por períodos completos</strong>:</p>
+<ul class="simple">
+<li><p>Enfocarse en períodos con datos más consistentes para analizar posibles tendencias o correlaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Investigación de picos de contaminación</strong>:</p>
+<ul class="simple">
+<li><p>Identificar las posibles causas de los picos en PM 10, como eventos climáticos o actividades humanas.</p></li>
+</ul>
+</li>
+</ol>
+</div>
 </section>
 <section id="datos-faltantes-del-pm-2-5">
-<h2><strong>Datos Faltantes del PM 2.5</strong><a class="headerlink" href="#datos-faltantes-del-pm-2-5" title="Permalink to this heading">#</a></h2>
+<h3><strong>Datos Faltantes del PM 2.5</strong><a class="headerlink" href="#datos-faltantes-del-pm-2-5" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Miremos los datos faltantes del PM 2.5</p></li>
 </ul>
@@ -1249,7 +1395,7 @@ memory usage: 151.0+ KB
 <span class="n">nuevo_indice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">fecha_inicio</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">fecha_fin</span><span class="p">)</span>
 
 <span class="c1"># Crear un DataFrame vacío para almacenar los resultados</span>
-<span class="n">df_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">df_res_pm_2_5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 
 <span class="c1"># Reindexar por cada estación</span>
 <span class="k">for</span> <span class="n">estacion</span><span class="p">,</span> <span class="n">grupo</span> <span class="ow">in</span> <span class="n">df_pm_2_5</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">):</span>
@@ -1266,10 +1412,10 @@ memory usage: 151.0+ KB
     <span class="c1"># Renombrar la columna del índice</span>
     <span class="n">grupo_reindexado</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;Fecha&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># Añadir al DataFrame final</span>
-    <span class="n">df_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_result</span><span class="p">,</span> <span class="n">grupo_reindexado</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_res_pm_2_5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_res_pm_2_5</span><span class="p">,</span> <span class="n">grupo_reindexado</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Verificar el resultado</span>
-<span class="n">df_result</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">df_res_pm_2_5</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1291,7 +1437,7 @@ memory usage: 151.0+ KB
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_va</span> <span class="o">=</span> <span class="n">df_result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_va</span> <span class="o">=</span> <span class="n">df_res_pm_2_5</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="c1"># Contar la cantidad de datos totales por estación</span>
 <span class="n">cantidad_datos_por_estacion</span> <span class="o">=</span> <span class="n">df_va</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cantidad de Datos&#39;</span><span class="p">)</span>
@@ -1378,6 +1524,284 @@ memory usage: 151.0+ KB
 </table>
 </div></div></div>
 </div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de la tabla</strong></p>
+<p>La tabla muestra un análisis de los datos disponibles y faltantes del parámetro <strong>PM 2.5</strong> para cuatro estaciones: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>.</p>
+<ol class="arabic simple">
+<li><p><strong>Cantidad Total de Datos</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Cada estación tiene un total de <strong>1207 observaciones</strong>, lo que indica un período de monitoreo uniforme para todas las estaciones.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Cantidad de Datos No Faltantes (PM 2.5)</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Los datos completos (no faltantes) para <strong>PM 2.5</strong> son extremadamente bajos:</p>
+<ul>
+<li><p><strong>LA GLORIA</strong>: 78 observaciones (6.46% de los datos totales).</p></li>
+<li><p><strong>TERMINAL</strong>: 93 observaciones (7.71% de los datos totales).</p></li>
+<li><p><strong>UNISINU</strong>: 78 observaciones (6.46% de los datos totales).</p></li>
+<li><p><strong>UPB</strong>: 89 observaciones (7.37% de los datos totales).</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p><strong>Valores Faltantes</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>El número de datos faltantes es muy alto en todas las estaciones:</p>
+<ul>
+<li><p><strong>LA GLORIA</strong> y <strong>UNISINU</strong> tienen <strong>1129 valores faltantes</strong> (93.54% de los datos totales).</p></li>
+<li><p><strong>TERMINAL</strong> tiene <strong>1114 valores faltantes</strong> (92.29% de los datos totales).</p></li>
+<li><p><strong>UPB</strong> tiene <strong>1118 valores faltantes</strong> (92.63% de los datos totales).</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p><strong>Porcentaje de Datos Faltantes</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>El porcentaje de datos faltantes supera el <strong>92% en todas las estaciones</strong>, lo que indica una gran discontinuidad en la recolección de datos para este parámetro.</p></li>
+</ul>
+</div>
+<ul class="simple">
+<li><p>Ahora, realizaremos la serie del PM 2.5 según cada estación, para mirar los datos faltantes</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># Suprimir advertencias</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+
+<span class="c1"># Obtener la lista única de estaciones</span>
+<span class="n">estaciones</span> <span class="o">=</span> <span class="n">df_res_pm_2_5</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+<span class="c1"># Crear un gráfico para cada estación</span>
+<span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">estaciones</span><span class="p">:</span>
+    <span class="c1"># Filtrar los datos para la estación actual</span>
+    <span class="n">df_estacion</span> <span class="o">=</span> <span class="n">df_res_pm_2_5</span><span class="p">[</span><span class="n">df_res_pm_2_5</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">]</span>
+    
+    <span class="c1"># Configurar el tamaño de la figura</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    
+    <span class="c1"># Crear el gráfico de líneas</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_estacion</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Configurar etiquetas y título</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Concentración de PM 2.5 a lo largo del tiempo - Estación: </span><span class="si">{</span><span class="n">estacion</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Concentración de PM 10 (mg/m3)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Mostrar el gráfico</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ea87ed0b18f1b021da7084f948219e9f4f4f862ca20d3c8b2c4a5570715defc6.png" src="_images/ea87ed0b18f1b021da7084f948219e9f4f4f862ca20d3c8b2c4a5570715defc6.png" />
+<img alt="_images/9201788f258ebbc15b96c87333ebbb8a0296b5be89da3c155f8e0742b2c3ae05.png" src="_images/9201788f258ebbc15b96c87333ebbb8a0296b5be89da3c155f8e0742b2c3ae05.png" />
+<img alt="_images/8e51861fac9ae65310bd1e0c1eceb0f65248fa0fd5bf2e8b990ca6d37d0f3b85.png" src="_images/8e51861fac9ae65310bd1e0c1eceb0f65248fa0fd5bf2e8b990ca6d37d0f3b85.png" />
+<img alt="_images/d5a90062e3fe39ab3f92352dfbd1b1c1b325b581de6b3f97e65e639ff27db307.png" src="_images/d5a90062e3fe39ab3f92352dfbd1b1c1b325b581de6b3f97e65e639ff27db307.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de las gráficas por estación para PM 2.5</strong></p>
+<p>Esta son las interpretaciones de las series según las estaciones</p>
+<ol class="arabic simple">
+<li><p><strong>Estación: LA GLORIA</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Los valores de <strong>PM 2.5</strong> presentan <strong>gaps significativos</strong> en la recolección de datos, observándose mediciones en periodos muy específicos.</p></li>
+<li><p>La concentración oscila mayormente entre <strong>5 y 15 mg/m³</strong>, con algunos picos por encima de los <strong>30 mg/m³</strong> al inicio del período.</p></li>
+</ul>
+</li>
+<li><p><strong>Tendencia general</strong>:</p>
+<ul>
+<li><p>Existe un ligero aumento en las concentraciones de PM 2.5 en las mediciones posteriores a 2021, aunque los datos son limitados para confirmar una tendencia sólida.</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Estación: TERMINAL</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Similar a LA GLORIA, hay <strong>gaps significativos</strong> en los datos, con mediciones realizadas en periodos muy específicos.</p></li>
+<li><p>Las concentraciones iniciales alcanzan hasta <strong>20 mg/m³</strong>, mientras que los periodos posteriores muestran valores más estables entre <strong>5 y 15 mg/m³</strong>.</p></li>
+</ul>
+</li>
+<li><p><strong>Tendencia general</strong>:</p>
+<ul>
+<li><p>Se observa una ligera disminución en las concentraciones promedio a lo largo del tiempo.</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p><strong>Estación: UNISINU</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Presenta menos puntos de datos y grandes gaps temporales.</p></li>
+<li><p>La concentración inicial muestra un pico significativo por encima de <strong>50 mg/m³</strong>, que no se repite en las mediciones posteriores.</p></li>
+<li><p>Las mediciones posteriores están en el rango de <strong>5 a 15 mg/m³</strong>.</p></li>
+</ul>
+</li>
+<li><p><strong>Tendencia general</strong>:</p>
+<ul>
+<li><p>Se aprecia un comportamiento más estable en los valores recientes, aunque limitado por la falta de continuidad en los datos.</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p><strong>Estación: UPB</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Patrones de datos</strong>:</p>
+<ul>
+<li><p>Los valores iniciales muestran mayor variabilidad, con concentraciones de <strong>5 a 20 mg/m³</strong> y algunos picos menores a lo largo del tiempo.</p></li>
+<li><p>Los periodos posteriores presentan valores más estables, oscilando entre <strong>5 y 15 mg/m³</strong>, con gaps similares a otras estaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Tendencia general</strong>:</p>
+<ul>
+<li><p>Existe un patrón moderadamente estable en las mediciones recientes.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Conclusiones generales</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Gaps en los datos</strong>:</p>
+<ul class="simple">
+<li><p>Todas las estaciones presentan periodos largos sin datos, lo que dificulta realizar un análisis continuo o identificar patrones estacionales claros.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango de concentraciones</strong>:</p>
+<ul class="simple">
+<li><p>Las concentraciones de PM 2.5 generalmente se encuentran entre <strong>5 y 15 mg/m³</strong>, con algunos picos significativos en ciertos periodos iniciales.</p></li>
+</ul>
+</li>
+<li><p><strong>Diferencias entre estaciones</strong>:</p>
+<ul class="simple">
+<li><p>Aunque los valores son similares entre estaciones, algunas como UNISINU muestran picos más altos en las primeras mediciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Posibilidad de análisis temporal</strong>:</p>
+<ul class="simple">
+<li><p>Debido a la alta cantidad de datos faltantes, sería necesario imputar valores para realizar un análisis de tendencias o estacionalidad confiable.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Recomendaciones</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Imputación de valores faltantes</strong>:</p>
+<ul class="simple">
+<li><p>Completar los datos ausentes mediante técnicas como interpolación o modelos predictivos basados en variables relacionadas.</p></li>
+</ul>
+</li>
+<li><p><strong>Mejorar la recolección de datos</strong>:</p>
+<ul class="simple">
+<li><p>Implementar medidas para reducir los gaps en los datos futuros y garantizar una recolección más uniforme.</p></li>
+</ul>
+</li>
+<li><p><strong>Análisis por periodos específicos</strong>:</p>
+<ul class="simple">
+<li><p>Centrar el análisis en los periodos donde los datos sean más consistentes.</p></li>
+</ul>
+</li>
+<li><p><strong>Investigación de picos iniciales</strong>:</p>
+<ul class="simple">
+<li><p>Analizar las posibles causas de los picos altos al inicio del periodo (por encima de 30 mg/m³), que podrían estar relacionados con eventos específicos.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</section>
+<section id="union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas">
+<h3><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong><a class="headerlink" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Unión los dataframe creados</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Supongamos que los DataFrames</span>
+<span class="n">df_unido</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_res_pm10</span><span class="p">,</span> <span class="n">df_res_pm_2_5</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Mostrar información del DataFrame unido</span>
+<span class="n">df_unido</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 9656 entries, 0 to 9655
+Data columns (total 4 columns):
+ #   Column               Non-Null Count  Dtype         
+---  ------               --------------  -----         
+ 0   Fecha                9656 non-null   datetime64[ns]
+ 1   Estacion             9656 non-null   object        
+ 2   Parametro            9656 non-null   object        
+ 3   Concentración_mg/m3  1350 non-null   float64       
+dtypes: datetime64[ns](1), float64(1), object(2)
+memory usage: 301.9+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Hagamos un join entre <code class="docutils literal notranslate"><span class="pre">df_unido</span></code> y <code class="docutils literal notranslate"><span class="pre">datos_parametros</span></code> con las fechas completas</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unir los DataFrames por la columna &quot;Fecha&quot; usando un merge (right join para mantener todos los datos de df_recopilacion)</span>
+<span class="n">df_comp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datos_parametros</span><span class="p">,</span> <span class="n">df_unido</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">df_comp</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 34424 entries, 0 to 34423
+Data columns (total 7 columns):
+ #   Column                 Non-Null Count  Dtype         
+---  ------                 --------------  -----         
+ 0   Fecha                  34424 non-null  datetime64[ns]
+ 1   Valor                  34064 non-null  float64       
+ 2   Unidad                 34064 non-null  object        
+ 3   Parametros_climaticos  34064 non-null  object        
+ 4   Estacion               34424 non-null  object        
+ 5   Parametro              34424 non-null  object        
+ 6   Concentración_mg/m3    4947 non-null   float64       
+dtypes: datetime64[ns](1), float64(2), object(4)
+memory usage: 1.8+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Grafica de valores faltantes de los datos <code class="docutils literal notranslate"><span class="pre">df_comp</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_comp</span><span class="o">.</span><span class="n">notna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="_images/108000f99e511e18603e31997203c08099d0bb24c4a774b4f73f65501ec9a3a3.png" src="_images/108000f99e511e18603e31997203c08099d0bb24c4a774b4f73f65501ec9a3a3.png" />
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -1439,8 +1863,12 @@ memory usage: 151.0+ KB
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos Faltantes para el PM 10</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extraccion-transformacion-y-carga-etl"><strong>Extracción, transformación y carga (ETL)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
