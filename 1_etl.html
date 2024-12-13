@@ -369,6 +369,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-2-5-segun-la-estacion"><strong>Descriptivo e inferencial del PM 2.5 según la estación</strong></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-del-pm10-y-pm-2-5"><strong>Comparación del PM10 y PM 2.5</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
 </ul>
             </nav>
@@ -398,6 +399,10 @@ document.write(`
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ks_1samp</span><span class="p">,</span> <span class="n">shapiro</span><span class="p">,</span> <span class="n">norm</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kruskal</span>
 <span class="kn">import</span> <span class="nn">scikit_posthocs</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">spearmanr</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mannwhitneyu</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
 </pre></div>
 </div>
 </div>
@@ -778,7 +783,10 @@ memory usage: 161.7+ KB
 <h2><strong>Análisis de la variable estación</strong><a class="headerlink" href="#analisis-de-la-variable-estacion" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un resumen con conteo para PM 10 y PM 2.5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suprimir advertencias</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+
+<span class="c1"># Crear un resumen con conteo para PM 10 y PM 2.5</span>
 <span class="n">conteo_parametros</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">datos_recopilados</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> <span class="s1">&#39;Parametro&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -1437,9 +1445,7 @@ memory usage: 151.0+ KB
 <h3><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong><a class="headerlink" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
-
-<span class="c1"># Suprimir advertencias</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suprimir advertencias</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
 
 <span class="c1"># Obtener la lista única de estaciones</span>
@@ -2528,9 +2534,7 @@ memory usage: 151.0+ KB
 <h3><strong>Gráfico de lineas de la fecha con respecto al PM 2.5 según la estación</strong><a class="headerlink" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm-2-5-segun-la-estacion" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
-
-<span class="c1"># Suprimir advertencias</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suprimir advertencias</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
 
 <span class="c1"># Obtener la lista única de estaciones</span>
@@ -3164,6 +3168,365 @@ Los resultados sugieren que, aunque hay consistencia en las concentraciones prom
 </div>
 </section>
 </section>
+<section id="comparacion-del-pm10-y-pm-2-5">
+<h2><strong>Comparación del PM10 y PM 2.5</strong><a class="headerlink" href="#comparacion-del-pm10-y-pm-2-5" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Hagamos de manera general la comparación entre el PM 10 y PM 2.5</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Asegurarnos de que la columna &#39;Parametro&#39; y &#39;Concentración_mg/m3&#39; están disponibles</span>
+<span class="n">df_join_pm_10_25</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">,</span> <span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">resumen_parametro</span> <span class="o">=</span> <span class="n">df_join_pm_10_25</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Parametro&#39;</span><span class="p">)[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">media</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">resumen_parametro</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Parametro</th>
+      <th>n</th>
+      <th>media</th>
+      <th>desviacion_estandar</th>
+      <th>mediana</th>
+      <th>min</th>
+      <th>max</th>
+      <th>Q1</th>
+      <th>Q3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PM 10</td>
+      <td>1014</td>
+      <td>39.212630</td>
+      <td>4.468585</td>
+      <td>39.360</td>
+      <td>21.23</td>
+      <td>53.18</td>
+      <td>37.138973</td>
+      <td>42.0475</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PM 2.5</td>
+      <td>338</td>
+      <td>12.419142</td>
+      <td>4.451899</td>
+      <td>12.575</td>
+      <td>0.69</td>
+      <td>55.66</td>
+      <td>10.232500</td>
+      <td>14.3075</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Análisis descriptivo de las concentraciones de PM 10 y PM 2.5</strong></p>
+<p>La tabla presenta un análisis descriptivo de las concentraciones de <strong>PM 10</strong> y <strong>PM 2.5</strong>, incluyendo estadísticas clave como la media, mediana, desviación estándar, y rangos intercuartílicos, que permiten una comprensión detallada de su comportamiento.</p>
+<ol class="arabic simple">
+<li><p><strong>PM 10</strong></p>
+<ul class="simple">
+<li><p><strong>Tamaño de muestra (n):</strong> Se analizaron un total de 1014 observaciones para PM 10.</p></li>
+<li><p><strong>Promedio y Mediana:</strong> La concentración promedio es de <strong>39.21 mg/m³</strong>, mientras que la mediana es ligeramente superior, con <strong>39.36 mg/m³</strong>, lo que indica una distribución equilibrada y simétrica en general.</p></li>
+<li><p><strong>Variabilidad:</strong> La desviación estándar es de <strong>4.47 mg/m³</strong>, lo que refleja una dispersión moderada en las mediciones.</p></li>
+<li><p><strong>Rangos:</strong></p>
+<ul>
+<li><p>El valor mínimo registrado es de <strong>21.23 mg/m³</strong>, mientras que el máximo alcanza <strong>53.18 mg/m³</strong>.</p></li>
+<li><p>El 50% de las observaciones están contenidas entre <strong>37.14 mg/m³</strong> (Q1) y <strong>42.05 mg/m³</strong> (Q3), destacando una concentración relativamente estable en este rango intercuartílico.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>PM 2.5</strong></p>
+<ul class="simple">
+<li><p><strong>Tamaño de muestra (n):</strong> Se analizaron un total de 338 observaciones para PM 2.5.</p></li>
+<li><p><strong>Promedio y Mediana:</strong> La concentración promedio es de <strong>12.42 mg/m³</strong>, cercana a la mediana de <strong>12.58 mg/m³</strong>, lo que también indica una distribución relativamente equilibrada.</p></li>
+<li><p><strong>Variabilidad:</strong> La desviación estándar de <strong>4.45 mg/m³</strong> refleja una variabilidad similar a la observada en PM 10, aunque con valores absolutos más bajos.</p></li>
+<li><p><strong>Rangos:</strong></p>
+<ul>
+<li><p>El valor mínimo registrado es de <strong>0.69 mg/m³</strong>, mientras que el máximo alcanza <strong>55.66 mg/m³</strong>, sugiriendo la presencia de algunos valores extremos.</p></li>
+<li><p>El rango intercuartílico está comprendido entre <strong>10.23 mg/m³</strong> (Q1) y <strong>14.31 mg/m³</strong> (Q3), destacando que la mayoría de las observaciones se concentran en este intervalo.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusiones</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Comparación entre PM 10 y PM 2.5:</strong></p>
+<ul class="simple">
+<li><p>Las concentraciones de <strong>PM 10</strong> son significativamente más altas que las de <strong>PM 2.5</strong>, tanto en términos de promedio como de mediana, lo que refleja su mayor prevalencia en el ambiente.</p></li>
+<li><p>Sin embargo, <strong>PM 2.5</strong> muestra un rango más amplio, con valores extremos que podrían indicar episodios específicos de contaminación.</p></li>
+</ul>
+</li>
+<li><p><strong>Estabilidad en PM 10:</strong></p>
+<ul class="simple">
+<li><p>La concentración de <strong>PM 10</strong> es más consistente, con una menor dispersión relativa (desviación estándar) y un rango intercuartílico más estrecho, lo que sugiere una mayor estabilidad en sus valores.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad en PM 2.5:</strong></p>
+<ul class="simple">
+<li><p>Aunque las concentraciones de <strong>PM 2.5</strong> son generalmente más bajas, presentan mayor variabilidad y valores extremos, lo que podría requerir un análisis más profundo de las fuentes y condiciones ambientales específicas que influyen en estas mediciones.</p></li>
+</ul>
+</li>
+</ol>
+<p>Este análisis es fundamental para diseñar estrategias de mitigación y políticas de control ambiental dirigidas a reducir las concentraciones de partículas contaminantes y proteger la salud pública.</p>
+</div>
+<ul class="simple">
+<li><p>Grafico de comparacion de densidad entre PM 10 y PM 2.5 desde el 2020 hasta 2023</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráfico de densidad para PM10 y PM2.5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_join_pm_10_25</span><span class="p">[</span><span class="n">df_join_pm_10_25</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 10&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PM 10&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_join_pm_10_25</span><span class="p">[</span><span class="n">df_join_pm_10_25</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PM 2.5&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de Densidad de PM 10 y PM 2.5&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Concentración (mg/m³)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Densidad&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parámetro&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2cef7468894ef81afbb2053ddf5a769485c164a01314de627dac53833bf7ad09.png" src="_images/2cef7468894ef81afbb2053ddf5a769485c164a01314de627dac53833bf7ad09.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación del gráfico de densidad</strong></p>
+<p>El gráfico de densidad muestra las distribuciones de las concentraciones de <strong>PM 10</strong> y <strong>PM 2.5</strong>, destacando sus diferencias en términos de comportamiento. Para <strong>PM 10</strong>, la concentración predominante está en torno a <strong>39 mg/m³</strong>, con una distribución simétrica y menor dispersión, lo que refleja estabilidad en las mediciones. En contraste, la distribución de <strong>PM 2.5</strong> tiene su pico alrededor de <strong>12 mg/m³</strong>, mostrando una mayor asimetría hacia la derecha y la presencia de valores extremos que pueden estar asociados con eventos específicos de contaminación. Al comparar ambos parámetros, <strong>PM 10</strong> presenta concentraciones más altas y consistentes, mientras que <strong>PM 2.5</strong>, al ser más fino, exhibe mayor variabilidad y tendencia a valores extremos. Estos hallazgos resaltan la necesidad de enfoques diferenciados en el monitoreo y mitigación de cada tipo de partícula, considerando sus fuentes y posibles impactos ambientales y de salud pública.</p>
+</div>
+<ul class="simple">
+<li><p>Veamos un diagrama de cajas y bigotes de la comparacion de PM 10 y PM 2.5 del 2020-2023</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráfico de cajas y bigotes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_join_pm_10_25</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Parametro&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Diagrama de Cajas y Bigotes del PM 10 y PM 2.5&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Parámetro&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Concentración (mg/m³)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ce80ce28773542af0f70a774fbac6b886f40ece9748bfa37926cc0bf983ff04b.png" src="_images/ce80ce28773542af0f70a774fbac6b886f40ece9748bfa37926cc0bf983ff04b.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación del diagrama de cajas y bigotes</strong></p>
+<p>El diagrama de cajas y bigotes ilustra la distribución de las concentraciones de <strong>PM 10</strong> y <strong>PM 2.5</strong>, mostrando diferencias clave en su rango, variabilidad y presencia de valores atípicos.</p>
+<p>Para <strong>PM 10</strong>, los valores se concentran entre aproximadamente <strong>37 mg/m³</strong> (Q1) y <strong>42 mg/m³</strong> (Q3), con una mediana en torno a <strong>39 mg/m³</strong>, lo que indica una distribución relativamente simétrica. Sin embargo, se observan valores atípicos por debajo de <strong>30 mg/m³</strong> y por encima de <strong>50 mg/m³</strong>, lo que refleja variaciones ocasionales significativas.</p>
+<p>Por otro lado, <strong>PM 2.5</strong> muestra un rango más amplio de concentración, desde aproximadamente <strong>10 mg/m³</strong> (Q1) hasta <strong>14 mg/m³</strong> (Q3), con una mediana cercana a <strong>12 mg/m³</strong>. La presencia de valores atípicos por encima de <strong>30 mg/m³</strong> destaca eventos puntuales de altas concentraciones, posiblemente asociados con episodios específicos de contaminación.</p>
+<p>La comparación entre ambos parámetros evidencia que <strong>PM 10</strong> presenta concentraciones más altas y una distribución más estable, mientras que <strong>PM 2.5</strong> muestra mayor variabilidad relativa, resaltando su susceptibilidad a variaciones ambientales. Estas características son críticas para diseñar estrategias de control específicas para cada tipo de material particulado.</p>
+</div>
+<ul class="simple">
+<li><p>Probemos la homocedasticidad</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extraer los datos de concentración</span>
+<span class="n">pm10_values</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 10&#39;</span><span class="p">][</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span>
+<span class="n">pm25_values</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">][</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span>
+
+<span class="c1"># Realizar la prueba de Mann-Whitney U</span>
+<span class="n">mann_whitney_result</span> <span class="o">=</span> <span class="n">mannwhitneyu</span><span class="p">(</span>
+    <span class="n">pm10_values</span><span class="p">,</span>
+    <span class="n">pm25_values</span><span class="p">,</span>
+    <span class="n">alternative</span><span class="o">=</span><span class="s1">&#39;two-sided&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Crear un DataFrame con los resultados</span>
+<span class="n">resultado_mann_whitney</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span>
+    <span class="s1">&#39;Prueba&#39;</span><span class="p">:</span> <span class="s1">&#39;Mann-Whitney U&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Estadístico&#39;</span><span class="p">:</span> <span class="n">mann_whitney_result</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span>
+    <span class="s1">&#39;p-valor&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mann_whitney_result</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">}])</span>
+
+<span class="c1"># Mostrar resultados</span>
+<span class="n">resultado_mann_whitney</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Prueba</th>
+      <th>Estadístico</th>
+      <th>p-valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mann-Whitney U</td>
+      <td>341443.5</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Comparación entre PM 10 y PM 2.5: Prueba de Mann-Whitney U</strong></p>
+<p>La prueba de Mann-Whitney U fue aplicada para comparar las concentraciones de PM 10 y PM 2.5 desde el año 2020 hasta 2023. Los resultados muestran un estadístico de <strong>341,443.5</strong> y un <strong>p-valor de 0.0</strong>, indicando una diferencia estadísticamente significativa entre las distribuciones de los dos parámetros. Esto implica que las concentraciones de PM 10 y PM 2.5 tienen comportamientos notablemente diferentes en términos de su distribución. Este resultado resalta la necesidad de analizar ambos parámetros de forma separada en estudios relacionados con calidad del aire, ya que no pueden considerarse estadísticamente equivalentes.</p>
+</div>
+<ul class="simple">
+<li><p>Análicemos la correlación del PM 10 y PM 2.5 desde 2020 al 2023</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suponiendo que &#39;df_original&#39; es el dataset principal que contiene datos de PM10 y PM2.5</span>
+<span class="n">df_pm10</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 10&#39;</span><span class="p">][[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]]</span>
+<span class="n">df_pm25</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">][[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]]</span>
+
+<span class="c1"># Convert &#39;Fecha&#39; to datetime for both DataFrames</span>
+<span class="n">df_pm10</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_pm10</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">])</span>
+<span class="n">df_pm25</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_pm25</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">])</span>
+
+<span class="c1"># Merge the two datasets based on the &#39;Fecha&#39; column</span>
+<span class="n">df_merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_pm10</span><span class="p">[[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">:</span> <span class="s1">&#39;PM10&#39;</span><span class="p">}),</span>
+    <span class="n">df_pm25</span><span class="p">[[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">:</span> <span class="s1">&#39;PM2.5&#39;</span><span class="p">}),</span>
+    <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot the scatter plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;PM10&#39;</span><span class="p">],</span> <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;PM2.5&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Diagram de dispersión del PM10 vs PM2.5&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;PM10 (mg/m³)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PM2.5 (mg/m³)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4504acf824a8ad069d9dc74c5f0408b054b0d875a4cd4b170696312bfd087406.png" src="_images/4504acf824a8ad069d9dc74c5f0408b054b0d875a4cd4b170696312bfd087406.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Combinar los DataFrames asegurándonos de que las fechas coincidan</span>
+<span class="n">df_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_pm10</span><span class="p">,</span> <span class="n">df_pm25</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_PM10&#39;</span><span class="p">,</span> <span class="s1">&#39;_PM25&#39;</span><span class="p">))</span>
+
+<span class="c1"># Realizar la prueba de Spearman</span>
+<span class="n">spearman_corr</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span>
+    <span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3_PM10&#39;</span><span class="p">],</span> 
+    <span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3_PM25&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Crear un DataFrame para los resultados</span>
+<span class="n">spearman_resultado</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Prueba&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Spearman&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Estadístico&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">spearman_corr</span><span class="p">],</span>
+    <span class="s1">&#39;p-valor&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">p_value</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">spearman_resultado_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">spearman_resultado</span><span class="p">)</span>
+
+<span class="c1"># Mostrar el DataFrame</span>
+<span class="n">spearman_resultado_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Prueba</th>
+      <th>Estadístico</th>
+      <th>p-valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Spearman</td>
+      <td>-0.083155</td>
+      <td>0.005278</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de la correlación</strong></p>
+<p>La prueba de correlación de Spearman realizada para las concentraciones de <strong>PM 10</strong> y <strong>PM 2.5</strong>, considerando datos desde el año <strong>2020 hasta 2023</strong>, arrojó un coeficiente de correlación (<strong>Estadístico</strong>) de <strong>-0.083</strong> y un <strong>p-valor</strong> de <strong>0.005</strong>.</p>
+<p>Esto indica que existe una correlación negativa muy débil entre las concentraciones de <strong>PM 10</strong> y <strong>PM 2.5</strong>. Aunque la relación es estadísticamente significativa debido al bajo p-valor (menor a 0.05), la magnitud del coeficiente sugiere que esta relación tiene poca relevancia práctica. Es decir, los cambios en las concentraciones de <strong>PM 10</strong> no están estrechamente relacionados con los cambios en las concentraciones de <strong>PM 2.5</strong> durante el período analizado.</p>
+<p>Estos resultados resaltan la necesidad de analizar las posibles diferencias en las fuentes o factores que afectan la variación de cada tipo de partícula, así como de considerar otros factores ambientales o estacionales que puedan influir en las concentraciones de estos contaminantes.</p>
+</div>
+</section>
 <section id="union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas">
 <h2><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong><a class="headerlink" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
@@ -3318,6 +3681,7 @@ memory usage: 1.8+ MB
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-2-5-segun-la-estacion"><strong>Descriptivo e inferencial del PM 2.5 según la estación</strong></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-del-pm10-y-pm-2-5"><strong>Comparación del PM10 y PM 2.5</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
 </ul>
   </nav></div>
