@@ -357,8 +357,13 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-10"><strong>Análisis del PM 10</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>datos faltantes para el PM 10</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion"><strong>Descriptivo e inferencial del PM 10 según la estación</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-2-5"><strong>Análisis del PM 2.5</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
 </ul>
 </li>
@@ -385,6 +390,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ks_1samp</span><span class="p">,</span> <span class="n">shapiro</span><span class="p">,</span> <span class="n">norm</span>
 </pre></div>
 </div>
 </div>
@@ -1126,181 +1132,11 @@ memory usage: 161.7+ KB
 </li>
 </ol>
 </div>
-<ul class="simple">
-<li><p>Unamos los datos recopilados y los datos de parámetros</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unir los DataFrames por la columna &quot;Fecha&quot; usando un merge (right join para mantener todos los datos de df_recopilacion)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">datos_parametros</span><span class="p">,</span> <span class="n">datos_recopilados</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 4951 entries, 0 to 4950
-Data columns (total 7 columns):
- #   Column                 Non-Null Count  Dtype         
----  ------                 --------------  -----         
- 0   Fecha                  4951 non-null   datetime64[ns]
- 1   Valor                  4951 non-null   float64       
- 2   Unidad                 4951 non-null   object        
- 3   Parametros_climaticos  4951 non-null   object        
- 4   Estacion               4951 non-null   object        
- 5   Parametro              4951 non-null   object        
- 6   Concentración_mg/m3    4951 non-null   float64       
-dtypes: datetime64[ns](1), float64(2), object(4)
-memory usage: 270.9+ KB
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Veamos si todos los días mediciones de PM 10 y PM 2.5</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Agrupar por fecha y contar las ocurrencias de PM10 y PM2.5</span>
-<span class="n">df_grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="c1"># df_grouped</span>
-
-<span class="c1"># Crear una columna booleana indicando si ambos valores están presentes en fechas consecutivas</span>
-<span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># Filtrar para obtener las fechas donde ambos valores no están presentes en fechas consecutivas</span>
-<span class="n">fechas_sin_coincidencia</span> <span class="o">=</span> <span class="n">df_grouped</span><span class="p">[</span><span class="o">~</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">index</span>
-
-<span class="c1"># Imprimir los resultados</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coinciden:&quot;</span><span class="p">,</span> <span class="n">df_grouped</span><span class="p">[</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No coinciden:&quot;</span><span class="p">,</span> <span class="n">fechas_sin_coincidencia</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coinciden: [Timestamp(&#39;2020-09-15 00:00:00&#39;), Timestamp(&#39;2020-09-16 00:00:00&#39;), Timestamp(&#39;2020-09-17 00:00:00&#39;), Timestamp(&#39;2020-09-18 00:00:00&#39;), Timestamp(&#39;2020-09-19 00:00:00&#39;), Timestamp(&#39;2020-09-20 00:00:00&#39;), Timestamp(&#39;2020-09-21 00:00:00&#39;), Timestamp(&#39;2020-09-22 00:00:00&#39;), Timestamp(&#39;2020-09-23 00:00:00&#39;), Timestamp(&#39;2020-09-24 00:00:00&#39;), Timestamp(&#39;2020-09-25 00:00:00&#39;), Timestamp(&#39;2020-09-26 00:00:00&#39;), Timestamp(&#39;2020-09-27 00:00:00&#39;), Timestamp(&#39;2020-09-28 00:00:00&#39;), Timestamp(&#39;2020-09-29 00:00:00&#39;), Timestamp(&#39;2020-09-30 00:00:00&#39;), Timestamp(&#39;2020-10-01 00:00:00&#39;), Timestamp(&#39;2020-10-02 00:00:00&#39;), Timestamp(&#39;2020-10-03 00:00:00&#39;), Timestamp(&#39;2020-10-04 00:00:00&#39;), Timestamp(&#39;2021-09-25 00:00:00&#39;), Timestamp(&#39;2021-09-26 00:00:00&#39;), Timestamp(&#39;2021-09-27 00:00:00&#39;), Timestamp(&#39;2021-09-28 00:00:00&#39;), Timestamp(&#39;2021-09-29 00:00:00&#39;), Timestamp(&#39;2021-09-30 00:00:00&#39;), Timestamp(&#39;2021-10-01 00:00:00&#39;), Timestamp(&#39;2021-10-02 00:00:00&#39;), Timestamp(&#39;2021-10-03 00:00:00&#39;), Timestamp(&#39;2021-10-04 00:00:00&#39;), Timestamp(&#39;2021-10-05 00:00:00&#39;), Timestamp(&#39;2021-10-06 00:00:00&#39;), Timestamp(&#39;2021-10-07 00:00:00&#39;), Timestamp(&#39;2021-10-08 00:00:00&#39;), Timestamp(&#39;2021-10-09 00:00:00&#39;), Timestamp(&#39;2021-10-10 00:00:00&#39;), Timestamp(&#39;2021-10-11 00:00:00&#39;), Timestamp(&#39;2021-10-12 00:00:00&#39;), Timestamp(&#39;2021-10-13 00:00:00&#39;), Timestamp(&#39;2021-10-14 00:00:00&#39;), Timestamp(&#39;2022-10-15 00:00:00&#39;), Timestamp(&#39;2022-10-16 00:00:00&#39;), Timestamp(&#39;2022-10-17 00:00:00&#39;), Timestamp(&#39;2022-10-18 00:00:00&#39;), Timestamp(&#39;2022-10-19 00:00:00&#39;), Timestamp(&#39;2022-10-20 00:00:00&#39;), Timestamp(&#39;2022-10-21 00:00:00&#39;), Timestamp(&#39;2022-10-22 00:00:00&#39;), Timestamp(&#39;2022-10-23 00:00:00&#39;), Timestamp(&#39;2022-10-24 00:00:00&#39;), Timestamp(&#39;2022-10-25 00:00:00&#39;), Timestamp(&#39;2022-10-26 00:00:00&#39;), Timestamp(&#39;2022-10-27 00:00:00&#39;), Timestamp(&#39;2022-10-28 00:00:00&#39;), Timestamp(&#39;2022-10-29 00:00:00&#39;), Timestamp(&#39;2022-10-30 00:00:00&#39;), Timestamp(&#39;2022-10-31 00:00:00&#39;), Timestamp(&#39;2022-11-01 00:00:00&#39;), Timestamp(&#39;2022-11-02 00:00:00&#39;), Timestamp(&#39;2022-11-03 00:00:00&#39;), Timestamp(&#39;2023-10-12 00:00:00&#39;), Timestamp(&#39;2023-10-14 00:00:00&#39;), Timestamp(&#39;2023-10-16 00:00:00&#39;), Timestamp(&#39;2023-10-18 00:00:00&#39;), Timestamp(&#39;2023-10-20 00:00:00&#39;), Timestamp(&#39;2023-10-22 00:00:00&#39;), Timestamp(&#39;2023-10-24 00:00:00&#39;), Timestamp(&#39;2023-10-26 00:00:00&#39;), Timestamp(&#39;2023-10-28 00:00:00&#39;), Timestamp(&#39;2023-11-05 00:00:00&#39;), Timestamp(&#39;2023-11-07 00:00:00&#39;), Timestamp(&#39;2023-11-09 00:00:00&#39;), Timestamp(&#39;2023-11-11 00:00:00&#39;), Timestamp(&#39;2023-11-13 00:00:00&#39;), Timestamp(&#39;2023-11-15 00:00:00&#39;), Timestamp(&#39;2023-11-17 00:00:00&#39;), Timestamp(&#39;2023-11-19 00:00:00&#39;), Timestamp(&#39;2023-11-21 00:00:00&#39;)]
-No coinciden: [Timestamp(&#39;2020-09-01 00:00:00&#39;), Timestamp(&#39;2020-09-04 00:00:00&#39;), Timestamp(&#39;2020-09-07 00:00:00&#39;), Timestamp(&#39;2020-09-10 00:00:00&#39;), Timestamp(&#39;2020-09-13 00:00:00&#39;), Timestamp(&#39;2020-10-09 00:00:00&#39;), Timestamp(&#39;2020-10-12 00:00:00&#39;), Timestamp(&#39;2020-10-15 00:00:00&#39;), Timestamp(&#39;2020-10-18 00:00:00&#39;), Timestamp(&#39;2020-10-21 00:00:00&#39;), Timestamp(&#39;2020-10-24 00:00:00&#39;), Timestamp(&#39;2020-10-27 00:00:00&#39;), Timestamp(&#39;2020-10-30 00:00:00&#39;), Timestamp(&#39;2020-11-02 00:00:00&#39;), Timestamp(&#39;2020-11-04 00:00:00&#39;), Timestamp(&#39;2020-11-06 00:00:00&#39;), Timestamp(&#39;2020-11-08 00:00:00&#39;), Timestamp(&#39;2020-11-10 00:00:00&#39;), Timestamp(&#39;2020-11-12 00:00:00&#39;), Timestamp(&#39;2020-11-14 00:00:00&#39;), Timestamp(&#39;2020-11-16 00:00:00&#39;), Timestamp(&#39;2020-11-18 00:00:00&#39;), Timestamp(&#39;2020-11-20 00:00:00&#39;), Timestamp(&#39;2020-11-22 00:00:00&#39;), Timestamp(&#39;2020-11-24 00:00:00&#39;), Timestamp(&#39;2020-11-26 00:00:00&#39;), Timestamp(&#39;2020-11-28 00:00:00&#39;), Timestamp(&#39;2020-11-30 00:00:00&#39;), Timestamp(&#39;2020-12-01 00:00:00&#39;), Timestamp(&#39;2020-12-02 00:00:00&#39;), Timestamp(&#39;2020-12-03 00:00:00&#39;), Timestamp(&#39;2020-12-04 00:00:00&#39;), Timestamp(&#39;2020-12-05 00:00:00&#39;), Timestamp(&#39;2020-12-06 00:00:00&#39;), Timestamp(&#39;2020-12-07 00:00:00&#39;), Timestamp(&#39;2020-12-08 00:00:00&#39;), Timestamp(&#39;2020-12-09 00:00:00&#39;), Timestamp(&#39;2020-12-10 00:00:00&#39;), Timestamp(&#39;2021-07-02 00:00:00&#39;), Timestamp(&#39;2021-07-04 00:00:00&#39;), Timestamp(&#39;2021-07-06 00:00:00&#39;), Timestamp(&#39;2021-07-08 00:00:00&#39;), Timestamp(&#39;2021-07-10 00:00:00&#39;), Timestamp(&#39;2021-07-12 00:00:00&#39;), Timestamp(&#39;2021-07-14 00:00:00&#39;), Timestamp(&#39;2021-07-16 00:00:00&#39;), Timestamp(&#39;2021-07-18 00:00:00&#39;), Timestamp(&#39;2021-07-20 00:00:00&#39;), Timestamp(&#39;2021-07-22 00:00:00&#39;), Timestamp(&#39;2021-07-24 00:00:00&#39;), Timestamp(&#39;2021-07-26 00:00:00&#39;), Timestamp(&#39;2021-07-28 00:00:00&#39;), Timestamp(&#39;2021-07-30 00:00:00&#39;), Timestamp(&#39;2021-08-01 00:00:00&#39;), Timestamp(&#39;2021-08-03 00:00:00&#39;), Timestamp(&#39;2021-08-05 00:00:00&#39;), Timestamp(&#39;2021-08-07 00:00:00&#39;), Timestamp(&#39;2021-08-09 00:00:00&#39;), Timestamp(&#39;2021-08-11 00:00:00&#39;), Timestamp(&#39;2021-08-13 00:00:00&#39;), Timestamp(&#39;2021-08-15 00:00:00&#39;), Timestamp(&#39;2021-08-17 00:00:00&#39;), Timestamp(&#39;2021-08-19 00:00:00&#39;), Timestamp(&#39;2021-08-21 00:00:00&#39;), Timestamp(&#39;2021-08-23 00:00:00&#39;), Timestamp(&#39;2021-08-25 00:00:00&#39;), Timestamp(&#39;2021-08-27 00:00:00&#39;), Timestamp(&#39;2021-08-29 00:00:00&#39;), Timestamp(&#39;2021-08-31 00:00:00&#39;), Timestamp(&#39;2021-09-02 00:00:00&#39;), Timestamp(&#39;2021-09-04 00:00:00&#39;), Timestamp(&#39;2021-09-06 00:00:00&#39;), Timestamp(&#39;2021-09-08 00:00:00&#39;), Timestamp(&#39;2021-09-10 00:00:00&#39;), Timestamp(&#39;2021-09-12 00:00:00&#39;), Timestamp(&#39;2021-09-14 00:00:00&#39;), Timestamp(&#39;2021-09-16 00:00:00&#39;), Timestamp(&#39;2021-09-18 00:00:00&#39;), Timestamp(&#39;2021-09-20 00:00:00&#39;), Timestamp(&#39;2021-09-22 00:00:00&#39;), Timestamp(&#39;2021-10-16 00:00:00&#39;), Timestamp(&#39;2021-10-18 00:00:00&#39;), Timestamp(&#39;2021-10-20 00:00:00&#39;), Timestamp(&#39;2021-10-22 00:00:00&#39;), Timestamp(&#39;2021-10-24 00:00:00&#39;), Timestamp(&#39;2021-10-26 00:00:00&#39;), Timestamp(&#39;2021-10-28 00:00:00&#39;), Timestamp(&#39;2021-10-30 00:00:00&#39;), Timestamp(&#39;2021-11-01 00:00:00&#39;), Timestamp(&#39;2021-11-03 00:00:00&#39;), Timestamp(&#39;2021-11-05 00:00:00&#39;), Timestamp(&#39;2021-11-07 00:00:00&#39;), Timestamp(&#39;2021-11-09 00:00:00&#39;), Timestamp(&#39;2021-11-11 00:00:00&#39;), Timestamp(&#39;2021-11-13 00:00:00&#39;), Timestamp(&#39;2022-07-01 00:00:00&#39;), Timestamp(&#39;2022-07-03 00:00:00&#39;), Timestamp(&#39;2022-07-05 00:00:00&#39;), Timestamp(&#39;2022-07-07 00:00:00&#39;), Timestamp(&#39;2022-07-09 00:00:00&#39;), Timestamp(&#39;2022-07-11 00:00:00&#39;), Timestamp(&#39;2022-07-13 00:00:00&#39;), Timestamp(&#39;2022-07-15 00:00:00&#39;), Timestamp(&#39;2022-07-17 00:00:00&#39;), Timestamp(&#39;2022-07-19 00:00:00&#39;), Timestamp(&#39;2022-07-21 00:00:00&#39;), Timestamp(&#39;2022-07-23 00:00:00&#39;), Timestamp(&#39;2022-07-25 00:00:00&#39;), Timestamp(&#39;2022-07-27 00:00:00&#39;), Timestamp(&#39;2022-07-29 00:00:00&#39;), Timestamp(&#39;2022-07-31 00:00:00&#39;), Timestamp(&#39;2022-08-02 00:00:00&#39;), Timestamp(&#39;2022-08-04 00:00:00&#39;), Timestamp(&#39;2022-08-06 00:00:00&#39;), Timestamp(&#39;2022-08-08 00:00:00&#39;), Timestamp(&#39;2022-08-10 00:00:00&#39;), Timestamp(&#39;2022-08-12 00:00:00&#39;), Timestamp(&#39;2022-08-14 00:00:00&#39;), Timestamp(&#39;2022-08-16 00:00:00&#39;), Timestamp(&#39;2022-08-18 00:00:00&#39;), Timestamp(&#39;2022-08-20 00:00:00&#39;), Timestamp(&#39;2022-08-22 00:00:00&#39;), Timestamp(&#39;2022-08-24 00:00:00&#39;), Timestamp(&#39;2022-08-26 00:00:00&#39;), Timestamp(&#39;2022-08-28 00:00:00&#39;), Timestamp(&#39;2022-08-30 00:00:00&#39;), Timestamp(&#39;2022-09-01 00:00:00&#39;), Timestamp(&#39;2022-09-03 00:00:00&#39;), Timestamp(&#39;2022-09-05 00:00:00&#39;), Timestamp(&#39;2022-09-07 00:00:00&#39;), Timestamp(&#39;2022-09-08 00:00:00&#39;), Timestamp(&#39;2022-09-09 00:00:00&#39;), Timestamp(&#39;2022-09-10 00:00:00&#39;), Timestamp(&#39;2022-09-11 00:00:00&#39;), Timestamp(&#39;2022-09-12 00:00:00&#39;), Timestamp(&#39;2022-09-13 00:00:00&#39;), Timestamp(&#39;2022-09-14 00:00:00&#39;), Timestamp(&#39;2022-09-15 00:00:00&#39;), Timestamp(&#39;2022-09-17 00:00:00&#39;), Timestamp(&#39;2022-09-18 00:00:00&#39;), Timestamp(&#39;2022-09-19 00:00:00&#39;), Timestamp(&#39;2022-09-20 00:00:00&#39;), Timestamp(&#39;2022-09-22 00:00:00&#39;), Timestamp(&#39;2022-09-24 00:00:00&#39;), Timestamp(&#39;2022-09-26 00:00:00&#39;), Timestamp(&#39;2022-09-28 00:00:00&#39;), Timestamp(&#39;2022-09-30 00:00:00&#39;), Timestamp(&#39;2022-10-03 00:00:00&#39;), Timestamp(&#39;2022-10-06 00:00:00&#39;), Timestamp(&#39;2022-10-09 00:00:00&#39;), Timestamp(&#39;2022-10-12 00:00:00&#39;), Timestamp(&#39;2022-12-12 00:00:00&#39;), Timestamp(&#39;2022-12-13 00:00:00&#39;), Timestamp(&#39;2022-12-14 00:00:00&#39;), Timestamp(&#39;2022-12-15 00:00:00&#39;), Timestamp(&#39;2022-12-16 00:00:00&#39;), Timestamp(&#39;2022-12-17 00:00:00&#39;), Timestamp(&#39;2022-12-18 00:00:00&#39;), Timestamp(&#39;2022-12-19 00:00:00&#39;), Timestamp(&#39;2022-12-20 00:00:00&#39;), Timestamp(&#39;2022-12-21 00:00:00&#39;), Timestamp(&#39;2023-10-10 00:00:00&#39;), Timestamp(&#39;2023-10-13 00:00:00&#39;), Timestamp(&#39;2023-10-15 00:00:00&#39;), Timestamp(&#39;2023-10-17 00:00:00&#39;), Timestamp(&#39;2023-10-19 00:00:00&#39;), Timestamp(&#39;2023-10-21 00:00:00&#39;), Timestamp(&#39;2023-10-23 00:00:00&#39;), Timestamp(&#39;2023-10-25 00:00:00&#39;), Timestamp(&#39;2023-10-27 00:00:00&#39;), Timestamp(&#39;2023-10-29 00:00:00&#39;), Timestamp(&#39;2023-10-30 00:00:00&#39;), Timestamp(&#39;2023-11-01 00:00:00&#39;), Timestamp(&#39;2023-11-03 00:00:00&#39;), Timestamp(&#39;2023-11-04 00:00:00&#39;), Timestamp(&#39;2023-11-06 00:00:00&#39;), Timestamp(&#39;2023-11-08 00:00:00&#39;), Timestamp(&#39;2023-11-10 00:00:00&#39;), Timestamp(&#39;2023-11-12 00:00:00&#39;), Timestamp(&#39;2023-11-14 00:00:00&#39;), Timestamp(&#39;2023-11-16 00:00:00&#39;), Timestamp(&#39;2023-11-18 00:00:00&#39;), Timestamp(&#39;2023-11-20 00:00:00&#39;), Timestamp(&#39;2023-11-23 00:00:00&#39;), Timestamp(&#39;2023-11-25 00:00:00&#39;), Timestamp(&#39;2023-11-27 00:00:00&#39;), Timestamp(&#39;2023-11-29 00:00:00&#39;), Timestamp(&#39;2023-12-01 00:00:00&#39;), Timestamp(&#39;2023-12-03 00:00:00&#39;), Timestamp(&#39;2023-12-05 00:00:00&#39;), Timestamp(&#39;2023-12-07 00:00:00&#39;), Timestamp(&#39;2023-12-09 00:00:00&#39;), Timestamp(&#39;2023-12-11 00:00:00&#39;), Timestamp(&#39;2023-12-13 00:00:00&#39;), Timestamp(&#39;2023-12-15 00:00:00&#39;), Timestamp(&#39;2023-12-17 00:00:00&#39;), Timestamp(&#39;2023-12-19 00:00:00&#39;), Timestamp(&#39;2023-12-21 00:00:00&#39;)]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contar el número de fechas donde ambos valores no están presentes en fechas consecutivas</span>
-<span class="n">num_no_coincidencias</span> <span class="o">=</span> <span class="n">df_grouped</span><span class="p">[</span><span class="o">~</span><span class="n">df_grouped</span><span class="p">[</span><span class="s1">&#39;Ambos_presentes_consecutivos&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Número de fechas donde no coinciden:&quot;</span><span class="p">,</span> <span class="n">num_no_coincidencias</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Número de fechas donde no coinciden: 198
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Indexando la fecha para futuras mediciones</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
-<span class="n">df_2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Valor</th>
-      <th>Unidad</th>
-      <th>Parametros_climaticos</th>
-      <th>Estacion</th>
-      <th>Parametro</th>
-      <th>Concentración_mg/m3</th>
-    </tr>
-    <tr>
-      <th>Fecha</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2022-12-21</th>
-      <td>291.021497</td>
-      <td>Grados (°)</td>
-      <td>Dirección Viento</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>40.69</td>
-    </tr>
-    <tr>
-      <th>2022-12-21</th>
-      <td>98.000000</td>
-      <td>%</td>
-      <td>Humedad</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>40.69</td>
-    </tr>
-    <tr>
-      <th>2022-12-21</th>
-      <td>32.301221</td>
-      <td>°C</td>
-      <td>Temp. Maxima</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>40.69</td>
-    </tr>
-    <tr>
-      <th>2022-12-21</th>
-      <td>30.796568</td>
-      <td>°C</td>
-      <td>Temp. Mínima</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>40.69</td>
-    </tr>
-    <tr>
-      <th>2022-12-21</th>
-      <td>1.852968</td>
-      <td>m/s</td>
-      <td>Velocidad Viento</td>
-      <td>LA GLORIA</td>
-      <td>PM 10</td>
-      <td>40.69</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 </section>
+<section id="analisis-del-pm-10">
+<h3><strong>Análisis del PM 10</strong><a class="headerlink" href="#analisis-del-pm-10" title="Permalink to this heading">#</a></h3>
 <section id="datos-faltantes-para-el-pm-10">
-<h3><strong>Datos faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Miraremos los datos faltantes para el PM 10</p></li>
-</ul>
+<h4><strong>datos faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pm_10</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span>
@@ -1588,9 +1424,9 @@ memory usage: 151.0+ KB
 <img alt="_images/c9bb3b396d6fd1437a80824a68950edb2e38b82c9f6396bb46324329eba78322.png" src="_images/c9bb3b396d6fd1437a80824a68950edb2e38b82c9f6396bb46324329eba78322.png" />
 </div>
 </div>
-<ul class="simple">
-<li><p>Ahora, realicemos el gráfico de lineas de la fecha con respecto al PM10 según la estación, para los datos faltantes</p></li>
-</ul>
+</section>
+<section id="grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion">
+<h4><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong><a class="headerlink" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
@@ -1744,8 +1580,378 @@ memory usage: 151.0+ KB
 </ol>
 </div>
 </section>
-<section id="datos-faltantes-del-pm-2-5">
-<h3><strong>Datos Faltantes del PM 2.5</strong><a class="headerlink" href="#datos-faltantes-del-pm-2-5" title="Permalink to this heading">#</a></h3>
+<section id="descriptivo-e-inferencial-del-pm-10-segun-la-estacion">
+<h4><strong>Descriptivo e inferencial del PM 10 según la estación</strong><a class="headerlink" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion" title="Permalink to this heading">#</a></h4>
+<p>Para realizar este análisis, no haremos imputación de datos por la fecha faltante, usaremos los datos en crudo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filtrar los datos para PM 10</span>
+<span class="n">pm_10</span> <span class="o">=</span> <span class="n">datos_recopilados</span><span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Parametro&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PM 10&#39;</span><span class="p">]</span>
+
+<span class="c1"># Generar la tabla resumen por estación</span>
+<span class="n">resumen_pm10</span> <span class="o">=</span> <span class="n">pm_10</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Estacion&#39;</span><span class="p">)[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">media</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Agregar una fila con el total de PM 10</span>
+<span class="n">total_pm10</span> <span class="o">=</span> <span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">media</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">total_pm10_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">total_pm10</span><span class="p">])</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Estacion</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">)</span>
+
+<span class="c1"># Unir el total con el resumen por estación</span>
+<span class="n">resumen_pm10_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">resumen_pm10</span><span class="p">,</span> <span class="n">total_pm10_df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">resumen_pm10_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>n</th>
+      <th>media</th>
+      <th>desviacion_estandar</th>
+      <th>mediana</th>
+      <th>min</th>
+      <th>max</th>
+      <th>Q1</th>
+      <th>Q3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>256.0</td>
+      <td>39.140948</td>
+      <td>5.071278</td>
+      <td>39.652347</td>
+      <td>22.02</td>
+      <td>50.33</td>
+      <td>36.180000</td>
+      <td>42.4300</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TERMINAL</td>
+      <td>253.0</td>
+      <td>40.167104</td>
+      <td>3.577234</td>
+      <td>39.700000</td>
+      <td>30.94</td>
+      <td>49.35</td>
+      <td>38.000000</td>
+      <td>42.3600</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UNISINU</td>
+      <td>252.0</td>
+      <td>38.447504</td>
+      <td>4.287586</td>
+      <td>38.869985</td>
+      <td>22.10</td>
+      <td>46.82</td>
+      <td>36.799190</td>
+      <td>41.1750</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UPB</td>
+      <td>253.0</td>
+      <td>39.092790</td>
+      <td>4.649564</td>
+      <td>39.370004</td>
+      <td>21.23</td>
+      <td>53.18</td>
+      <td>37.113808</td>
+      <td>41.6100</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Total</td>
+      <td>1014.0</td>
+      <td>39.212630</td>
+      <td>4.468585</td>
+      <td>39.360000</td>
+      <td>21.23</td>
+      <td>53.18</td>
+      <td>37.138973</td>
+      <td>42.0475</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de la tabla: Resumen de PM 10 por estación y total</strong></p>
+<p>La tabla proporciona un análisis descriptivo de las concentraciones de PM 10 en cuatro estaciones: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>, así como un resumen total.</p>
+<ol class="arabic simple">
+<li><p><strong>Total (Todas las estaciones)</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 1014 registros en total.</p></li>
+<li><p><strong>Concentración promedio (media)</strong>: <strong>39.21 mg/m³</strong>, con una mediana de <strong>39.36 mg/m³</strong>, lo que indica una distribución equilibrada.</p></li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>La desviación estándar es <strong>4.47 mg/m³</strong>, mostrando una variabilidad general moderada entre todas las estaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores totales oscilan entre <strong>21.23 mg/m³</strong> y <strong>53.18 mg/m³</strong>, con el 50% de los datos entre <strong>37.14 mg/m³</strong> (Q1) y <strong>42.05 mg/m³</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Estación: LA GLORIA</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 256 registros disponibles.</p></li>
+<li><p><strong>Concentración promedio (media)</strong>: <strong>39.14 mg/m³</strong>, cercana a la mediana (<strong>39.65 mg/m³</strong>), lo que indica una distribución balanceada.</p></li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>La desviación estándar es <strong>5.07 mg/m³</strong>, lo que sugiere una moderada variabilidad en las mediciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores van desde <strong>22.02 mg/m³</strong> a <strong>50.33 mg/m³</strong>, con el 50% de los datos entre <strong>36.18 mg/m³</strong> (Q1) y <strong>42.43 mg/m³</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Estación: TERMINAL</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 253 registros disponibles.</p></li>
+<li><p><strong>Concentración promedio (media)</strong>: <strong>40.17 mg/m³</strong>, cercana a la mediana (<strong>39.70 mg/m³</strong>).</p></li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>La desviación estándar es <strong>3.58 mg/m³</strong>, indicando una menor variabilidad en comparación con otras estaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores están entre <strong>30.94 mg/m³</strong> y <strong>49.35 mg/m³</strong>, con el 50% de los datos entre <strong>38.00 mg/m³</strong> (Q1) y <strong>42.36 mg/m³</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Estación: UNISINU</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 252 registros disponibles.</p></li>
+<li><p><strong>Concentración promedio (media)</strong>: <strong>38.45 mg/m³</strong>, con una mediana de <strong>38.87 mg/m³</strong>.</p></li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>La desviación estándar es <strong>4.29 mg/m³</strong>, lo que indica variabilidad moderada.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores están entre <strong>22.10 mg/m³</strong> y <strong>46.82 mg/m³</strong>, con el 50% de los datos entre <strong>36.80 mg/m³</strong> (Q1) y <strong>41.18 mg/m³</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Estación: UPB</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 253 registros disponibles.</p></li>
+<li><p><strong>Concentración promedio (media)</strong>: <strong>39.09 mg/m³</strong>, similar a la mediana de <strong>39.37 mg/m³</strong>.</p></li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>La desviación estándar es <strong>4.65 mg/m³</strong>, reflejando una mayor dispersión en comparación con otras estaciones.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores oscilan entre <strong>21.23 mg/m³</strong> y <strong>53.18 mg/m³</strong>, con el 50% de los datos entre <strong>37.11 mg/m³</strong> (Q1) y <strong>41.61 mg/m³</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusiones</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Uniformidad en los datos</strong>:</p>
+<ul class="simple">
+<li><p>Todas las estaciones muestran valores de concentración promedio y mediana similares, lo que refleja condiciones de calidad del aire comparables.</p></li>
+</ul>
+</li>
+<li><p><strong>Mayor variabilidad en UPB</strong>:</p>
+<ul class="simple">
+<li><p>La estación <strong>UPB</strong> tiene el rango más amplio (<strong>21.23 mg/m³ a 53.18 mg/m³</strong>) y la mayor desviación estándar (<strong>4.65 mg/m³</strong>), lo que podría indicar condiciones ambientales más fluctuantes.</p></li>
+</ul>
+</li>
+<li><p><strong>Concentraciones más estables en TERMINAL</strong>:</p>
+<ul class="simple">
+<li><p>La estación <strong>TERMINAL</strong> presenta la menor variabilidad, con una desviación estándar de <strong>3.58 mg/m³</strong> y un rango relativamente estrecho.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<ul class="simple">
+<li><p>Hagamos las pruebas de normalidad de la variable PM 10 y tambien según la estación</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inicializar un diccionario para almacenar resultados</span>
+<span class="n">normalidad_resultados_pm10</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Prueba&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;Estación&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;Estadístico&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;p-valor&#39;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+<span class="c1"># Analizar normalidad para cada estación y total</span>
+<span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">resumen_pm10</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">estacion</span> <span class="o">!=</span> <span class="s1">&#39;Total&#39;</span><span class="p">:</span>
+        <span class="c1"># Filtrar datos por estación</span>
+        <span class="n">pm10_estacion</span> <span class="o">=</span> <span class="n">pm_10</span><span class="p">[</span><span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion</span><span class="p">][</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Tomar todos los datos para el total</span>
+        <span class="n">pm10_estacion</span> <span class="o">=</span> <span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Agregar el número de observaciones (n)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pm10_estacion</span><span class="p">)</span>
+
+    <span class="c1"># Prueba de Kolmogorov-Smirnov</span>
+    <span class="n">ks_result</span> <span class="o">=</span> <span class="n">ks_1samp</span><span class="p">((</span><span class="n">pm10_estacion</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pm10_estacion</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">pm10_estacion</span><span class="p">),</span> <span class="n">cdf</span><span class="o">=</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;Prueba&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Kolmogorov-Smirnov&#39;</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;Estación&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estacion</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;Estadístico&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ks_result</span><span class="o">.</span><span class="n">statistic</span><span class="p">)</span>
+    <span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;p-valor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">ks_result</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Calcular para el total sin descomponer por estación</span>
+<span class="n">pm10_total</span> <span class="o">=</span> <span class="n">pm_10</span><span class="p">[</span><span class="s1">&#39;Concentración_mg/m3&#39;</span><span class="p">]</span>
+<span class="n">n_total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pm10_total</span><span class="p">)</span>
+<span class="n">ks_total</span> <span class="o">=</span> <span class="n">ks_1samp</span><span class="p">((</span><span class="n">pm10_total</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pm10_total</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">pm10_total</span><span class="p">),</span> <span class="n">cdf</span><span class="o">=</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;Prueba&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Kolmogorov-Smirnov&#39;</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;Estación&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Total (Sin Descomponer)&#39;</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_total</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;Estadístico&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ks_total</span><span class="o">.</span><span class="n">statistic</span><span class="p">)</span>
+<span class="n">normalidad_resultados_pm10</span><span class="p">[</span><span class="s1">&#39;p-valor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">ks_total</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Convertir los resultados a un DataFrame</span>
+<span class="n">normalidad_resultados_pm10_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">normalidad_resultados_pm10</span><span class="p">)</span>
+
+<span class="c1"># Reordenar columnas para que &#39;n&#39; aparezca después de &#39;Estación&#39;</span>
+<span class="n">normalidad_resultados_pm10_df</span> <span class="o">=</span> <span class="n">normalidad_resultados_pm10_df</span><span class="p">[[</span><span class="s1">&#39;Estación&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;Prueba&#39;</span><span class="p">,</span> <span class="s1">&#39;Estadístico&#39;</span><span class="p">,</span> <span class="s1">&#39;p-valor&#39;</span><span class="p">]]</span>
+
+<span class="n">normalidad_resultados_pm10_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estación</th>
+      <th>n</th>
+      <th>Prueba</th>
+      <th>Estadístico</th>
+      <th>p-valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>256</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.070016</td>
+      <td>0.155</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TERMINAL</td>
+      <td>253</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.064121</td>
+      <td>0.239</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UNISINU</td>
+      <td>252</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.113812</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UPB</td>
+      <td>253</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.095958</td>
+      <td>0.018</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Total (Sin Descomponer)</td>
+      <td>1014</td>
+      <td>Kolmogorov-Smirnov</td>
+      <td>0.078140</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Análisis de Normalidad de las Concentraciones de PM 10</strong></p>
+<p>La tabla muestra los resultados de la prueba de Kolmogorov-Smirnov aplicada a las concentraciones de PM 10 por estación y para el total general, con el propósito de evaluar la normalidad de los datos. En la estación <strong>LA GLORIA</strong>, con 256 observaciones, el estadístico KS fue 0.070 y el p-valor de 0.155, indicando que las concentraciones de PM 10 podrían seguir una distribución normal al no rechazarse la hipótesis nula. De manera similar, en la estación <strong>TERMINAL</strong>, con 253 observaciones, el estadístico KS fue 0.064 y el p-valor de 0.239, lo que también sugiere una distribución normal. En contraste, las estaciones <strong>UNISINU</strong> y <strong>UPB</strong> no cumplieron con la normalidad. En <strong>UNISINU</strong>, con 252 observaciones, el estadístico KS fue 0.114 y el p-valor de 0.003, mientras que en <strong>UPB</strong>, con 253 observaciones, el estadístico KS fue 0.096 y el p-valor de 0.018, indicando que en ambas estaciones las concentraciones de PM 10 no siguen una distribución normal. Para el total general, considerando 1014 observaciones de todas las estaciones combinadas, el estadístico KS fue 0.078 y el p-valor de 0.000, concluyendo que las concentraciones de PM 10 no se distribuyen de forma normal cuando se analizan de manera conjunta. Estos resultados destacan la necesidad de segmentar los análisis por estación, dado que las condiciones varían significativamente. Para estaciones como <strong>UNISINU</strong> y <strong>UPB</strong>, donde no se cumple la normalidad.</p>
+</div>
+</section>
+</section>
+<section id="analisis-del-pm-2-5">
+<h3><strong>Análisis del PM 2.5</strong><a class="headerlink" href="#analisis-del-pm-2-5" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Miremos los datos faltantes del PM 2.5</p></li>
 </ul>
@@ -2304,8 +2510,13 @@ memory usage: 1.8+ MB
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-10"><strong>Análisis del PM 10</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>datos faltantes para el PM 10</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-lineas-de-la-fecha-con-respecto-al-pm10-segun-la-estacion"><strong>Gráfico de lineas de la fecha con respecto al PM10 según la estación</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptivo-e-inferencial-del-pm-10-segun-la-estacion"><strong>Descriptivo e inferencial del PM 10 según la estación</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-pm-2-5"><strong>Análisis del PM 2.5</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
 </ul>
 </li>
