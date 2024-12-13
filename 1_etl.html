@@ -370,7 +370,14 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-del-pm10-y-pm-2-5"><strong>Comparación del PM10 y PM 2.5</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-correlacion-de-los-parametros-climaticos-y-ambientales"><strong>Análisis de correlación de los parámetros climaticos y ambientales</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-y-pm-10"><strong>Correlación de variables climáticas y PM 10</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-vs-pm-10-segun-la-estacion"><strong>Correlación de variables climáticas vs PM 10 según la estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-y-pm-2-5"><strong>Correlación de variables climáticas y PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-vs-pm-2-5-segun-la-estacion"><strong>Correlación de variables climáticas vs PM 2.5 según la estación</strong></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -4139,8 +4146,10 @@ El análisis evidencia fluctuaciones significativas en las concentraciones de PM
 <p>Estos resultados resaltan la necesidad de analizar las posibles diferencias en las fuentes o factores que afectan la variación de cada tipo de partícula, así como de considerar otros factores ambientales o estacionales que puedan influir en las concentraciones de estos contaminantes.</p>
 </div>
 </section>
+<section id="analisis-de-correlacion-de-los-parametros-climaticos-y-ambientales">
+<h2><strong>Análisis de correlación de los parámetros climaticos y ambientales</strong><a class="headerlink" href="#analisis-de-correlacion-de-los-parametros-climaticos-y-ambientales" title="Permalink to this heading">#</a></h2>
 <section id="union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas">
-<h2><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong><a class="headerlink" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas" title="Permalink to this heading">#</a></h2>
+<h3><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong><a class="headerlink" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Unión los dataframe creados</p></li>
 </ul>
@@ -4216,6 +4225,695 @@ memory usage: 1.8+ MB
 <img alt="_images/108000f99e511e18603e31997203c08099d0bb24c4a774b4f73f65501ec9a3a3.png" src="_images/108000f99e511e18603e31997203c08099d0bb24c4a774b4f73f65501ec9a3a3.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_comp</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;_data/df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="correlacion-de-variables-climaticas-y-pm-10">
+<h3><strong>Correlación de variables climáticas y PM 10</strong><a class="headerlink" href="#correlacion-de-variables-climaticas-y-pm-10" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reconstruir el conjunto de datos combinado para calcular la correlación de Spearman</span>
+<span class="n">pivot_data</span> <span class="o">=</span> <span class="n">df_comp</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fecha&quot;</span><span class="p">,</span> <span class="s2">&quot;Estacion&quot;</span><span class="p">],</span>  
+    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Parametros_climaticos&quot;</span><span class="p">,</span>  
+    <span class="n">values</span><span class="o">=</span><span class="s2">&quot;Valor&quot;</span><span class="p">,</span>  
+    <span class="n">aggfunc</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span>  
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Agregar las concentraciones de PM10 al conjunto de datos</span>
+<span class="n">pm10_data</span> <span class="o">=</span> <span class="n">df_comp</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Fecha&quot;</span><span class="p">,</span> <span class="s2">&quot;Estacion&quot;</span><span class="p">])[</span><span class="s2">&quot;Concentración_mg/m3&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>  
+<span class="n">merged_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">pivot_data</span><span class="p">,</span> <span class="n">pm10_data</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fecha&quot;</span><span class="p">,</span> <span class="s2">&quot;Estacion&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>  
+<span class="n">merged_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Concentración_mg/m3&quot;</span><span class="p">:</span> <span class="s2">&quot;PM10&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
+
+<span class="c1"># Eliminar valores NaN para garantizar datos válidos para la correlación</span>
+<span class="n">cleaned_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Calcular la correlación de Spearman y los valores p para PM10 frente a otros parámetros climáticos</span>
+<span class="n">spearman_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># Excluir columnas no numéricas y la columna de PM10</span>
+    <span class="k">if</span> <span class="n">column</span> <span class="o">!=</span> <span class="s2">&quot;PM10&quot;</span><span class="p">:</span>
+        <span class="c1"># Calcular el coeficiente de correlación de Spearman y su valor p</span>
+        <span class="n">corr</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;PM10&quot;</span><span class="p">],</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+        <span class="n">spearman_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;Parametro climaticos&quot;</span><span class="p">:</span> <span class="n">column</span><span class="p">,</span> <span class="s2">&quot;Correlación Spearman&quot;</span><span class="p">:</span> <span class="n">corr</span><span class="p">,</span> <span class="s2">&quot;P-Valor&quot;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">})</span>
+
+<span class="c1"># Convertir los resultados en un DataFrame</span>
+<span class="n">spearman_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">spearman_results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;Correlación Spearman&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">spearman_df</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Parametro climaticos</th>
+      <th>Correlación Spearman</th>
+      <th>P-Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Humedad</td>
+      <td>0.149296</td>
+      <td>0.003240</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Temp. Mínima</td>
+      <td>0.045260</td>
+      <td>0.374572</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>Dirección Viento</td>
+      <td>0.031627</td>
+      <td>0.535042</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Temp. Maxima</td>
+      <td>-0.008517</td>
+      <td>0.867354</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Velocidad Viento</td>
+      <td>-0.095269</td>
+      <td>0.061158</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de las variables climaticas vs PM 10</strong></p>
+<p>En este análisis estamos usando la fecha del 2020 al 2023 y se utilizó el coeficiente de correlación de Spearman para evaluar la relación entre los niveles de PM10 y los parámetros climáticos registrados. Los resultados obtenidos son los siguientes:</p>
+<ol class="arabic simple">
+<li><p><strong>Humedad</strong> mostró una correlación positiva moderada (<em>ρ</em> = 0.149, <em>p</em> = 0.003), indicando que niveles más altos de humedad están asociados con incrementos en los niveles de PM10. Aunque esta relación es estadísticamente significativa (<em>p</em> &lt; 0.05), su magnitud es baja.</p></li>
+<li><p><strong>Temperatura mínima</strong> presentó una correlación débil positiva (<em>ρ</em> = 0.045, <em>p</em> = 0.375), mientras que la <strong>temperatura máxima</strong> tuvo una correlación débil negativa (<em>ρ</em> = -0.009, <em>p</em> = 0.867). En ambos casos, los valores <em>p</em> sugieren que estas correlaciones no son estadísticamente significativas.</p></li>
+<li><p><strong>Dirección del viento</strong> tuvo una correlación muy débil positiva (<em>ρ</em> = 0.032, <em>p</em> = 0.535), indicando que este parámetro no tiene una relación significativa con los niveles de PM10.</p></li>
+<li><p><strong>Velocidad del viento</strong> mostró una correlación negativa débil (<em>ρ</em> = -0.095, <em>p</em> = 0.061). Aunque no es estadísticamente significativa al nivel convencional (<em>p</em> &lt; 0.05), este parámetro podría estar asociado con una ligera reducción de los niveles de PM10.</p></li>
+</ol>
+<p>En conclusión, entre los parámetros climáticos analizados, <strong>la humedad</strong> es el único que muestra una relación significativa con los niveles de PM10, aunque la magnitud de la correlación es limitada. Estos hallazgos resaltan la necesidad de un análisis más profundo y multidimensional que incorpore otros factores no climáticos que puedan influir en los niveles de PM10, especialmente en entornos donde la calidad del aire es crítica para la salud pública.</p>
+</div>
+</section>
+<section id="correlacion-de-variables-climaticas-vs-pm-10-segun-la-estacion">
+<h3><strong>Correlación de variables climáticas vs PM 10 según la estación</strong><a class="headerlink" href="#correlacion-de-variables-climaticas-vs-pm-10-segun-la-estacion" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular la correlación de Spearman entre PM10 y los parámetros climáticos agrupados por &quot;Estacion&quot;</span>
+<span class="n">station_results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Agrupar por estación y calcular las correlaciones</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">station_data</span> <span class="ow">in</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Estacion&quot;</span><span class="p">):</span>
+    <span class="n">spearman_station</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">station_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># Excluir columnas no numéricas y la columna PM10</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">!=</span> <span class="s2">&quot;PM10&quot;</span><span class="p">:</span>
+            <span class="c1"># Calcular la correlación de Spearman y el valor p</span>
+            <span class="n">corr</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">station_data</span><span class="p">[</span><span class="s2">&quot;PM10&quot;</span><span class="p">],</span> <span class="n">station_data</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+            <span class="n">spearman_station</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;Estacion&quot;</span><span class="p">:</span> <span class="n">station</span><span class="p">,</span> <span class="s2">&quot;Parametros climaticos&quot;</span><span class="p">:</span> <span class="n">column</span><span class="p">,</span> <span class="s2">&quot;Correlación Spearman&quot;</span><span class="p">:</span> <span class="n">corr</span><span class="p">,</span> <span class="s2">&quot;P-Valor&quot;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">})</span>
+    <span class="c1"># Agregar los resultados de la estación actual a la lista general</span>
+    <span class="n">station_results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">spearman_station</span><span class="p">)</span>
+
+<span class="c1"># Convertir los resultados en un DataFrame</span>
+<span class="n">station_corr_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">station_results</span><span class="p">)</span>
+
+<span class="n">station_corr_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>Parametros climaticos</th>
+      <th>Correlación Spearman</th>
+      <th>P-Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>Dirección Viento</td>
+      <td>-0.003347</td>
+      <td>0.973904</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LA GLORIA</td>
+      <td>Humedad</td>
+      <td>0.202014</td>
+      <td>0.046066</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LA GLORIA</td>
+      <td>Temp. Maxima</td>
+      <td>-0.014161</td>
+      <td>0.889930</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LA GLORIA</td>
+      <td>Temp. Mínima</td>
+      <td>-0.011993</td>
+      <td>0.906699</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LA GLORIA</td>
+      <td>Velocidad Viento</td>
+      <td>-0.021059</td>
+      <td>0.836927</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TERMINAL</td>
+      <td>Dirección Viento</td>
+      <td>0.128187</td>
+      <td>0.213255</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>TERMINAL</td>
+      <td>Humedad</td>
+      <td>0.130171</td>
+      <td>0.206198</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TERMINAL</td>
+      <td>Temp. Maxima</td>
+      <td>0.014532</td>
+      <td>0.888244</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TERMINAL</td>
+      <td>Temp. Mínima</td>
+      <td>0.038029</td>
+      <td>0.712982</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>TERMINAL</td>
+      <td>Velocidad Viento</td>
+      <td>-0.201767</td>
+      <td>0.048686</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>UNISINU</td>
+      <td>Dirección Viento</td>
+      <td>0.035066</td>
+      <td>0.735846</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>UNISINU</td>
+      <td>Humedad</td>
+      <td>0.182478</td>
+      <td>0.076740</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>UNISINU</td>
+      <td>Temp. Maxima</td>
+      <td>-0.046437</td>
+      <td>0.654972</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>UNISINU</td>
+      <td>Temp. Mínima</td>
+      <td>0.155909</td>
+      <td>0.131366</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>UNISINU</td>
+      <td>Velocidad Viento</td>
+      <td>-0.102727</td>
+      <td>0.321868</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>UPB</td>
+      <td>Dirección Viento</td>
+      <td>-0.028404</td>
+      <td>0.781294</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>UPB</td>
+      <td>Humedad</td>
+      <td>0.075257</td>
+      <td>0.461433</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>UPB</td>
+      <td>Temp. Maxima</td>
+      <td>0.008040</td>
+      <td>0.937371</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>UPB</td>
+      <td>Temp. Mínima</td>
+      <td>0.006641</td>
+      <td>0.948254</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>UPB</td>
+      <td>Velocidad Viento</td>
+      <td>-0.081112</td>
+      <td>0.427208</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip conclusion admonition">
+<p class="admonition-title"><strong>Interpretación de las variables climaticas vs PM 10 por estación</strong></p>
+<p>En este análisis se evaluaron las correlaciones de Spearman entre las concentraciones de PM10 y diversos parámetros climáticos (dirección del viento, humedad, temperatura máxima, temperatura mínima y velocidad del viento) para diferentes estaciones de monitoreo: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>. COn fecha de 2020 hasta 2023, los resultados obtenidos permiten destacar los siguientes hallazgos:</p>
+<ol class="arabic simple">
+<li><p><strong>Estación LA GLORIA</strong>:</p>
+<ul class="simple">
+<li><p>La humedad presentó una correlación positiva débil (<em>ρ</em> = 0.202, <em>p</em> = 0.046), siendo estadísticamente significativa (<em>p</em> &lt; 0.05).</p></li>
+<li><p>Los demás parámetros climáticos no mostraron relaciones significativas con PM10, con valores de <em>p</em> &gt; 0.05.</p></li>
+</ul>
+</li>
+<li><p><strong>Estación TERMINAL</strong>:</p>
+<ul class="simple">
+<li><p>La velocidad del viento tuvo una correlación negativa débil (<em>ρ</em> = -0.202, <em>p</em> = 0.049), significativa al nivel de <em>p</em> &lt; 0.05.</p></li>
+<li><p>Los otros parámetros climáticos no presentaron correlaciones significativas.</p></li>
+</ul>
+</li>
+<li><p><strong>Estación UNISINU</strong>:</p>
+<ul class="simple">
+<li><p>Ningún parámetro climático presentó una correlación estadísticamente significativa con PM10 (<em>p</em> &gt; 0.05), aunque la humedad mostró una correlación positiva débil (<em>ρ</em> = 0.182, <em>p</em> = 0.077).</p></li>
+</ul>
+</li>
+<li><p><strong>Estación UPB</strong>:</p>
+<ul class="simple">
+<li><p>Ningún parámetro climático presentó una correlación significativa (<em>p</em> &gt; 0.05), y todas las correlaciones fueron muy débiles.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Interpretación</strong></p>
+<p>Entre los resultados, se destacan las correlaciones significativas observadas en <strong>LA GLORIA</strong> (humedad) y <strong>TERMINAL</strong> (velocidad del viento), aunque su magnitud es débil, lo que sugiere que estas variables pueden tener una influencia limitada sobre los niveles de PM10. En las demás estaciones, las relaciones entre los parámetros climáticos y PM10 no fueron significativas.</p>
+<p>Estos hallazgos indican que los factores climáticos considerados podrían no ser los principales determinantes de las concentraciones de PM10 en estas estaciones. Esto resalta la necesidad de investigar otras variables, como fuentes de emisión específicas, patrones de tráfico, o actividad industrial, para comprender mejor las fluctuaciones en los niveles de PM10 y diseñar estrategias efectivas para la mejora de la calidad del aire.</p>
+</div>
+</section>
+<section id="correlacion-de-variables-climaticas-y-pm-2-5">
+<h3><strong>Correlación de variables climáticas y PM 2.5</strong><a class="headerlink" href="#correlacion-de-variables-climaticas-y-pm-2-5" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Agregar las concentraciones de PM2.5 al conjunto de datos</span>
+<span class="n">pm25_data</span> <span class="o">=</span> <span class="n">df_comp</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Fecha&quot;</span><span class="p">,</span> <span class="s2">&quot;Estacion&quot;</span><span class="p">])[</span><span class="s2">&quot;Concentración_mg/m3&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>  <span class="c1"># Promedio por Fecha y Estación</span>
+<span class="n">merged_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">pivot_data</span><span class="p">,</span> <span class="n">pm25_data</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fecha&quot;</span><span class="p">,</span> <span class="s2">&quot;Estacion&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>  <span class="c1"># Combinar los datos pivotados con las concentraciones de PM2.5</span>
+<span class="n">merged_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Concentración_mg/m3&quot;</span><span class="p">:</span> <span class="s2">&quot;PM2.5&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Renombrar la columna de PM2.5 para mayor claridad</span>
+
+<span class="c1"># Eliminar valores NaN para garantizar datos válidos para la correlación</span>
+<span class="n">cleaned_data</span> <span class="o">=</span> <span class="n">merged_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Calcular la correlación de Spearman y los valores p para PM2.5 frente a otros parámetros climáticos</span>
+<span class="n">spearman_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># Excluir columnas no numéricas y la columna de PM2.5</span>
+    <span class="k">if</span> <span class="n">column</span> <span class="o">!=</span> <span class="s2">&quot;PM2.5&quot;</span><span class="p">:</span>
+        <span class="c1"># Calcular el coeficiente de correlación de Spearman y su valor p</span>
+        <span class="n">corr</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;PM2.5&quot;</span><span class="p">],</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+        <span class="n">spearman_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;Parametros climaticos&quot;</span><span class="p">:</span> <span class="n">column</span><span class="p">,</span> <span class="s2">&quot;Correlación Spearman&quot;</span><span class="p">:</span> <span class="n">corr</span><span class="p">,</span> <span class="s2">&quot;P-Valor&quot;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">})</span>
+
+<span class="c1"># Convertir los resultados en un DataFrame</span>
+<span class="n">spearman_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">spearman_results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;Correlación Spearman&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">spearman_df</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Parametros climaticos</th>
+      <th>Correlación Spearman</th>
+      <th>P-Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Humedad</td>
+      <td>0.149296</td>
+      <td>0.003240</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Temp. Mínima</td>
+      <td>0.045260</td>
+      <td>0.374572</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>Dirección Viento</td>
+      <td>0.031627</td>
+      <td>0.535042</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Temp. Maxima</td>
+      <td>-0.008517</td>
+      <td>0.867354</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Velocidad Viento</td>
+      <td>-0.095269</td>
+      <td>0.061158</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de las variables climaticas vs PM 2.5</strong></p>
+<p>En este análisis, se evaluaron las correlaciones de Spearman entre las concentraciones de PM2.5 y varios parámetros climáticos. Los resultados obtenidos indican las siguientes relaciones:</p>
+<ol class="arabic simple">
+<li><p><strong>Humedad</strong>:</p>
+<ul class="simple">
+<li><p>Presentó una correlación positiva moderada (<em>ρ</em> = 0.149, <em>p</em> = 0.003), siendo estadísticamente significativa (<em>p</em> &lt; 0.05). Esto sugiere que niveles más altos de humedad podrían estar relacionados con un aumento en las concentraciones de PM2.5.</p></li>
+</ul>
+</li>
+<li><p><strong>Temperatura mínima</strong>:</p>
+<ul class="simple">
+<li><p>La correlación fue positiva débil (<em>ρ</em> = 0.045, <em>p</em> = 0.375), pero no estadísticamente significativa, lo que indica una relación débil y posiblemente no consistente.</p></li>
+</ul>
+</li>
+<li><p><strong>Dirección del viento</strong>:</p>
+<ul class="simple">
+<li><p>Mostró una correlación muy débil positiva (<em>ρ</em> = 0.032, <em>p</em> = 0.535), sin significancia estadística (<em>p</em> &gt; 0.05). Esto sugiere que la dirección del viento tiene una influencia mínima en las concentraciones de PM2.5.</p></li>
+</ul>
+</li>
+<li><p><strong>Temperatura máxima</strong>:</p>
+<ul class="simple">
+<li><p>La correlación fue débil y negativa (<em>ρ</em> = -0.009, <em>p</em> = 0.867), no siendo significativa. Esto implica que no hay una relación clara entre la temperatura máxima y los niveles de PM2.5.</p></li>
+</ul>
+</li>
+<li><p><strong>Velocidad del viento</strong>:</p>
+<ul class="simple">
+<li><p>Tuvo una correlación negativa débil (<em>ρ</em> = -0.095, <em>p</em> = 0.061), que tampoco fue estadísticamente significativa. Aunque la relación es tenue, podría indicar que velocidades más altas del viento están ligeramente asociadas con una reducción de PM2.5.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Interpretación</strong></p>
+<p>Entre los parámetros analizados, <strong>la humedad</strong> es el único que muestra una correlación estadísticamente significativa con las concentraciones de PM2.5, aunque su magnitud es limitada. Los demás parámetros no presentan relaciones significativas ni patrones claros.</p>
+<p>Estos resultados sugieren que, si bien algunos factores climáticos pueden influir en las concentraciones de PM2.5, su impacto parece ser limitado. Esto resalta la necesidad de considerar otras variables, como fuentes de emisión, características geográficas y actividades humanas, para comprender plenamente los patrones de variación de PM2.5 y diseñar estrategias efectivas para mejorar la calidad del aire.</p>
+</div>
+</section>
+<section id="correlacion-de-variables-climaticas-vs-pm-2-5-segun-la-estacion">
+<h3><strong>Correlación de variables climáticas vs PM 2.5 según la estación</strong><a class="headerlink" href="#correlacion-de-variables-climaticas-vs-pm-2-5-segun-la-estacion" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular la correlación de Spearman entre PM2.5 y los parámetros climáticos agrupados por &quot;Estacion&quot;</span>
+<span class="n">station_results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Agrupar por estación y calcular las correlaciones</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">station_data</span> <span class="ow">in</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Estacion&quot;</span><span class="p">):</span>
+    <span class="n">spearman_station</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">station_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># Excluir columnas no numéricas y la columna PM2.5</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="o">!=</span> <span class="s2">&quot;PM2.5&quot;</span><span class="p">:</span>
+            <span class="c1"># Calcular la correlación de Spearman y el valor p</span>
+            <span class="n">corr</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">station_data</span><span class="p">[</span><span class="s2">&quot;PM2.5&quot;</span><span class="p">],</span> <span class="n">station_data</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+            <span class="n">spearman_station</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;Estacion&quot;</span><span class="p">:</span> <span class="n">station</span><span class="p">,</span> <span class="s2">&quot;Parametros climaticos&quot;</span><span class="p">:</span> <span class="n">column</span><span class="p">,</span> <span class="s2">&quot;Correlación Spearman&quot;</span><span class="p">:</span> <span class="n">corr</span><span class="p">,</span> <span class="s2">&quot;P-Valor&quot;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">})</span>
+    <span class="c1"># Agregar los resultados de la estación actual a la lista general</span>
+    <span class="n">station_results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">spearman_station</span><span class="p">)</span>
+
+<span class="c1"># Convertir los resultados en un DataFrame</span>
+<span class="n">station_corr_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">station_results</span><span class="p">)</span>
+
+<span class="n">station_corr_df</span>  <span class="c1"># Mostrar el DataFrame con los resultados</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estacion</th>
+      <th>Parametros climaticos</th>
+      <th>Correlación Spearman</th>
+      <th>P-Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LA GLORIA</td>
+      <td>Dirección Viento</td>
+      <td>-0.003347</td>
+      <td>0.973904</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LA GLORIA</td>
+      <td>Humedad</td>
+      <td>0.202014</td>
+      <td>0.046066</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LA GLORIA</td>
+      <td>Temp. Maxima</td>
+      <td>-0.014161</td>
+      <td>0.889930</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LA GLORIA</td>
+      <td>Temp. Mínima</td>
+      <td>-0.011993</td>
+      <td>0.906699</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LA GLORIA</td>
+      <td>Velocidad Viento</td>
+      <td>-0.021059</td>
+      <td>0.836927</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TERMINAL</td>
+      <td>Dirección Viento</td>
+      <td>0.128187</td>
+      <td>0.213255</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>TERMINAL</td>
+      <td>Humedad</td>
+      <td>0.130171</td>
+      <td>0.206198</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TERMINAL</td>
+      <td>Temp. Maxima</td>
+      <td>0.014532</td>
+      <td>0.888244</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TERMINAL</td>
+      <td>Temp. Mínima</td>
+      <td>0.038029</td>
+      <td>0.712982</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>TERMINAL</td>
+      <td>Velocidad Viento</td>
+      <td>-0.201767</td>
+      <td>0.048686</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>UNISINU</td>
+      <td>Dirección Viento</td>
+      <td>0.035066</td>
+      <td>0.735846</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>UNISINU</td>
+      <td>Humedad</td>
+      <td>0.182478</td>
+      <td>0.076740</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>UNISINU</td>
+      <td>Temp. Maxima</td>
+      <td>-0.046437</td>
+      <td>0.654972</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>UNISINU</td>
+      <td>Temp. Mínima</td>
+      <td>0.155909</td>
+      <td>0.131366</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>UNISINU</td>
+      <td>Velocidad Viento</td>
+      <td>-0.102727</td>
+      <td>0.321868</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>UPB</td>
+      <td>Dirección Viento</td>
+      <td>-0.028404</td>
+      <td>0.781294</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>UPB</td>
+      <td>Humedad</td>
+      <td>0.075257</td>
+      <td>0.461433</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>UPB</td>
+      <td>Temp. Maxima</td>
+      <td>0.008040</td>
+      <td>0.937371</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>UPB</td>
+      <td>Temp. Mínima</td>
+      <td>0.006641</td>
+      <td>0.948254</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>UPB</td>
+      <td>Velocidad Viento</td>
+      <td>-0.081112</td>
+      <td>0.427208</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de las variables climaticas vs PM 10 por estación</strong></p>
+<p>En este análisis se evaluaron las correlaciones de Spearman entre las concentraciones de PM2.5 y diversos parámetros climáticos agrupados por estación de monitoreo (<strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>). A continuación, se presentan los hallazgos clave:</p>
+<ol class="arabic simple">
+<li><p><strong>Estación LA GLORIA</strong>:</p>
+<ul class="simple">
+<li><p>La <strong>humedad</strong> mostró una correlación positiva moderada (<em>ρ</em> = 0.202, <em>p</em> = 0.046), siendo estadísticamente significativa (<em>p</em> &lt; 0.05). Esto sugiere que niveles más altos de humedad pueden estar asociados con mayores concentraciones de PM2.5.</p></li>
+<li><p>Los demás parámetros no presentaron correlaciones significativas con PM2.5 (<em>p</em> &gt; 0.05).</p></li>
+</ul>
+</li>
+<li><p><strong>Estación TERMINAL</strong>:</p>
+<ul class="simple">
+<li><p>La <strong>velocidad del viento</strong> tuvo una correlación negativa débil (<em>ρ</em> = -0.202, <em>p</em> = 0.049), significativa al nivel de <em>p</em> &lt; 0.05. Esto sugiere que velocidades más altas del viento podrían reducir las concentraciones de PM2.5.</p></li>
+<li><p>Ningún otro parámetro mostró relaciones significativas con PM2.5.</p></li>
+</ul>
+</li>
+<li><p><strong>Estación UNISINU</strong>:</p>
+<ul class="simple">
+<li><p>Aunque ningún parámetro alcanzó significancia estadística (<em>p</em> &gt; 0.05), la <strong>humedad</strong> presentó una correlación positiva débil (<em>ρ</em> = 0.182, <em>p</em> = 0.077), lo que podría indicar una tendencia leve.</p></li>
+</ul>
+</li>
+<li><p><strong>Estación UPB</strong>:</p>
+<ul class="simple">
+<li><p>Ninguno de los parámetros climáticos mostró correlaciones significativas con PM2.5 (<em>p</em> &gt; 0.05). Las relaciones fueron débiles y sin relevancia estadística.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Interpretación</strong></p>
+<p>Entre los parámetros evaluados, <strong>la humedad</strong> en la estación <strong>LA GLORIA</strong> y la <strong>velocidad del viento</strong> en la estación <strong>TERMINAL</strong> mostraron correlaciones significativas con PM2.5, aunque la magnitud de estas relaciones es débil. En las demás estaciones, las correlaciones fueron no significativas y de baja magnitud, lo que sugiere que los factores climáticos analizados podrían no ser los principales determinantes de las concentraciones de PM2.5.</p>
+<p>Estos resultados destacan la necesidad de considerar otras variables, como fuentes de emisión específicas, características geográficas y patrones de actividad humana, para entender completamente las variaciones de PM2.5 y formular estrategias eficaces para la mejora de la calidad del aire.</p>
+</div>
+</section>
 </section>
 </section>
 
@@ -4294,7 +4992,14 @@ memory usage: 1.8+ MB
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-del-pm10-y-pm-2-5"><strong>Comparación del PM10 y PM 2.5</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-correlacion-de-los-parametros-climaticos-y-ambientales"><strong>Análisis de correlación de los parámetros climaticos y ambientales</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-y-pm-10"><strong>Correlación de variables climáticas y PM 10</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-vs-pm-10-segun-la-estacion"><strong>Correlación de variables climáticas vs PM 10 según la estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-y-pm-2-5"><strong>Correlación de variables climáticas y PM 2.5</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlacion-de-variables-climaticas-vs-pm-2-5-segun-la-estacion"><strong>Correlación de variables climáticas vs PM 2.5 según la estación</strong></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
