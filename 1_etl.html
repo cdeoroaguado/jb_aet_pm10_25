@@ -354,6 +354,9 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extraccion-transformacion-y-carga-etl"><strong>Extracción, transformación y carga (ETL)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
@@ -690,6 +693,439 @@ memory usage: 161.7+ KB
 </div>
 </div>
 </div>
+<section id="analisis-de-la-variable-fecha">
+<h3><strong>Análisis de la variable fecha</strong><a class="headerlink" href="#analisis-de-la-variable-fecha" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Realicemos un análisis univariado</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fecha_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Primer Fecha&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()],</span>
+    <span class="s1">&#39;Última Fecha&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">datos_recopilados</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span>
+<span class="p">})</span>
+
+<span class="n">fecha_info</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Primer Fecha</th>
+      <th>Última Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-09-01</td>
+      <td>2023-12-21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Conclusión sobre el rango de fechas</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Rango temporal</strong>:</p>
+<ul class="simple">
+<li><p>La variable <code class="docutils literal notranslate"><span class="pre">Fecha</span></code> cubre un período desde el <strong>1 de septiembre de 2020</strong> hasta el <strong>21 de diciembre de 2023</strong>.</p></li>
+<li><p>Este rango abarca aproximadamente <strong>3 años y 3 meses</strong>, lo que sugiere una recolección de datos a lo largo de un periodo considerable.</p></li>
+</ul>
+</li>
+<li><p><strong>Consistencia temporal</strong>:</p>
+<ul class="simple">
+<li><p>El amplio rango sugiere que el sistema de monitoreo ha estado activo durante un tiempo prolongado.</p></li>
+<li><p>Sin embargo, será importante verificar si hay gaps significativos dentro de este rango, lo que podría afectar el análisis de tendencias o patrones temporales.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</section>
+<section id="analisis-de-la-variable-estacion">
+<h3><strong>Análisis de la variable estación</strong><a class="headerlink" href="#analisis-de-la-variable-estacion" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un resumen con conteo para PM 10 y PM 2.5</span>
+<span class="n">conteo_parametros</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">datos_recopilados</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> <span class="s1">&#39;Parametro&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># Calcular el porcentaje</span>
+<span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span>
+<span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;PM 10 %&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;PM 10&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;PM 2.5 %&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;PM 2.5&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">conteo_parametros</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Derretir los datos para el gráfico</span>
+<span class="n">conteo_parametros_melted</span> <span class="o">=</span> <span class="n">conteo_parametros</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span>
+    <span class="n">id_vars</span><span class="o">=</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> 
+    <span class="n">value_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PM 10&#39;</span><span class="p">,</span> <span class="s1">&#39;PM 2.5&#39;</span><span class="p">],</span> 
+    <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;Parametro&#39;</span><span class="p">,</span> 
+    <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;Cantidad&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Gráfico de barras</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">conteo_parametros_melted</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Estacion&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Cantidad&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Parametro&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;pastel&#39;</span><span class="p">)</span>
+
+<span class="c1"># Agregar los valores en las barras</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">cantidad</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">,</span> <span class="n">conteo_parametros_melted</span><span class="p">[</span><span class="s1">&#39;Cantidad&#39;</span><span class="p">]):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cantidad</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Configurar etiquetas y título</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Conteo de registros por estación y parámetro&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Estación&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cantidad de registros&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Parámetro&#39;</span><span class="p">)</span>
+
+<span class="c1"># Mostrar el gráfico</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2e2c2760c40da31ab64a8b1d5253ff369b24541ea3e909148b902d5fff5a843f.png" src="_images/2e2c2760c40da31ab64a8b1d5253ff369b24541ea3e909148b902d5fff5a843f.png" />
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong><strong>Interpretación de la gráfica: Conteo de registros por estación y parámetro</strong></strong></p>
+<p>La gráfica muestra la distribución de registros disponibles para los parámetros <strong>PM 10</strong> y <strong>PM 2.5</strong> en las cuatro estaciones: <strong>LA GLORIA</strong>, <strong>TERMINAL</strong>, <strong>UNISINU</strong> y <strong>UPB</strong>.</p>
+<ol class="arabic simple">
+<li><p><strong>Registros de PM 10</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad predominante</strong>:</p>
+<ul>
+<li><p>En todas las estaciones, el parámetro <strong>PM 10</strong> tiene significativamente más registros que <strong>PM 2.5</strong>.</p></li>
+</ul>
+</li>
+<li><p>Cantidades específicas por estación:</p>
+<ul>
+<li><p><strong>LA GLORIA</strong>: 256 registros.</p></li>
+<li><p><strong>TERMINAL</strong>: 253 registros.</p></li>
+<li><p><strong>UNISINU</strong>: 252 registros.</p></li>
+<li><p><strong>UPB</strong>: 253 registros.</p></li>
+</ul>
+</li>
+<li><p><strong>Consistencia entre estaciones</strong>:</p>
+<ul>
+<li><p>Los registros de PM 10 están uniformemente distribuidos entre las estaciones, con ligeras variaciones.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Registros de PM 2.5</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad baja</strong>:</p>
+<ul>
+<li><p>El parámetro <strong>PM 2.5</strong> tiene una cantidad mucho menor de registros en comparación con <strong>PM 10</strong>.</p></li>
+</ul>
+</li>
+<li><p>Cantidades específicas por estación:</p>
+<ul>
+<li><p><strong>LA GLORIA</strong>: 78 registros.</p></li>
+<li><p><strong>TERMINAL</strong>: 93 registros.</p></li>
+<li><p><strong>UNISINU</strong>: 78 registros.</p></li>
+<li><p><strong>UPB</strong>: 89 registros.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad entre estaciones</strong>:</p>
+<ul>
+<li><p>Se observa mayor variación en los registros de PM 2.5 entre estaciones, siendo <strong>TERMINAL</strong> la que tiene más registros y <strong>LA GLORIA</strong> y <strong>UNISINU</strong> las que tienen menos.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusiones</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Desbalance entre parámetros</strong>:</p>
+<ul class="simple">
+<li><p>Existe un desbalance significativo en la cantidad de datos recolectados para <strong>PM 10</strong> y <strong>PM 2.5</strong>, lo que puede limitar el análisis de este último parámetro.</p></li>
+</ul>
+</li>
+<li><p><strong>Consistencia en PM 10</strong>:</p>
+<ul class="simple">
+<li><p>Los registros de PM 10 son bastante consistentes entre las estaciones, lo que sugiere un mejor monitoreo de este parámetro.</p></li>
+</ul>
+</li>
+<li><p><strong>Datos insuficientes para PM 2.5</strong>:</p>
+<ul class="simple">
+<li><p>La baja cantidad de registros para PM 2.5 podría afectar la capacidad de realizar análisis representativos o comparaciones significativas entre estaciones.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</section>
+<section id="analisis-de-las-variables-climaticas">
+<h3><strong>Análisis de las variables climaticas</strong><a class="headerlink" href="#analisis-de-las-variables-climaticas" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Eliminar duplicados por &#39;Fecha&#39; y &#39;Parametros_climaticos&#39;</span>
+<span class="n">df_parametros_unique</span> <span class="o">=</span> <span class="n">datos_parametros</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Fecha&#39;</span><span class="p">,</span> <span class="s1">&#39;Parametros_climaticos&#39;</span><span class="p">])</span>
+
+<span class="c1"># Generar la tabla resumen por &#39;Parametros_climaticos&#39; después de eliminar duplicados</span>
+<span class="n">resumen_parametros_unique</span> <span class="o">=</span> <span class="n">df_parametros_unique</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Parametros_climaticos&#39;</span><span class="p">)[</span><span class="s1">&#39;Valor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span>
+    <span class="n">media</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+    <span class="n">desviacion_estandar</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
+    <span class="n">mediana</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="n">Q1</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span>
+    <span class="n">Q3</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">resumen_parametros_unique</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Parametros_climaticos</th>
+      <th>n</th>
+      <th>media</th>
+      <th>desviacion_estandar</th>
+      <th>mediana</th>
+      <th>min</th>
+      <th>max</th>
+      <th>Q1</th>
+      <th>Q3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Dirección Viento</td>
+      <td>620</td>
+      <td>249.373382</td>
+      <td>74.231481</td>
+      <td>263.534591</td>
+      <td>3.062100</td>
+      <td>360.000000</td>
+      <td>230.389556</td>
+      <td>291.298178</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Humedad</td>
+      <td>1267</td>
+      <td>96.496448</td>
+      <td>4.180253</td>
+      <td>98.000000</td>
+      <td>76.000000</td>
+      <td>107.000000</td>
+      <td>94.000000</td>
+      <td>100.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Temp. Maxima</td>
+      <td>1274</td>
+      <td>33.977539</td>
+      <td>1.981477</td>
+      <td>34.300000</td>
+      <td>26.300000</td>
+      <td>38.800000</td>
+      <td>32.800000</td>
+      <td>35.300000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Temp. Mínima</td>
+      <td>1266</td>
+      <td>23.964479</td>
+      <td>1.182211</td>
+      <td>24.000000</td>
+      <td>19.700000</td>
+      <td>30.796568</td>
+      <td>23.200000</td>
+      <td>24.700000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Velocidad Viento</td>
+      <td>744</td>
+      <td>1.682666</td>
+      <td>1.380230</td>
+      <td>1.419180</td>
+      <td>0.190966</td>
+      <td>21.692811</td>
+      <td>1.229207</td>
+      <td>1.708611</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><strong>Interpretación de la tabla: Resumen por Parámetros Climáticos</strong></p>
+<p>La tabla proporciona un análisis descriptivo para diferentes parámetros climáticos, basado en el número de registros (n), media, desviación estándar, mediana, valores mínimo y máximo, y los cuartiles Q1 y Q3.</p>
+<ol class="arabic simple">
+<li><p><strong>Dirección del Viento</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 620 registros disponibles.</p></li>
+<li><p><strong>Media y mediana</strong>:</p>
+<ul>
+<li><p>La media es <strong>249.37°</strong>, cercana a la mediana de <strong>263.53°</strong>, lo que indica una distribución aproximadamente simétrica.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>Una desviación estándar de <strong>74.23°</strong> sugiere una alta variabilidad en las direcciones del viento.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores oscilan entre <strong>3.06°</strong> y <strong>360.00°</strong>, con el 50% de los valores entre <strong>230.39°</strong> (Q1) y <strong>291.30°</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Humedad</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 1267 registros.</p></li>
+<li><p><strong>Media y mediana</strong>:</p>
+<ul>
+<li><p>Una media de <strong>96.50%</strong> y una mediana de <strong>98%</strong>, lo que refleja niveles de humedad consistentemente altos.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>La desviación estándar es baja (<strong>4.18%</strong>), lo que indica que la humedad es bastante estable.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores están entre <strong>76%</strong> y <strong>107%</strong>, con el 50% de los datos entre <strong>94%</strong> (Q1) y <strong>100%</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Temperatura Máxima</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 1274 registros.</p></li>
+<li><p><strong>Media y mediana</strong>:</p>
+<ul>
+<li><p>La media es <strong>33.98°C</strong>, mientras que la mediana es ligeramente superior (<strong>34.30°C</strong>), sugiriendo una ligera asimetría hacia valores más bajos.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>Una desviación estándar de <strong>1.98°C</strong> indica que las temperaturas máximas son relativamente consistentes.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores oscilan entre <strong>26.30°C</strong> y <strong>38.80°C</strong>, con el 50% de los datos entre <strong>32.80°C</strong> (Q1) y <strong>35.30°C</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Temperatura Mínima</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 1266 registros.</p></li>
+<li><p><strong>Media y mediana</strong>:</p>
+<ul>
+<li><p>La media es <strong>23.96°C</strong>, y la mediana es similar (<strong>24.00°C</strong>), indicando una distribución simétrica.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>Una desviación estándar de <strong>1.18°C</strong> muestra una baja variabilidad en las temperaturas mínimas.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores oscilan entre <strong>19.70°C</strong> y <strong>30.80°C</strong>, con el 50% de los datos entre <strong>23.20°C</strong> (Q1) y <strong>24.70°C</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Velocidad del Viento</strong></p>
+<ul class="simple">
+<li><p><strong>Cantidad de datos (n)</strong>: 744 registros.</p></li>
+<li><p><strong>Media y mediana</strong>:</p>
+<ul>
+<li><p>La media es <strong>1.68 m/s</strong>, mientras que la mediana es <strong>1.42 m/s</strong>, lo que indica una ligera asimetría hacia valores más altos.</p></li>
+</ul>
+</li>
+<li><p><strong>Variabilidad</strong>:</p>
+<ul>
+<li><p>La desviación estándar es alta (<strong>1.38 m/s</strong>), lo que sugiere variaciones significativas en las velocidades del viento.</p></li>
+</ul>
+</li>
+<li><p><strong>Rango y cuartiles</strong>:</p>
+<ul>
+<li><p>Los valores van desde <strong>0.19 m/s</strong> hasta <strong>21.69 m/s</strong>, con el 50% de los datos entre <strong>1.23 m/s</strong> (Q1) y <strong>1.71 m/s</strong> (Q3).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Conclusiones generales</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Estabilidad en algunos parámetros</strong>:</p>
+<ul class="simple">
+<li><p>La <strong>humedad</strong> y las <strong>temperaturas mínimas y máximas</strong> muestran baja variabilidad, lo que refleja condiciones climáticas consistentes.</p></li>
+</ul>
+</li>
+<li><p><strong>Alta variabilidad en otros parámetros</strong>:</p>
+<ul class="simple">
+<li><p>La <strong>dirección del viento</strong> y la <strong>velocidad del viento</strong> presentan una mayor variabilidad, lo que podría estar relacionado con fenómenos meteorológicos locales o estacionales.</p></li>
+</ul>
+</li>
+<li><p><strong>Importancia del rango intercuartil (IQR)</strong>:</p>
+<ul class="simple">
+<li><p>El rango intercuartil (Q3 - Q1) es particularmente útil para identificar la dispersión central de los datos, lo que puede ayudar a detectar valores atípicos.</p></li>
+</ul>
+</li>
+<li><p><strong>Recomendaciones para análisis futuros</strong>:</p>
+<ul class="simple">
+<li><p>Explorar la estacionalidad en los parámetros con alta variabilidad (e.g., viento).</p></li>
+<li><p>Evaluar correlaciones entre estos parámetros para identificar patrones climáticos más complejos.</p></li>
+</ul>
+</li>
+</ol>
+</div>
 <ul class="simple">
 <li><p>Unamos los datos recopilados y los datos de parámetros</p></li>
 </ul>
@@ -859,6 +1295,7 @@ No coinciden: [Timestamp(&#39;2020-09-01 00:00:00&#39;), Timestamp(&#39;2020-09-
 </table>
 </div></div></div>
 </div>
+</section>
 <section id="datos-faltantes-para-el-pm-10">
 <h3><strong>Datos faltantes para el PM 10</strong><a class="headerlink" href="#datos-faltantes-para-el-pm-10" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
@@ -1864,6 +2301,9 @@ memory usage: 1.8+ MB
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extraccion-transformacion-y-carga-etl"><strong>Extracción, transformación y carga (ETL)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-fecha"><strong>Análisis de la variable fecha</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-estacion"><strong>Análisis de la variable estación</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-climaticas"><strong>Análisis de las variables climaticas</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-para-el-pm-10"><strong>Datos faltantes para el PM 10</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes-del-pm-2-5"><strong>Datos Faltantes del PM 2.5</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-de-los-datos-pm-10-y-pm-2-5-con-las-fechas-completas"><strong>Unión de los datos PM 10 y PM 2.5 con las fechas completas</strong></a></li>
